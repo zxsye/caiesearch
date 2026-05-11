@@ -1,0 +1,47 @@
+version: '3'
+networks:
+  mw:
+    driver: bridge
+services:
+  www:
+    container_name: schsrch-www
+    build: .
+    networks:
+      - mw
+    ports:
+      - "8080:80"
+    environment:
+      NODE_ENV: development
+      MONGODB: mongodb://mw-mongo/schsrch
+      ES: mw-es:9200
+      SITE_ORIGIN: http://localhost:8080
+    stdin_open: true
+    tty: true
+    depends_on:
+      - mongo
+      - es
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+      - "/Users/zilin/Library/CloudStorage/Dropbox/== Work ==/Tutoring/CIE Past Papers:/papers:ro"
+  mongo:
+    container_name: mw-mongo
+    image: mongo:latest
+    networks:
+      - mw
+    volumes:
+      - mw-mongo-data:/data/db
+  es:
+    container_name: mw-es
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.23
+    networks:
+      - mw
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - mw-es-data:/usr/share/elasticsearch/data
+
+volumes:
+  mw-mongo-data:
+  mw-es-data:
