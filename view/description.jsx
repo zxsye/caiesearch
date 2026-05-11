@@ -88,13 +88,9 @@ export default class Description extends React.Component {
       statusInfo = (
         <div className={'status' + (this.state.loading ? ' loading' : '')}>
           <div>
-            Currently supporting&nbsp;
             <a onClick={evt => AppState.dispatch({type: 'subjects'})}>
               {CIESubjects.length} subjects
-            </a>: <span>storing {stat.docCount} paper</span> <span>({stat.indexCount} pages).</span>
-          </div>
-          <div>
-            Mystery number: {stat.requestCount}
+            </a> · {stat.docCount} papers · {stat.indexCount} pages indexed
           </div>
           {this.state.loading ? null : reloadBtn}
         </div>
@@ -113,6 +109,15 @@ export default class Description extends React.Component {
         </div>
       )
     }
+    // Quick-access subject cards (Maths + 3 Sciences)
+    // Each card dispatches a search query when clicked.
+    const quickSubjects = [
+      { id: '9709', name: 'Mathematics', emoji: '📐' },
+      { id: '9702', name: 'Physics', emoji: '⚛️' },
+      { id: '9701', name: 'Chemistry', emoji: '🧪' },
+      { id: '9700', name: 'Biology', emoji: '🧬' },
+    ]
+
     return (
       <div className='home-desc'>
         {this.state.server && !this.props.showHelp ? (
@@ -122,13 +127,41 @@ export default class Description extends React.Component {
             <a href='https://github.com/micromaomao/schsrch/blob/master/index.js' target='_blank'>API</a>
           </div>
         ) : null}
+
+        {/* Quick-access subject cards */}
+        {!this.props.showHelp ? (
+          <div className='quick-subjects'>
+            {quickSubjects.map(subj => (
+              <div
+                className='quick-subject-card'
+                key={subj.id}
+                onClick={() => AppState.dispatch({type: 'query', query: subj.id + ' '})}
+              >
+                <div className='card-emoji'>{subj.emoji}</div>
+                <div className='card-name'>{subj.name}</div>
+                <div className='card-code'>{subj.id}</div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {/* Browse all subjects link */}
+        {!this.props.showHelp ? (
+          <div className='browse-all'>
+            <a onClick={evt => AppState.dispatch({type: 'subjects'})} href='/subjects/'>
+              Browse all {CIESubjects.length} subjects →
+            </a>
+          </div>
+        ) : null}
+
         <div className='help'>
           {!this.props.showHelp ? (
-            <a className='helpbtn' onClick={this.handleShowHelp} href='/help/'>Show help&hellip;</a>
+            <a className='helpbtn' onClick={this.handleShowHelp} href='/help/'>Show help…</a>
           ) : (
             <a className='helpbtn' onClick={this.handleHideHelp} href='/'>{this.state.server ? 'Back' : 'Close help'}</a>
           )}
         </div>
+
         {(this.state.server ? AppState.getState().serverrender.siteOrigin : window.location.origin) === 'https://paper.sc' || this.props.showHelp ? null : (
           <div className='mirrornotice'>You are viewing a mirror of <a href='https://paper.sc'>paper.sc</a>.</div>
         )}

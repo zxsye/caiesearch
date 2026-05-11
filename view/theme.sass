@@ -1,0 +1,144 @@
+// ============================================================================
+// CAIESEARCH DESIGN SYSTEM — theme.sass
+// ============================================================================
+//
+// This file defines the complete design system as CSS custom properties.
+// All components should reference these tokens instead of hardcoded values.
+//
+// HOW TO EXTEND:
+//   1. Add new tokens under the relevant section (colors, spacing, etc.)
+//   2. For dark mode: add overrides under `.dark` or
+//      `@media (prefers-color-scheme: dark)` — the structure is already here.
+//   3. For new component styles: create a new partial and @import it in layout.sass.
+//
+// COLOR NAMING CONVENTION:
+//   --cs-{category}-{variant}
+//   e.g. --cs-bg-primary, --cs-text-secondary, --cs-accent-hover
+//
+// ============================================================================
+
+// ---------------------------------------------------------------------------
+// Google Fonts — imported via <link> in index.pug for performance.
+// Font stacks defined here as SASS variables for use in the codebase.
+// ---------------------------------------------------------------------------
+
+$font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
+$font-heading: 'Outfit', 'Inter', sans-serif
+$font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace
+
+// ---------------------------------------------------------------------------
+// SASS color variables (used internally in this file for computing shades).
+// Components should use the CSS custom properties below, NOT these directly.
+// ---------------------------------------------------------------------------
+
+$_accent: hsl(20, 80%, 52%)         // Warm amber-orange — primary brand color
+$_accent-hover: hsl(20, 80%, 44%)
+$_accent-soft: hsl(20, 70%, 95%)    // Very light tint for backgrounds
+$_accent-muted: hsl(20, 60%, 85%)   // Muted accent for borders
+$_accent-secondary: hsl(32, 85%, 52%) // Golden amber — for gradients/highlights
+$_link: hsl(346, 70%, 48%)          // Warm rose — distinct from accent for links
+$_link-hover: hsl(346, 70%, 38%)
+$_success: hsl(152, 60%, 40%)
+$_warning: hsl(38, 92%, 50%)
+$_danger: hsl(0, 75%, 55%)
+
+// ---------------------------------------------------------------------------
+// CSS CUSTOM PROPERTIES
+// ---------------------------------------------------------------------------
+
+\:root
+  // --- Fonts ---
+  --cs-font-body: #{$font-body}
+  --cs-font-heading: #{$font-heading}
+  --cs-font-mono: #{$font-mono}
+
+  // --- Font Sizes ---
+  --cs-text-xs: 0.75rem
+  --cs-text-sm: 0.875rem
+  --cs-text-base: 1rem
+  --cs-text-lg: 1.125rem
+  --cs-text-xl: 1.5rem
+  --cs-text-2xl: 2rem
+  --cs-text-3xl: 2.5rem
+
+  // --- Backgrounds ---
+  --cs-bg-primary: hsl(30, 20%, 99%)
+  --cs-bg-secondary: hsl(30, 15%, 96%)
+  --cs-bg-muted: hsl(30, 10%, 93%)
+  --cs-bg-elevated: hsl(0, 0%, 100%)
+
+  // --- Text ---
+  --cs-text-primary: hsl(20, 10%, 12%)
+  --cs-text-secondary: hsl(20, 5%, 42%)
+  --cs-text-tertiary: hsl(20, 5%, 62%)
+  --cs-text-inverse: hsl(0, 0%, 100%)
+
+  // --- Accent Colors ---
+  --cs-accent: #{$_accent}
+  --cs-accent-hover: #{$_accent-hover}
+  --cs-accent-soft: #{$_accent-soft}
+  --cs-accent-muted: #{$_accent-muted}
+  --cs-accent-secondary: #{$_accent-secondary}
+  --cs-accent-rgb: 217, 108, 40
+
+  // --- Semantic Colors ---
+  --cs-link: #{$_link}
+  --cs-link-hover: #{$_link-hover}
+  --cs-success: #{$_success}
+  --cs-warning: #{$_warning}
+  --cs-danger: #{$_danger}
+
+  // --- Borders ---
+  --cs-border: hsl(30, 10%, 88%)
+  --cs-border-hover: hsl(30, 10%, 78%)
+  --cs-border-focus: #{$_accent}
+
+  // --- Shadows ---
+  --cs-shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.04)
+  --cs-shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06)
+  --cs-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07)
+  --cs-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08)
+  --cs-shadow-glow: 0 0 0 3px rgb(var(--cs-accent-rgb) / 0.15), 0 0 20px rgb(var(--cs-accent-rgb) / 0.1)
+
+  // --- Radii ---
+  --cs-radius-sm: 0.375rem
+  --cs-radius-md: 0.75rem
+  --cs-radius-lg: 1rem
+  --cs-radius-xl: 1.5rem
+  --cs-radius-full: 9999px
+
+  // --- Spacing (reference scale — use in component styles) ---
+  --cs-space-1: 0.25rem
+  --cs-space-2: 0.5rem
+  --cs-space-3: 0.75rem
+  --cs-space-4: 1rem
+  --cs-space-5: 1.25rem
+  --cs-space-6: 1.5rem
+  --cs-space-8: 2rem
+  --cs-space-10: 2.5rem
+  --cs-space-12: 3rem
+  --cs-space-16: 4rem
+  --cs-space-20: 5rem
+
+  // --- Motion ---
+  --cs-ease-out: cubic-bezier(0.16, 1, 0.3, 1)
+  --cs-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1)
+  --cs-duration-fast: 150ms
+  --cs-duration-normal: 250ms
+  --cs-duration-slow: 400ms
+
+// ---------------------------------------------------------------------------
+// DARK MODE STUB (uncomment and customize when ready)
+// ---------------------------------------------------------------------------
+// .dark, [data-theme="dark"]
+//   --cs-bg-primary: hsl(20, 10%, 6%)
+//   --cs-bg-secondary: hsl(20, 10%, 10%)
+//   --cs-bg-muted: hsl(20, 8%, 15%)
+//   --cs-bg-elevated: hsl(20, 10%, 12%)
+//   --cs-text-primary: hsl(30, 15%, 92%)
+//   --cs-text-secondary: hsl(30, 10%, 65%)
+//   --cs-text-tertiary: hsl(30, 5%, 48%)
+//   --cs-border: hsl(20, 8%, 20%)
+//   --cs-border-hover: hsl(20, 8%, 30%)
+//   --cs-accent-soft: hsl(20, 40%, 15%)
+//   --cs-accent-muted: hsl(20, 30%, 25%)

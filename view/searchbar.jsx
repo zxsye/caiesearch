@@ -196,11 +196,21 @@ export default class SearchBar extends AnimatorReactComponent {
     let renderT = (
       <div className={this.props.big ? 'searchbar big' : 'searchbar small'}>
         <div className={'bannerContain' + (hideBanner ? ' hide' : '')} key='bannerContain'>
-          <img className='icon' src={'data:image/svg+xml,' + encodeURIComponent(IconData)} alt='SchSrch' />
-          <img className='banner' key='banner' src={'data:image/svg+xml,' + encodeURIComponent(BannerDrawing)} alt='SchSrch' />
+          <img className='icon' src={'data:image/svg+xml,' + encodeURIComponent(IconData)} alt='caiesearch' />
+          {this.props.big ? (
+            <React.Fragment>
+              <h1 className='heroTitle'>Search Past Papers</h1>
+              <p className='heroSubtitle'>Find any CAIE paper instantly</p>
+            </React.Fragment>
+          ) : null}
         </div>
         <div className={'inputContain' + (hideBanner ? ' hidebanner' : '')}>
           <div className='inputPositionWrap'>
+            {/* Search Icon — inline SVG for the magnifying glass */}
+            <svg className='searchIcon' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+              <circle cx='11' cy='11' r='8' />
+              <line x1='21' y1='21' x2='16.65' y2='16.65' />
+            </svg>
             <input
               className={'querybox' + (this.state.server ? ' border' : '')}
               type='text'
@@ -211,6 +221,7 @@ export default class SearchBar extends AnimatorReactComponent {
               onBlur={evt => this.blur(true)}
               onKeyDown={this.handleKey}
               name='query'
+              placeholder='Search by subject code, name, or paper content…'
               autoComplete='off' />
             {this.state.server ? null : (
               <div className='stroke'>
@@ -223,7 +234,7 @@ export default class SearchBar extends AnimatorReactComponent {
               ) : null}
               {this.state.query.length && !this.state.server
                 ? (
-                  <div className='clearInput' onClick={evt => this.clear()}>
+                  <div className='clearInput' onClick={evt => this.clear()} title='Clear search'>
                     <svg className="icon ii-c"><use href="#ii-c" xlinkHref="#ii-c"></use></svg>
                   </div>
                 )

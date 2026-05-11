@@ -3,7 +3,11 @@ doctype html
 html
   head
     meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=no")
-    meta(name="theme-color",content="#ff5722")
+    meta(name="theme-color",content="#D96C28")
+    //- Design System Fonts: Inter (body), Outfit (headings), JetBrains Mono (code/badges)
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap")
     -let mf = require('../lib/manifest-loader!./manifest.json')
     link(rel="manifest", href=mf.manifest)
     each icon in mf.icons

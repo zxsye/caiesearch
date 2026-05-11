@@ -1,9 +1,18 @@
-$color-primary: #FF5722
-$color-link: #E91E63
-$color-secondary-text: #727272
-$color-filepreview-top: darken($color-primary, 20%)
+// ============================================================================
+// LAYOUT.SASS — Main stylesheet for caiesearch
+// ============================================================================
+// Imports the design system (theme.sass) for all tokens.
+// Legacy SASS variables below are bridges to the new theme for backward compat.
+// When refactoring a component, prefer using var(--cs-*) directly.
+// ============================================================================
 
-@import url('https://fonts.googleapis.com/css?family=Lato:300')
+@import './theme'
+
+// --- Legacy SASS variable bridges (for un-refactored components) ---
+$color-primary: hsl(20, 80%, 52%)
+$color-link: hsl(346, 70%, 48%)
+$color-secondary-text: hsl(20, 5%, 42%)
+$color-filepreview-top: hsl(20, 60%, 30%)
 
 .icon
   display: inline-block
@@ -14,27 +23,32 @@ $color-filepreview-top: darken($color-primary, 20%)
   fill: currentColor
 
 .material_button
-  background-color: $color-primary
+  background-color: var(--cs-accent)
   display: inline-block
-  padding: 0.5rem 1rem
-  color: white
+  padding: var(--cs-space-2) var(--cs-space-4)
+  color: var(--cs-text-inverse)
   cursor: pointer
-  transition: background-color 200ms, box-shadow 200ms
+  border-radius: var(--cs-radius-sm)
+  transition: background-color var(--cs-duration-fast), box-shadow var(--cs-duration-fast), transform var(--cs-duration-fast)
   -webkit-tap-highlight-color: transparent
   &:hover
-    background-color: $color-link
-    box-shadow: 0 -2px 0 rgba(black, 0.4) inset
+    background-color: var(--cs-accent-hover)
+    box-shadow: var(--cs-shadow-sm)
+    transform: translateY(-1px)
   &:active
-    box-shadow: 0 2px 0 rgba(black, 0.4) inset
+    transform: translateY(0)
+    box-shadow: none
 
 body
-  background-color: white
+  background-color: var(--cs-bg-primary)
   font-size: 16px
-  color: #212121
+  color: var(--cs-text-primary)
   cursor: default
   min-width: 200px
   margin: 0
-  font-family: sans-serif
+  font-family: var(--cs-font-body)
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
   *
     box-sizing: border-box
     overflow-wrap: break-word
@@ -278,249 +292,468 @@ $sidebar-width: 300px
   &:active
     background-color: rgba($color-primary, 0.2)
 
+// ---------------------------------------------------------------------------
+// VIEW: Home
+// ---------------------------------------------------------------------------
 .schsrch .view-home
   overflow-y: auto !important
   .sidebarbtn
     position: absolute
-    top: 1rem
-    left: 1rem
+    top: var(--cs-space-4)
+    left: var(--cs-space-4)
     width: auto
     height: auto
   .helph1
     margin-top: 14px
-    font-size: 1.7rem
-    line-height: 40px
-    color: $color-primary
+    font-size: var(--cs-text-2xl)
+    line-height: 1.3
+    color: var(--cs-accent)
     text-align: center
-    font-family: 'Lato', sans-serif
-    font-weight: 300
+    font-family: var(--cs-font-heading)
+    font-weight: 600
   .searchbarcontain.helping
-    margin-top: 0.5rem
-    margin-bottom: 0.5rem
+    margin-top: var(--cs-space-2)
+    margin-bottom: var(--cs-space-2)
     max-width: 90vw
     margin-left: auto
     margin-right: auto
 
+// ---------------------------------------------------------------------------
+// COMPONENT: Search Bar — shared styles
+// ---------------------------------------------------------------------------
 .searchbar
   .bannerContain
-    transition: all 100ms
+    transition: all var(--cs-duration-normal) var(--cs-ease-out)
     text-align: center
     display: flex
-    color: $color-primary
+    color: var(--cs-accent)
     flex-wrap: nowrap
     justify-content: center
     align-items: center
     flex-direction: row
     .icon
-      transition: width 200ms, height 200ms
+      transition: width var(--cs-duration-normal), height var(--cs-duration-normal)
   .bannerContain.hide
     display: none
+
+  // --- Input Container (the rounded search box) ---
   .inputContain
-    $inputFontSize: 1.3rem
+    $inputFontSize: 1.125rem
     $inputLineHeight: 1.8
     position: relative
-    transition: all 100ms
+    transition: all var(--cs-duration-normal) var(--cs-ease-out)
+
     .querybox
       border: none
       outline: none
+      font-family: var(--cs-font-body)
+
     .querybox, .stroke, .inputPositionWrap
-      transition: all 100ms
+      transition: all var(--cs-duration-normal) var(--cs-ease-out)
+
     .inputPositionWrap
       position: relative
       display: flex
       flex-direction: row
       flex-wrap: nowrap
-      align-items: flex-end
+      align-items: center
       margin-left: auto
       margin-right: auto
-      height: $inputFontSize * $inputLineHeight
+      height: auto
+      min-height: $inputFontSize * $inputLineHeight
+      background-color: var(--cs-bg-elevated)
+      border: 1.5px solid var(--cs-border)
+      border-radius: var(--cs-radius-lg)
+      padding: var(--cs-space-3) var(--cs-space-4)
+      box-shadow: var(--cs-shadow-sm)
+      transition: border-color var(--cs-duration-fast), box-shadow var(--cs-duration-fast)
+
+      &:focus-within
+        border-color: var(--cs-accent)
+        box-shadow: var(--cs-shadow-glow)
+
+      .searchIcon
+        flex-shrink: 0
+        flex-grow: 0
+        width: 1.25rem
+        height: 1.25rem
+        margin-right: var(--cs-space-3)
+        color: var(--cs-text-tertiary)
+        transition: color var(--cs-duration-fast)
+
       .querybox
         flex-grow: 1
         flex-shrink: 1
+        background: transparent
+
       .stroke
         position: absolute
         z-index: 2
         height: 2px
-        bottom: 0
-        left: 0
-        right: 0
-        background-color: lighten($color-primary, 30%)
+        bottom: -1px
+        left: var(--cs-space-4)
+        right: var(--cs-space-4)
+        background-color: transparent
         overflow: hidden
+        border-radius: var(--cs-radius-full)
         .fill
           height: 2px
-          background-color: $color-primary
+          background: linear-gradient(90deg, var(--cs-accent), var(--cs-accent-secondary))
+          border-radius: var(--cs-radius-full)
+
       .rightWrap
-        padding-top: 0.3rem
-        padding-left: 0.5rem
-        padding-right: 0.5rem
-        background-color: rgba(white, 0.7)
+        padding-left: var(--cs-space-2)
         z-index: 1
         flex-grow: 0
         flex-shrink: 0
+        display: flex
+        align-items: center
         .clearInput
-          display: inline-block
+          display: flex
+          align-items: center
+          justify-content: center
           cursor: pointer
-          margin-top: -0.3rem
-          margin-left: -0.5rem
-          margin-right: -0.5rem
-          padding-top: 0.3rem
-          padding-left: 0.5rem
-          padding-right: 0.5rem
-          padding-bottom: 0.5rem
+          width: 1.75rem
+          height: 1.75rem
+          border-radius: var(--cs-radius-full)
+          background-color: var(--cs-bg-muted)
+          transition: background-color var(--cs-duration-fast), transform var(--cs-duration-fast)
+          &:hover
+            background-color: var(--cs-border-hover)
+            transform: scale(1.1)
           .icon
             vertical-align: middle
             line-height: 0
-            color: $color-primary
+            color: var(--cs-text-secondary)
+            font-size: 0.75rem
+
     .querybox
-      color: $color-primary
+      color: var(--cs-text-primary)
       display: inline-block
       font-size: $inputFontSize
       line-height: $inputLineHeight
       margin: 0
       padding: 0
+
     .querybox
       &::placeholder,
       &::-webkit-input-placeholder,
       &::-moz-placeholder,
       &:-ms-input-placeholder
-        color: $color-primary
-    .querybox.border
-      border-bottom: 2px $color-primary solid
-    .subjecthints
-      background-color: white
-      z-index: 4
-      .subject
-        background-color: white
-        transition: background-color 200ms
-        padding: 0.3rem 1rem
-        .level, .id
-          font-size: 50%
-          color: $color-secondary-text
-      .subject:hover, .subject.select
-        background-color: darken(white, 10%)
+        color: var(--cs-text-tertiary)
+        font-weight: 400
 
+    .querybox.border
+      border-bottom: 2px var(--cs-accent) solid
+
+    // --- Subject Hints Dropdown ---
+    .subjecthints
+      background-color: var(--cs-bg-elevated)
+      z-index: 10
+      border: 1px solid var(--cs-border)
+      border-radius: var(--cs-radius-md)
+      box-shadow: var(--cs-shadow-lg)
+      margin-top: var(--cs-space-2)
+      overflow: hidden
+      animation: cs-hints-enter var(--cs-duration-normal) var(--cs-ease-out)
+
+      .subject
+        background-color: transparent
+        transition: background-color var(--cs-duration-fast)
+        padding: var(--cs-space-3) var(--cs-space-4)
+        display: flex
+        align-items: center
+        gap: var(--cs-space-2)
+        cursor: pointer
+        border-left: 3px solid transparent
+        .id
+          font-family: var(--cs-font-mono)
+          font-size: var(--cs-text-xs)
+          color: var(--cs-accent)
+          background-color: var(--cs-accent-soft)
+          padding: 0.1rem 0.4rem
+          border-radius: var(--cs-radius-sm)
+          font-weight: 500
+        .level
+          font-size: var(--cs-text-xs)
+          color: var(--cs-text-tertiary)
+        .name
+          font-size: var(--cs-text-sm)
+          color: var(--cs-text-primary)
+
+      .subject:hover, .subject.select
+        background-color: var(--cs-bg-secondary)
+        border-left-color: var(--cs-accent)
+
+@keyframes cs-hints-enter
+  from
+    opacity: 0
+    transform: translateY(-4px)
+  to
+    opacity: 1
+    transform: translateY(0)
+
+// ---------------------------------------------------------------------------
+// COMPONENT: Search Bar — BIG variant (homepage hero)
+// ---------------------------------------------------------------------------
 .searchbar.big
   .bannerContain
-    margin-top: 20vh
-    height: 160px
+    margin-top: 12vh
+    height: auto
+    padding: var(--cs-space-4) 0 var(--cs-space-6) 0
+    flex-direction: column
+    gap: var(--cs-space-2)
     .icon
-      display: none
+      width: 3rem
+      height: 3rem
     .banner
-      height: 135px
+      height: 0
+      overflow: hidden
+    .heroTitle
+      font-family: var(--cs-font-heading)
+      font-size: var(--cs-text-3xl)
+      font-weight: 700
+      color: var(--cs-text-primary)
+      margin: 0
+      line-height: 1.2
+    .heroSubtitle
+      font-size: var(--cs-text-lg)
+      color: var(--cs-text-secondary)
+      font-weight: 400
+      margin: 0
+
   .inputContain
     display: block
     text-align: center
-    margin-top: 1rem
-    background-color: rgba($color-primary, 0.05)
+    margin-top: var(--cs-space-4)
+    background-color: transparent
+    max-width: 640px
+    margin-left: auto
+    margin-right: auto
+    padding-left: var(--cs-space-4)
+    padding-right: var(--cs-space-4)
+
+    .inputPositionWrap
+      padding: var(--cs-space-4) var(--cs-space-5)
+
     .inputPositionWrap, .subjecthints
-      width: 90%
+      width: 100%
     .querybox
-      text-align: center
+      text-align: left
       background-color: transparent
+      font-size: 1.125rem
     .subjecthints
       margin-left: auto
       margin-right: auto
+      text-align: left
+
+// ---------------------------------------------------------------------------
+// COMPONENT: Search Bar — SMALL variant (search results header)
+// ---------------------------------------------------------------------------
 .searchbar.small
   flex-shrink: 0
   margin: 0
-  padding-top: 0.5rem
+  padding: var(--cs-space-3) var(--cs-space-4)
   display: flex
   flex-direction: row
   flex-wrap: nowrap
   align-items: center
+  background-color: var(--cs-bg-primary)
+
   .bannerContain
-    margin-left: 0.5rem
-    margin-right: 0.5rem
+    margin-right: var(--cs-space-3)
     .icon
-      width: 2rem
-      height: 2rem
+      width: 1.75rem
+      height: 1.75rem
     .banner
       width: 0
+      overflow: hidden
+
   .inputContain
     flex-grow: 1
-    margin-left: 0.5rem
     .querybox
       text-align: left
+    .inputPositionWrap
+      padding: var(--cs-space-2) var(--cs-space-3)
     .inputPositionWrap, .subjecthints
       width: 100%
     .subjecthints
       position: absolute
+      left: 0
+      right: 0
   .inputContain.hidebanner
     margin-left: 0
 
+// ---------------------------------------------------------------------------
+// VIEW: Home — Description area (stats, links, quick-access cards)
+// ---------------------------------------------------------------------------
 .schsrch .home-desc
-  margin-top: 2rem
+  margin-top: var(--cs-space-8)
   text-align: center
-  font-size: 1rem
+  font-size: var(--cs-text-base)
+  padding: 0 var(--cs-space-4)
+  max-width: 720px
+  margin-left: auto
+  margin-right: auto
+
   .links
-    margin-bottom: 2rem
+    margin-bottom: var(--cs-space-8)
     a
-      color: $color-link
-      margin-left: 1rem
-      margin-right: 1rem
+      color: var(--cs-link)
+      margin-left: var(--cs-space-4)
+      margin-right: var(--cs-space-4)
       cursor: pointer
       text-decoration: none
       display: inline-block
       line-height: 1.5
+      transition: color var(--cs-duration-fast)
+      &:hover
+        color: var(--cs-link-hover)
+
+  // --- Quick-access subject cards grid ---
+  .quick-subjects
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    gap: var(--cs-space-3)
+    margin-bottom: var(--cs-space-8)
+    max-width: 560px
+    margin-left: auto
+    margin-right: auto
+
+    @media (max-width: 540px)
+      grid-template-columns: repeat(2, 1fr)
+
+    .quick-subject-card
+      background-color: var(--cs-bg-secondary)
+      border: 1px solid var(--cs-border)
+      border-radius: var(--cs-radius-md)
+      padding: var(--cs-space-4) var(--cs-space-3)
+      cursor: pointer
+      transition: all var(--cs-duration-fast) var(--cs-ease-out)
+      text-align: center
+      -webkit-tap-highlight-color: transparent
+      user-select: none
+
+      &:hover
+        border-color: var(--cs-accent-muted)
+        box-shadow: var(--cs-shadow-md)
+        transform: translateY(-2px)
+
+      &:active
+        transform: translateY(0)
+        box-shadow: var(--cs-shadow-xs)
+
+      .card-emoji
+        font-size: 1.75rem
+        line-height: 1
+        margin-bottom: var(--cs-space-2)
+
+      .card-name
+        font-family: var(--cs-font-heading)
+        font-size: var(--cs-text-sm)
+        font-weight: 600
+        color: var(--cs-text-primary)
+        line-height: 1.3
+        margin-bottom: var(--cs-space-1)
+
+      .card-code
+        font-family: var(--cs-font-mono)
+        font-size: var(--cs-text-xs)
+        color: var(--cs-text-tertiary)
+        font-weight: 500
+
+  .browse-all
+    margin-bottom: var(--cs-space-8)
+    a
+      color: var(--cs-link)
+      text-decoration: none
+      font-size: var(--cs-text-sm)
+      font-weight: 500
+      padding: var(--cs-space-2) var(--cs-space-4)
+      border: 1px solid var(--cs-border)
+      border-radius: var(--cs-radius-full)
+      transition: all var(--cs-duration-fast)
+      display: inline-block
+      &:hover
+        background-color: var(--cs-bg-secondary)
+        border-color: var(--cs-border-hover)
+        color: var(--cs-link-hover)
+
   .status
-    font-size: 0.8rem
-    color: lighten($color-primary, 10%)
-    padding-left: 0.5rem
-    padding-right: 0.5rem
+    font-size: var(--cs-text-xs)
+    color: var(--cs-text-tertiary)
+    padding-left: var(--cs-space-2)
+    padding-right: var(--cs-space-2)
     .large
-      font-size: 1rem
-      color: lighten($color-primary, 5%)
+      font-size: var(--cs-text-sm)
+      color: var(--cs-text-secondary)
     .error-display
       max-width: 40rem
       margin-left: auto
       margin-right: auto
     .reload span
-      color: $color-link
+      color: var(--cs-link)
       line-height: 2
-      padding: 0.5rem 2rem
+      padding: var(--cs-space-2) var(--cs-space-8)
       cursor: pointer
-      font-size: 0.7rem
+      font-size: var(--cs-text-xs)
+      border-radius: var(--cs-radius-sm)
+      transition: background-color var(--cs-duration-fast)
+      &:hover
+        background-color: var(--cs-bg-muted)
     .error, .reload
-      font-size: 0.75rem
+      font-size: var(--cs-text-xs)
     div
-      margin-bottom: 0.6rem
+      margin-bottom: var(--cs-space-2)
     a
-      color: $color-link
-      transition: color 200ms
+      color: var(--cs-link)
+      transition: color var(--cs-duration-fast)
       text-decoration: none
       cursor: pointer
       &:hover
-        color: darken($color-link, 20%)
+        color: var(--cs-link-hover)
+
   .status.loading
     opacity: 0.5
+
   .cieinprog, .mirrornotice
-    margin-bottom: 1rem
-    color: $color-primary
+    margin-bottom: var(--cs-space-4)
+    color: var(--cs-text-secondary)
+    font-size: var(--cs-text-sm)
     a
-      color: $color-link
+      color: var(--cs-link)
       text-decoration: none
+
   .copyright
-    margin-top: 3em
-    font-size: 0.8rem
-    color: $color-primary
+    margin-top: var(--cs-space-12)
+    margin-bottom: var(--cs-space-8)
+    font-size: var(--cs-text-xs)
+    color: var(--cs-text-tertiary)
     a
-      color: $color-link
+      color: var(--cs-link)
       text-decoration: none
+
   .help
-    margin-bottom: 1rem
+    margin-bottom: var(--cs-space-4)
     .helpbtn
-      display: block
-      color: $color-link
+      display: inline-block
+      color: var(--cs-link)
       text-decoration: none
       cursor: pointer
-      padding: 1rem
-      margin: -1rem
+      padding: var(--cs-space-2) var(--cs-space-4)
+      font-size: var(--cs-text-sm)
+      border-radius: var(--cs-radius-sm)
+      transition: background-color var(--cs-duration-fast)
+      &:hover
+        background-color: var(--cs-bg-muted)
+
   .notification
-    background-color: lighten($color-primary, 42%)
-    color: $color-primary
-    padding: 0.5rem 1rem
-    margin-bottom: 0.5rem
-    border-top: $color-link solid 3px
+    background-color: var(--cs-accent-soft)
+    color: var(--cs-text-primary)
+    padding: var(--cs-space-3) var(--cs-space-4)
+    margin-bottom: var(--cs-space-3)
+    border-top: var(--cs-accent) solid 3px
+    border-radius: var(--cs-radius-sm)
     .inner
       max-width: 1000px
       margin: 0 auto
