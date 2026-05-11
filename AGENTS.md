@@ -41,7 +41,17 @@ The project uses a custom C++ PDF parser (`sspdf`). This **must** be compiled in
 docker exec -it schsrch-www npm install
 ```
 
-### 3. How to Index (or Reindex) Papers
+### 3. Compiling Frontend Assets (Webpack)
+After modifying SASS or React components, you must rebuild the frontend bundles:
+```bash
+# One-time production build
+docker exec -it schsrch-www npm run webpack
+
+# Continuous watch (for development)
+docker exec -it schsrch-www npm run webpack-dev
+```
+
+### 4. How to Index (or Reindex) Papers
 The papers are mounted into the container at `/papers` from the user's Dropbox directory:
 `/Users/zilin/Library/CloudStorage/Dropbox/== Work ==/Tutoring/CIE Past Papers`
 
@@ -54,7 +64,7 @@ docker exec -it schsrch-www node doIndex.bin.js /papers
 > [!IMPORTANT]
 > **Dropbox Sync Warning**: If you encounter `Unknown system error -35` during indexing, it is likely because macOS is offloading the PDF files to the cloud. **Ensure the Dropbox folder is set to "Make available offline"** before indexing.
 
-### 4. Database Persistence
+### 5. Database Persistence
 - **MongoDB**: Stores file metadata and binary blobs.
 - **Elasticsearch**: Stores searchable text content.
 - Volumes: `mw-mongo-data` and `mw-es-data`.

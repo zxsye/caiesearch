@@ -894,6 +894,17 @@ $sidebar-width: 300px
   opacity: 0.5
   pointer-events: none
 .searchresult
+  // Scaled up by 15% from previous (0.8 * 1.15 = 0.92 of original)
+  --cs-text-xs: 0.69rem
+  --cs-text-sm: 0.8rem
+  --cs-text-base: 0.92rem
+  --cs-text-lg: 1.04rem
+  --cs-text-xl: 1.38rem
+  --cs-text-2xl: 1.84rem
+  --cs-text-3xl: 2.3rem
+  padding-left: 4px
+  padding-right: 4px
+  padding-top: 5px
   .overflow
     padding: 1rem 2rem
     cursor: auto
@@ -949,7 +960,7 @@ $sidebar-width: 300px
 
   // --- Modern Search Result Card (.set) ---
   .set
-    margin-bottom: var(--cs-space-4)
+    margin-bottom: var(--cs-space-2)
     background-color: var(--cs-bg-elevated)
     border: 1.5px solid var(--cs-border)
     border-radius: var(--cs-radius-md)
@@ -978,7 +989,6 @@ $sidebar-width: 300px
       border-bottom: 1px solid var(--cs-border)
 
       .subject-info
-        flex-grow: 1
         font-family: var(--cs-font-heading)
         font-weight: 600
         font-size: var(--cs-text-sm)
@@ -1017,13 +1027,13 @@ $sidebar-width: 300px
         color: var(--cs-text-secondary)
 
     .file-list
-      padding: var(--cs-space-1) var(--cs-space-4) var(--cs-space-3)
+      padding: 0.2rem var(--cs-space-4) 0.6rem
       
     .pills-container
       display: flex
       flex-wrap: wrap
-      gap: var(--cs-space-2)
-      margin-top: var(--cs-space-1)
+      gap: 0.4rem
+      margin-top: 0
 
     .file-pill
       padding: var(--cs-space-2) var(--cs-space-3)
@@ -1052,7 +1062,7 @@ $sidebar-width: 300px
 
       .pill-name
         font-weight: 500
-        font-size: 0.85rem
+        font-size: var(--cs-text-sm)
         color: var(--cs-text-primary)
         transition: all var(--cs-duration-fast)
 
@@ -1085,11 +1095,9 @@ $sidebar-width: 300px
 
       .indexcontent
         font-size: var(--cs-text-sm)
-        color: var(--cs-text-secondary)
+        color: var(--cs-text-primary)
         line-height: 1.5
-        background-color: var(--cs-bg-muted)
-        padding: var(--cs-space-3)
-        border-radius: var(--cs-radius-sm)
+        margin-top: var(--cs-space-1)
         .highlight
           color: var(--cs-text-primary)
           font-weight: 600
@@ -1161,7 +1169,7 @@ $sidebar-width: 300px
       .ts
         .tit
           font-family: var(--cs-font-mono)
-          font-size: 0.65rem
+          font-size: 0.6rem
           color: var(--cs-text-tertiary)
           padding: var(--cs-space-4) var(--cs-space-2) var(--cs-space-2)
           text-align: center
@@ -1173,7 +1181,7 @@ $sidebar-width: 300px
         color: var(--cs-text-secondary)
         font-family: var(--cs-font-heading)
         font-weight: 600
-        font-size: 1rem
+        font-size: 0.92rem
         text-align: center
         padding: var(--cs-space-4) 0
         transition: all var(--cs-duration-fast)
@@ -1240,14 +1248,14 @@ $sidebar-width: 300px
   .files
     padding: 0
   .typename
-    font-size: 0.9rem
+    font-size: 0.83rem
   .subject
     display: none
 
 .searchprompt
   color: $color-primary
   line-height: 1.5
-  font-size: 0.8rem
+  font-size: 0.74rem
   &.center
     text-align: center
   .error
