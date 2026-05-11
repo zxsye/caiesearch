@@ -236,7 +236,7 @@ let AppState = createStore(function (state = {}, action) {
         previewing: null,
         v2viewing: {
           fileId: action.fileId,
-          tCurrentType: action.tCurrentType ? action.tCurrentType : (state.v2viewing ? state.v2viewing.tCurrentType : null),
+          tCurrentType: typeof action.tCurrentType !== 'undefined' ? action.tCurrentType : (state.v2viewing ? state.v2viewing.tCurrentType : null),
           stageTransforms: {},
           viewDir: action.viewDir || null,
           searchIndex: action.searchIndex || null,

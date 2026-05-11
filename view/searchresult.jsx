@@ -25,38 +25,21 @@ class InitResultList extends React.Component {
           }
           return (
             <div className='timeset' key={`${timeset.subject} ${timeset.time}`}>
-              <div className='time'>
-                <span className='subjid'>{timeset.subject}</span> <span className='subjname'>({subject.level} {subject.name})</span> {timeset.time}
+              <div className='time-header'>
+                <span className='subject-title'>{subject.name} ({timeset.subject})</span>
+                <span className='time-badge'>{timeset.time}</span>
               </div>
-              {timeset.papers.map(paper => {
-                return (
-                  <div className='paper' key={paper.paper + ' ' + paper.variant}>
-                    <span className='pv'>
-                      {paper.paper === 0 ? null : (
-                        paper.variant === 0 ? (
-                          <span>
-                            Paper {paper.paper}
-                          </span>
-                        ) : (
-                          <span>
-                            {paper.paper}{paper.variant}
-                          </span>
-                        )
-                      )}
-                    </span>
-                    <span className='typelist'>
-                      {paper.types.map(entity => {
-                        return (
-                          <a className='type' key={entity.type}
-                              onClick={evt => AppState.dispatch({type: 'v2view', fileId: (paper.types.find(x => x.type === entity.type) || paper.types[0])._id, tCurrentType: entity.type})}>
-                            {PaperUtils.capitalizeFirst(PaperUtils.getTypeString(entity.type))}
-                          </a>
-                        )
-                      })}
-                    </span>
-                  </div>
-                )
-              })}
+              <div className='papers-grid'>
+                {timeset.papers.map(paper => {
+                  return (
+                    <PaperSet
+                      paperSet={paper}
+                      key={paper.paper + ' ' + paper.variant}
+                      mini={false}
+                    />
+                  )
+                })}
+              </div>
             </div>
           )
         })}

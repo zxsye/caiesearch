@@ -2,8 +2,6 @@ import * as React from 'react'
 import CIESubjects from './CIESubjects.js'
 import { AppState } from './appstate.js'
 import AnimatorReactComponent from './animatorReactComponent.jsx'
-const IconData = require('raw-loader!./icon.svg').default.toString()
-const BannerDrawing = require('raw-loader!./banner.svg').default.toString()
 
 export default class SearchBar extends AnimatorReactComponent {
   constructor (props) {
@@ -196,7 +194,6 @@ export default class SearchBar extends AnimatorReactComponent {
     let renderT = (
       <div className={this.props.big ? 'searchbar big' : 'searchbar small'}>
         <div className={'bannerContain' + (hideBanner ? ' hide' : '')} key='bannerContain'>
-          <img className='icon' src={'data:image/svg+xml,' + encodeURIComponent(IconData)} alt='caiesearch' />
           {this.props.big ? (
             <React.Fragment>
               <h1 className='heroTitle'>Search Past Papers</h1>

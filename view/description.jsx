@@ -78,35 +78,33 @@ export default class Description extends React.Component {
     )
     if (this.state.server) {
       statusInfo = (
-        <div className='status'>
+        <span className='status'>
           Currently supporting&nbsp;
           <a href='/subjects/'>{CIESubjects.length} subjects</a>.
-        </div>
+        </span>
       )
     } else if (this.state.status && !this.state.error) {
       let stat = this.state.status
       statusInfo = (
-        <div className={'status' + (this.state.loading ? ' loading' : '')}>
-          <div>
-            <a onClick={evt => AppState.dispatch({type: 'subjects'})}>
-              {CIESubjects.length} subjects
-            </a> · {stat.docCount} papers · {stat.indexCount} pages indexed
-          </div>
+        <span className={'status' + (this.state.loading ? ' loading' : '')}>
+          <a onClick={evt => AppState.dispatch({type: 'subjects'})} href='/subjects/'>
+            {CIESubjects.length} subjects
+          </a> · {stat.docCount} papers · {stat.indexCount} pages
           {this.state.loading ? null : reloadBtn}
-        </div>
+        </span>
       )
     } else if (!this.state.error) {
       statusInfo = (
-        <div className='status'>
-          <div className='loading'>Fetching status information...</div>
-        </div>
+        <span className='status'>
+          Fetching status information...
+        </span>
       )
     } else {
       statusInfo = (
-        <div className='status'>
+        <span className='status'>
           <FetchErrorPromise.ErrorDisplay error={this.state.error} serverErrorActionText={'fetch status'} />
           {reloadBtn}
-        </div>
+        </span>
       )
     }
     // Quick-access subject cards (Maths + 3 Sciences)
@@ -116,6 +114,8 @@ export default class Description extends React.Component {
       { id: '9702', name: 'Physics', emoji: '⚛️' },
       { id: '9701', name: 'Chemistry', emoji: '🧪' },
       { id: '9700', name: 'Biology', emoji: '🧬' },
+      { id: '9608', name: 'Computer Science', emoji: '💻' },
+      { id: '9708', name: 'Economics', emoji: '📈' },
     ]
 
     return (
@@ -154,20 +154,24 @@ export default class Description extends React.Component {
           </div>
         ) : null}
 
-        <div className='help'>
-          {!this.props.showHelp ? (
-            <a className='helpbtn' onClick={this.handleShowHelp} href='/help/'>Show help…</a>
-          ) : (
+        {this.props.showHelp ? (
+          <div className='help'>
             <a className='helpbtn' onClick={this.handleHideHelp} href='/'>{this.state.server ? 'Back' : 'Close help'}</a>
-          )}
-        </div>
+          </div>
+        ) : null}
 
         {(this.state.server ? AppState.getState().serverrender.siteOrigin : window.location.origin) === 'https://paper.sc' || this.props.showHelp ? null : (
           <div className='mirrornotice'>You are viewing a mirror of <a href='https://paper.sc'>paper.sc</a>.</div>
         )}
-        {!this.props.showHelp ? statusInfo : null}
+        
         {!this.props.showHelp ? (
-          <div className='copyright'>All paper &#169; <a href='http://www.cambridgeassessment.org.uk/' target='_blank'>UCLES</a>. Content provided solely for educational purpose.</div>
+          <div className='footer-stats'>
+            {statusInfo}
+            <span className='separator'> · </span>
+            <span className='copyright'>© <a href='http://www.cambridgeassessment.org.uk/' target='_blank'>UCLES</a> · Educational use only</span>
+            <span className='separator'> · </span>
+            <a className='help-link' onClick={this.handleShowHelp} href='/help/'>Help</a>
+          </div>
         ) : null}
       </div>
     )

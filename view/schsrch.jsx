@@ -9,7 +9,6 @@ import Sidebar from './sidebar.jsx'
 import * as bowser from 'bowser'
 import SubjectsView from './subjectsview.jsx'
 import Help from './help.jsx'
-import SearchPrompt from './searchprompt.jsx'
 import PaperViewer from './paperviewer.jsx'
 
 export default class SchSrch extends React.Component {
@@ -157,7 +156,6 @@ export default class SchSrch extends React.Component {
         <div className={'searchbarcontain' + (showHelp ? ' helping' : '')} key='searchbarcontain'>
           <SearchBar key='searchbar' ref={f => this.searchbar = f} big={!showHelp} onQuery={this.handleSearchBarQuery} alwaysShowIcon={showHelp}/>
         </div>
-        <SearchPrompt center={true} query={(AppState.getState().querying || {query: ''}).query} />
         <Description showHelp={showHelp} />
         {showHelp ? <Help /> : null}
       </div>

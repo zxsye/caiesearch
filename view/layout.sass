@@ -613,7 +613,7 @@ $sidebar-width: 300px
   // --- Quick-access subject cards grid ---
   .quick-subjects
     display: grid
-    grid-template-columns: repeat(4, 1fr)
+    grid-template-columns: repeat(3, 1fr)
     gap: var(--cs-space-3)
     margin-bottom: var(--cs-space-8)
     max-width: 560px
@@ -724,15 +724,34 @@ $sidebar-width: 300px
       color: var(--cs-link)
       text-decoration: none
 
-  .copyright
+  .footer-stats
     margin-top: var(--cs-space-12)
     margin-bottom: var(--cs-space-8)
     font-size: var(--cs-text-xs)
     color: var(--cs-text-tertiary)
-    a
-      color: var(--cs-link)
-      text-decoration: none
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-wrap: wrap
+    gap: var(--cs-space-2)
+    
+    .status-text
+      color: var(--cs-text-tertiary)
 
+    .copyright
+      color: var(--cs-text-tertiary)
+
+    .separator
+      color: var(--cs-border)
+      margin: 0 var(--cs-space-1)
+      
+    a
+      color: var(--cs-text-secondary)
+      text-decoration: none
+      transition: color var(--cs-duration-fast)
+      &:hover
+        color: var(--cs-link-hover)
+        
   .help
     margin-bottom: var(--cs-space-4)
     .helpbtn
@@ -836,94 +855,193 @@ $sidebar-width: 300px
           font-size: 75%
         a
           color: inherit
-          text-decoration: inherit
+          text-decoration: none
   .empty
-    padding: 3rem 5rem
+    padding: var(--cs-space-16) var(--cs-space-8)
+    text-align: center
+    color: var(--cs-text-secondary)
+    font-size: var(--cs-text-lg)
+
+  // --- Modern Search Result Card (.set) ---
   .set
-    margin-top: 0.5rem
-    margin-bottom: 0.3rem
-    padding: 0 0 0.5rem 0
-    background-color: rgba($color-primary, 0.05)
-    transition: background-color 1000ms
+    margin-bottom: var(--cs-space-4)
+    background-color: var(--cs-bg-elevated)
+    border: 1.5px solid var(--cs-border)
+    border-radius: var(--cs-radius-md)
+    box-shadow: var(--cs-shadow-sm)
+    transition: all var(--cs-duration-fast) var(--cs-ease-out)
+    overflow: hidden
+    display: flex
+    flex-direction: column
+
+    &:hover
+      border-color: var(--cs-border-hover)
+      box-shadow: var(--cs-shadow-md)
+      transform: translateY(-2px)
+
     &.current
-      background-color: #c3bcba
-      transition: background-color 400ms
-    .setname
-      padding: 0.5rem 1rem
-      background-color: rgba($color-primary, 0.1)
-      font-size: 0.9rem
-      color: $color-secondary-text
-      .time, .paper, .variant
-        color: $color-primary
-        font-size: 0.9rem
-        display: inline-block
-      .paper.meta
-        color: $color-secondary-text !important
-        font-size: 1rem !important
-      .subject
+      border-color: var(--cs-accent)
+      box-shadow: var(--cs-shadow-glow)
+
+    .set-header
+      padding: var(--cs-space-2) var(--cs-space-4)
+      background-color: var(--cs-bg-secondary)
+      display: flex
+      flex-wrap: wrap
+      align-items: center
+      gap: var(--cs-space-2)
+      border-bottom: 1px solid var(--cs-border)
+
+      .subject-info
+        flex-grow: 1
+        font-family: var(--cs-font-heading)
+        font-weight: 600
+        font-size: var(--cs-text-sm)
+        color: var(--cs-text-primary)
         .level
-          font-size: 60%
-          vertical-align: middle
-    a
-      color: inherit
-    .files
-      padding-top: 1rem
-      .file
-        padding: 0.3rem 1rem
-    .related
-      padding-top: 0.5rem
-      padding-left: 2rem
-      padding-right: 2rem
-      .file
-        padding: 0.1rem 0.5rem
-    .files, .related
-      padding-left: 1rem
-      padding-right: 1rem
-      color: $color-secondary-text
-    .file
+          font-weight: 400
+          color: var(--cs-text-tertiary)
+          margin-right: var(--cs-space-1)
+
+      .badges
+        display: flex
+        gap: var(--cs-space-1)
+
+    .badge
+      font-family: var(--cs-font-mono)
+      font-size: var(--cs-text-xs)
+      font-weight: 600
+      padding: 0.1rem 0.5rem
+      border-radius: var(--cs-radius-sm)
+      text-transform: uppercase
+
+      &.season-s
+        background-color: hsl(38, 92%, 95%)
+        color: hsl(38, 92%, 45%)
+      &.season-w
+        background-color: hsl(210, 100%, 96%)
+        color: hsl(210, 100%, 45%)
+      &.season-m
+        background-color: hsl(152, 69%, 95%)
+        color: hsl(152, 69%, 35%)
+      &.paper
+        background-color: var(--cs-accent-soft)
+        color: var(--cs-accent)
+      &.variant
+        background-color: var(--cs-bg-muted)
+        color: var(--cs-text-secondary)
+
+    .file-list
+      padding: var(--cs-space-1) var(--cs-space-4) var(--cs-space-3)
+      
+    .pills-container
+      display: flex
+      flex-wrap: wrap
+      gap: var(--cs-space-2)
+      margin-top: var(--cs-space-1)
+
+    .file-pill
+      padding: var(--cs-space-2) var(--cs-space-3)
       cursor: pointer
-      .typename
-        color: $color-link
-        margin-right: 1rem
-      .desc
-        font-size: 90%
+      display: inline-flex
+      align-items: center
+      gap: var(--cs-space-2)
+      border-radius: var(--cs-radius-md)
+      background-color: transparent
+      transition: all var(--cs-duration-fast)
+      
+      &:hover
+        background-color: var(--cs-bg-secondary)
+        .pill-name
+          color: var(--cs-accent)
+          font-weight: 700
+        .pill-icon
+          color: var(--cs-accent)
+
+      .pill-icon
+        width: 1.1rem
+        height: 1.1rem
+        flex-shrink: 0
+        color: var(--cs-text-tertiary)
+        transition: color var(--cs-duration-fast)
+
+      .pill-name
+        font-weight: 500
+        font-size: 0.85rem
+        color: var(--cs-text-primary)
+        transition: all var(--cs-duration-fast)
+
+      &.questions
+        .pill-name
+          color: var(--cs-accent)
+          font-weight: 600
+        .pill-icon
+          color: var(--cs-accent)
+
+    // --- Full Text Search Result Styling ---
     .file.first
-      padding: 1rem 1rem 0.5rem 1rem
-      .foundon
-        color: $color-primary
+      padding: var(--cs-space-3) var(--cs-space-4)
+      border-bottom: 1px solid var(--cs-border)
+      cursor: pointer
+      &:hover
+        background-color: var(--cs-bg-secondary)
+
+      .file-main
+        display: flex
+        align-items: baseline
+        gap: var(--cs-space-2)
+        margin-bottom: var(--cs-space-2)
+        .typename
+          font-weight: 600
+          color: var(--cs-accent)
+        .pageinfo
+          font-size: var(--cs-text-xs)
+          color: var(--cs-text-tertiary)
+
       .indexcontent
-        font-size: 80%
-        margin-top: 0.5rem
-        color: $color-secondary-text
+        font-size: var(--cs-text-sm)
+        color: var(--cs-text-secondary)
+        line-height: 1.5
+        background-color: var(--cs-bg-muted)
+        padding: var(--cs-space-3)
+        border-radius: var(--cs-radius-sm)
         .highlight
-          color: $color-primary
+          color: var(--cs-text-primary)
+          font-weight: 600
+          background-color: hsl(45, 100%, 85%)
+          padding: 0 2px
+          border-radius: 2px
+
+    .related-label
+      padding: var(--cs-space-1) var(--cs-space-4) 0 var(--cs-space-4)
+      font-size: var(--cs-text-xs)
+      font-weight: 600
+      color: var(--cs-text-tertiary)
+      text-transform: uppercase
+      letter-spacing: 0.025em
+
   .searchprompt
-    padding-left: 0.5rem
-    padding-right: 0.5rem
+    padding: var(--cs-space-4)
+    color: var(--cs-text-tertiary)
+    font-size: var(--cs-text-sm)
+    text-align: center
+    &.center
+      margin-top: var(--cs-space-4)
 
   .warning
-    border-top: 2px solid $color-link
-    background-color: lighten($color-primary, 40%)
-    text-align: left
-    padding: 0.5rem 1rem
-    margin-top: 0.5rem
-    margin-bottom: 0.5rem
-    a
-      color: $color-link
-      cursor: pointer
-      transition: color 200ms
+    background-color: var(--cs-accent-soft)
+    border-left: 4px solid var(--cs-accent)
+    padding: var(--cs-space-3) var(--cs-space-4)
+    margin: var(--cs-space-4) 0
+    border-radius: var(--cs-radius-sm)
+    font-size: var(--cs-text-sm)
+    color: var(--cs-text-primary)
+    .msg a
+      color: var(--cs-link)
+      font-weight: 600
+      text-decoration: none
       &:hover
-        color: darken($color-link, 20%)
-        border-bottom: solid 1px rgba($color-secondary-text, 0.2)
-
-  .fulltextlist
-    .paperviewer.loaded
-      height: 50vh
-    .paperviewercontain
-      width: 100%
-      background-color: rgba($color-primary, 0.05)
-      padding-right: 14px
-
+        text-decoration: underline
 
 .searchresult.v2
   position: absolute
@@ -932,6 +1050,8 @@ $sidebar-width: 300px
   right: 0
   bottom: 0
   overflow: hidden
+  background-color: var(--cs-bg-primary)
+
   .v2container
     height: 100%
     display: flex
@@ -942,81 +1062,88 @@ $sidebar-width: 300px
     .v2paperlist
       flex-shrink: 0
       flex-grow: 0
-      width: 40px
+      width: 64px
       overflow-y: auto
+      background-color: var(--cs-bg-secondary)
+      border-right: 1px solid var(--cs-border)
 
       .tsscontainer
         width: 100%
         min-height: 100%
-        border-right: 2px $color-primary solid
         display: flex
         flex-direction: column
-        flex-wrap: nowrap
-        overflow-x: visible
 
       .ts
-        overflow-x: visible
         .tit
-          border-bottom: $color-primary dashed 2px
-          font-size: 0.7rem
-          color: $color-primary
-          padding-top: 1rem
-          text-align: right
+          font-family: var(--cs-font-mono)
+          font-size: 0.65rem
+          color: var(--cs-text-tertiary)
+          padding: var(--cs-space-4) var(--cs-space-2) var(--cs-space-2)
+          text-align: center
+          border-bottom: 1px solid var(--cs-border)
+          background-color: var(--cs-bg-muted)
 
       .paper
         cursor: pointer
-        color: $color-link
-        font-size: 1.1rem
+        color: var(--cs-text-secondary)
+        font-family: var(--cs-font-heading)
+        font-weight: 600
+        font-size: 1rem
         text-align: center
-        padding: 0.7rem 0
-        $a: rgba(1,1,1,0) solid 2px
-        border-left: $a
-        border-top: $a
-        border-bottom: $a
+        padding: var(--cs-space-4) 0
+        transition: all var(--cs-duration-fast)
+        border-left: 3px solid transparent
+
+        &:hover
+          color: var(--cs-accent)
+          background-color: var(--cs-bg-muted)
+
         &.current
-          $b: $color-primary solid 2px
-          border-left: $b
-          border-top: $b
-          border-bottom: $b
-          color: $color-primary
-          margin-right: -2px
-          background-color: white
+          color: var(--cs-accent)
+          background-color: var(--cs-bg-primary)
+          border-left-color: var(--cs-accent)
 
     .viewercontain
       flex-shrink: 1
       flex-grow: 1
       overflow: hidden
-      .null
-        text-align: center
-        margin-top: 2rem
-        color: $color-secondary-text
+      display: flex
+      flex-direction: column
 
       .initresultlist
-        overflow: auto
+        padding: var(--cs-space-6)
+        overflow-y: auto
+        flex-grow: 1
+
         .timeset
-            margin-bottom: 1rem
-            .time
-              border-bottom: dashed 2px $color-primary
-              padding-left: 0.5rem
-              padding-right: 0.5rem
-              color: $color-primary
-              font-size: 1.2rem
-              .subjname
-                font-size: 1rem
-                color: $color-secondary-text
-            .paper
-              margin-top: 0.5rem
-              margin-bottom: 0.5rem
-              padding-left: 1rem
-              padding-right: 1rem
-              .pv
-                font-size: 1.1rem
-                margin-right: 1rem
-              .typelist > a
-                display: inline-block
-                color: $color-link
-                cursor: pointer
-                margin-right: 1rem
+          margin-bottom: var(--cs-space-8)
+          
+          .time-header
+            display: flex
+            align-items: center
+            gap: var(--cs-space-3)
+            margin-bottom: var(--cs-space-4)
+            padding-bottom: var(--cs-space-2)
+            border-bottom: 2px solid var(--cs-border)
+            
+            .subject-title
+              font-family: var(--cs-font-heading)
+              font-size: var(--cs-text-xl)
+              font-weight: 700
+              color: var(--cs-text-primary)
+            
+            .time-badge
+              font-family: var(--cs-font-mono)
+              font-size: var(--cs-text-sm)
+              color: var(--cs-accent)
+              background-color: var(--cs-accent-soft)
+              padding: 0.2rem 0.6rem
+              border-radius: var(--cs-radius-full)
+
+          .papers-grid
+            display: grid
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+            gap: var(--cs-space-4)
 
 .set.mini
   background-color: transparent
