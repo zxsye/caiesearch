@@ -9,8 +9,8 @@ RUN chown -R node:node /usr/src/app && \
 USER node:node
 
 COPY --chown=node:node . .
-RUN npm i --progress=false --loglevel=warn
+RUN npm i --progress=false --loglevel=warn --legacy-peer-deps
 EXPOSE 80 443
 STOPSIGNAL SIGTERM
-HEALTHCHECK --timeout=2s CMD curl -f https://localhost/
+HEALTHCHECK --timeout=2s CMD curl -f http://localhost/
 CMD ["bash", "./docker-entrypoint.sh"]

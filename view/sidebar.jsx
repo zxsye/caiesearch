@@ -20,7 +20,30 @@ export default class Sidebar extends React.Component {
             </div>
           ) : null}
         <div className='menu'>
-          <div className={'menuitem' + (view === 'home' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'home'})}>Home</div>
+          <div className='menu-section'>Navigation</div>
+          <div className={'menuitem' + (view === 'home' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'home'})}>
+            <span className='icon'>🏠</span> Home
+          </div>
+          <div className={'menuitem' + (view === 'subjects' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'subjects'})}>
+            <span className='icon'>📚</span> Browse Subjects
+          </div>
+          <div className={'menuitem' + (AppState.getState().showHelp ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'show-help'})}>
+            <span className='icon'>❓</span> Help
+          </div>
+          
+          <div className='menu-section' style={{marginTop: '1rem'}}>Quick Subjects</div>
+          <div className='menuitem' onClick={evt => AppState.dispatch({type: 'query', query: '9709'})}>
+            <span className='icon'>📐</span> Math (9709)
+          </div>
+          <div className='menuitem' onClick={evt => AppState.dispatch({type: 'query', query: '9700'})}>
+            <span className='icon'>🧬</span> Biology (9700)
+          </div>
+          <div className='menuitem' onClick={evt => AppState.dispatch({type: 'query', query: '9701'})}>
+            <span className='icon'>🧪</span> Chemistry (9701)
+          </div>
+          <div className='menuitem' onClick={evt => AppState.dispatch({type: 'query', query: '9702'})}>
+            <span className='icon'>⚡</span> Physics (9702)
+          </div>
         </div>
         <div className='bottom'>
           <a onClick={evt => AppState.dispatch({type: 'disclaim'})}>Disclaimer</a>

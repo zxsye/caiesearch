@@ -6,8 +6,12 @@ import * as FetchErrorPromise from './fetcherrorpromise.jsx'
 export default class SubjectsView extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      activeTab: 'A/s',
+      searchQuery: ''
+    }
     this.handleHome = this.handleHome.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
   }
   componentDidMount () {
     if (!this.props.statistics) {
@@ -22,6 +26,9 @@ export default class SubjectsView extends React.Component {
       AppState.dispatch({type: 'subjects-stst-error', error: err})
     })
   }
+  handleSearch (evt) {
+    this.setState({ searchQuery: evt.target.value.toLowerCase() })
+  }
   render () {
     let agg = null
     let err = null
@@ -30,59 +37,121 @@ export default class SubjectsView extends React.Component {
     } else if (this.props.statistics && this.props.statistics.error) {
       err = this.props.statistics.error
     }
+    
+    const filteredSubjects = SubjectData.filter(subj => {
+      let matchesTab = false
+      if (this.state.activeTab === 'IGCSE') {
+        matchesTab = subj.level === 'IGCSE'
+      } else if (this.state.activeTab === 'A/s') {
+        matchesTab = subj.level === 'A/s'
+      } else {
+        matchesTab = subj.level !== 'A/s' && subj.level !== 'IGCSE'
+      }
+      
+      let matchesSearch = true
+      if (this.state.searchQuery) {
+        matchesSearch = subj.id.toLowerCase().includes(this.state.searchQuery) ||
+                        subj.name.toLowerCase().includes(this.state.searchQuery)
+      }
+      
+      return matchesTab && matchesSearch
+    })
+
     let subjFunc = subj => {
       let aggItem = agg ? agg.find(g => g._id === subj.id) : null
       return (
-        <li key={subj.id}>
+        <div className='subject-card' key={subj.id}>
           <a
             href={`/search/?as=page&query=${subj.id}`}
-            onClick={this.handleQuery.bind(this, subj.id)}>
-              {subj.level} {subj.name} ({subj.id})
+            onClick={this.handleQuery.bind(this, subj.id)}
+            className='card-header'
+          >
+            <div className='card-title'>
+              <span className='code-badge'>{subj.id}</span>
+              <span className='name'>{subj.name}</span>
+            </div>
+            {aggItem ? (
+              <span className='count-badge'>
+                {aggItem.totalPaper} papers
+              </span>
+            ) : null}
           </a>
-          {aggItem ? (
-            <span className='count'>
-              &nbsp;({aggItem.totalPaper})
-            </span>
-          ) : null}
+          
           {aggItem && aggItem.times && aggItem.times.length > 0 ? (
-            <div className='times'>
-              {aggItem.times.map(t => {
-                return (
-                  <a key={t} href={`/search/?as=page&query=${encodeURIComponent(`${subj.id} ${t}`)}`}
-                    onClick={this.handleQuery.bind(this, `${subj.id} ${t}`)}>&nbsp;{t}&nbsp;</a>
-                )
-              })}
+            <div className='card-seasons'>
+              <span className='seasons-label'>Sessions available:</span>
+              <div className='seasons-list'>
+                {aggItem.times.map(t => {
+                  let seasonClass = 'season-pill '
+                  if (t.startsWith('s')) seasonClass += 'summer'
+                  else if (t.startsWith('w')) seasonClass += 'winter'
+                  else if (t.startsWith('m')) seasonClass += 'march'
+                  
+                  return (
+                    <a key={t} href={`/search/?as=page&query=${encodeURIComponent(`${subj.id} ${t}`)}`}
+                      onClick={this.handleQuery.bind(this, `${subj.id} ${t}`)} className={seasonClass}>{t}</a>
+                  )
+                })}
+              </div>
             </div>
           ) : null}
-        </li>
+        </div>
       )
     }
     return (
-      <div className='subjects'>
-        <div className='return'>
-          <a href='/' onClick={this.handleHome}>Return to search</a>
+      <div className='subjects-redesign'>
+        <div className='header-section'>
+          <h1 className='page-title'>Browse Subjects</h1>
+          <p className='page-subtitle'>
+            {SubjectData.length} subjects supported.
+            {!AppState.getState().serverrender && (
+              <span> Missing something? <a onClick={evt => AppState.dispatch({type: 'showFeedback', search: '/subjects/'})}>Request it</a>.</span>
+            )}
+          </p>
         </div>
-        <p>
-          These {SubjectData.length} subjects are supported and continuously updated.
-          If you didn't find what you need, you can&nbsp;
-          {AppState.getState().serverrender ? (
-            'enable JavaScript and request to add it with feedback, or contact the site owner in person if you know them'
-          ) : (
-            <a onClick={evt => AppState.dispatch({type: 'showFeedback', search: '/subjects/'})}>request to add it</a>
-          )}.
-        </p>
-        <h2>IGCSE</h2>
-        <ul>
-          {SubjectData.filter(x => x.level === 'IGCSE').map(subjFunc)}
-        </ul>
-        <h2>AS and A level</h2>
-        <ul>
-          {SubjectData.filter(x => x.level === 'A/s').map(subjFunc)}
-        </ul>
-        <h2>Misc</h2>
-        <ul>
-          {SubjectData.filter(x => x.level !== 'A/s' && x.level !== 'IGCSE').map(subjFunc)}
-        </ul>
+
+        <div className='controls-section'>
+          <div className='tabs'>
+            <button 
+              className={`tab-btn ${this.state.activeTab === 'A/s' ? 'active' : ''}`}
+              onClick={() => this.setState({activeTab: 'A/s'})}>
+              AS & A Level
+            </button>
+            <button 
+              className={`tab-btn ${this.state.activeTab === 'IGCSE' ? 'active' : ''}`}
+              onClick={() => this.setState({activeTab: 'IGCSE'})}>
+              IGCSE
+            </button>
+            <button 
+              className={`tab-btn ${this.state.activeTab === 'Misc' ? 'active' : ''}`}
+              onClick={() => this.setState({activeTab: 'Misc'})}>
+              Misc
+            </button>
+          </div>
+          
+          <div className='search-filter'>
+            <svg className='icon' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type='text' 
+              placeholder='Filter by code or name...' 
+              value={this.state.searchQuery}
+              onChange={this.handleSearch}
+            />
+          </div>
+        </div>
+
+        <div className='subject-grid'>
+          {filteredSubjects.length > 0 ? 
+            filteredSubjects.map(subjFunc) : 
+            <div className='empty-state'>
+              <div className='empty-icon'>🔍</div>
+              <div>No subjects found matching your criteria.</div>
+            </div>
+          }
+        </div>
       </div>
     )
   }

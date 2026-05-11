@@ -38,7 +38,8 @@ services:
       - mw
     environment:
       - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    restart: always
     volumes:
       - mw-es-data:/usr/share/elasticsearch/data
 

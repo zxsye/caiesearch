@@ -22,13 +22,42 @@
 3. **The Router (`index.js`)**: 
    - Handles all web routes, search API, and PDF blob serving.
 
-## 🚀 Development / Local Hosting
-The project is configured to run via Docker Compose for easy environment setup.
-- **Port**: `8080` (mapped to container port 80)
-- **Commands**:
-  - `docker-compose up -d` (Start services)
-  - `docker exec -it schsrch-www npm install` (Compile C++ addons inside container)
-  - `docker exec -it schsrch-www node doIndex.bin.js /papers` (Index papers from the mounted volume)
+## 🚀 Local Hosting & Operations
+
+### 1. Starting the Environment
+The site is hosted via Docker Compose. All databases (Mongo, ES) are persistent via Docker volumes.
+```bash
+# Start all containers
+docker-compose up -d
+
+# Verify status
+docker-compose ps
+```
+The site will be accessible at [http://localhost:8080](http://localhost:8080).
+
+### 2. Compiling Native Addons
+The project uses a custom C++ PDF parser (`sspdf`). This **must** be compiled inside the Linux container environment after any major changes or initial setup:
+```bash
+docker exec -it schsrch-www npm install
+```
+
+### 3. How to Index (or Reindex) Papers
+The papers are mounted into the container at `/papers` from the user's Dropbox directory:
+`/Users/zilin/Library/CloudStorage/Dropbox/== Work ==/Tutoring/CIE Past Papers`
+
+To index new papers or reindex existing ones:
+```bash
+# Full indexing of the mounted volume
+docker exec -it schsrch-www node doIndex.bin.js /papers
+```
+
+> [!IMPORTANT]
+> **Dropbox Sync Warning**: If you encounter `Unknown system error -35` during indexing, it is likely because macOS is offloading the PDF files to the cloud. **Ensure the Dropbox folder is set to "Make available offline"** before indexing.
+
+### 4. Database Persistence
+- **MongoDB**: Stores file metadata and binary blobs.
+- **Elasticsearch**: Stores searchable text content.
+- Volumes: `mw-mongo-data` and `mw-es-data`.
 
 ## 📁 Key Directories
 - `src/`: React frontend source code.
