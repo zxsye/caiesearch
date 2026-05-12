@@ -15,6 +15,7 @@ services:
       MONGODB: mongodb://mw-mongo/schsrch
       ES: mw-es:9200
       SITE_ORIGIN: http://localhost:8080
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
     stdin_open: true
     tty: true
     depends_on:

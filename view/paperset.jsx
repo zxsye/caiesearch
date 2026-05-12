@@ -91,6 +91,22 @@ export default class PaperSet extends React.Component {
             })}
           </div>
         </div>
+        {(() => {
+          // Collect unique topics across all docs in this set (pp results)
+          if (firstDoc !== null) return null // full-text results show topics inline above
+          let topicsSet = new Set()
+          for (let doc of set.types) {
+            if (Array.isArray(doc.topics)) doc.topics.forEach(t => topicsSet.add(t))
+          }
+          if (topicsSet.size === 0) return null
+          return (
+            <div className='pp-topics'>
+              {[...topicsSet].sort().map(t => (
+                <span key={t} className='topic-badge'>{t}</span>
+              ))}
+            </div>
+          )
+        })()}
       </div>
     )
   }

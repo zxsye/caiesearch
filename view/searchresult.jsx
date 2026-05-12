@@ -36,6 +36,13 @@ class InitResultList extends React.Component {
                       paperSet={paper}
                       key={paper.paper + ' ' + paper.variant}
                       mini={false}
+                      onOpenFile={(id, page, type) => {
+                        AppState.dispatch({
+                          type: 'v2view',
+                          fileId: id,
+                          tCurrentType: type
+                        })
+                      }}
                     />
                   )
                 })}

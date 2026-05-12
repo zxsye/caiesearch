@@ -17,7 +17,27 @@ Environment variables needed: (i.e. docker run -e xxx=xxx -e&hellip; maowtm/schs
 - ES=*&lt;your-elasticsearch-server&gt;*:9200
 - SITE\_ORIGIN=http://localhost (depend on you)
 
-For a possible developmental set-up, see [./docker-compose-example.yml](./docker-compose-example.yml) .
+For a possible developmental set-up, see [./docker-compose-example.yml](./docker-compose-example.yml).
+
+----
+
+## Maintenance & Enrichment
+
+### Question-Level Topic Tagging
+The project uses Gemini 3.1 Flash-Lite to automatically categorize questions into syllabus topics.
+
+To run the tagging script:
+```bash
+docker exec -it -e GEMINI_API_KEY=$GEMINI_API_KEY schsrch-www node doLinkTopics.bin.js <subject_code> [limit] [year] [paper]
+```
+
+- **subject_code**: The 4-digit CIE subject code (e.g., `9709`, `0625`).
+- **limit**: Number of papers to process (defaults to 5).
+- **year**: (Optional) Filter by year (e.g., `23` for 2023).
+- **paper**: (Optional) Filter by paper number (e.g., `1`) or paper+variant (e.g., `13`).
+
+> [!NOTE]
+> Ensure `GEMINI_API_KEY` is defined in your `docker-compose.yml` or environment.
 
 ----
 

@@ -1127,6 +1127,35 @@ $sidebar-width: 300px
       text-transform: uppercase
       letter-spacing: 0.025em
 
+    .pp-topics
+      display: flex
+      flex-wrap: wrap
+      gap: var(--cs-space-1)
+      padding: var(--cs-space-2) var(--cs-space-4) var(--cs-space-3) var(--cs-space-4)
+      border-top: 1px solid var(--cs-border)
+      background-color: var(--cs-bg-secondary)
+      .topic-badge
+        display: inline-flex
+        align-items: center
+        font-family: var(--cs-font-body, 'Inter', sans-serif)
+        font-size: 0.68rem
+        font-weight: 600
+        letter-spacing: 0.01em
+        color: var(--cs-accent)
+        background-color: var(--cs-accent-soft)
+        border: 1px solid var(--cs-accent-muted)
+        border-radius: var(--cs-radius-full, 9999px)
+        padding: 0.1rem 0.55rem
+        line-height: 1.6
+        white-space: nowrap
+        transition: background-color 150ms ease, color 150ms ease, transform 150ms ease
+        user-select: none
+        &:hover
+          background-color: var(--cs-accent)
+          color: white
+          border-color: var(--cs-accent)
+          transform: translateY(-1px)
+
   .searchprompt
     padding: var(--cs-space-4)
     color: var(--cs-text-tertiary)
@@ -2527,6 +2556,35 @@ $feedback-top-height: 2rem + 1.3rem
             overflow: hidden
             white-space: nowrap
             text-overflow: ellipsis
+          .topic-pills
+            display: flex
+            flex-direction: row
+            flex-wrap: wrap
+            gap: 0.25rem
+            padding: 0.25rem 0 0.1rem 0
+            .topic-badge
+              display: inline-flex
+              align-items: center
+              font-family: var(--cs-font-body, 'Inter', sans-serif)
+              font-size: 0.68rem
+              font-weight: 600
+              letter-spacing: 0.01em
+              color: var(--cs-accent)
+              background-color: var(--cs-accent-soft)
+              border: 1px solid var(--cs-accent-muted)
+              border-radius: var(--cs-radius-full, 9999px)
+              padding: 0.1rem 0.55rem
+              line-height: 1.6
+              white-space: nowrap
+              transition: background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease
+              user-select: none
+              cursor: default
+              &:hover
+                background-color: var(--cs-accent)
+                color: white
+                border-color: var(--cs-accent)
+                transform: translateY(-1px)
+                box-shadow: 0 2px 6px rgba(var(--cs-accent-rgb, 217 108 40) / 0.28)
           .jump
             font-size: 0.8rem
             color: $color-secondary-text

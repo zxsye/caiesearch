@@ -61,10 +61,23 @@ To index new papers or reindex existing ones:
 docker exec -it schsrch-www node doIndex.bin.js /papers
 ```
 
+### 5. How to Link Topics (Gemini Tagging)
+To automatically categorize questions into syllabus topics using Gemini 3.1 Flash-Lite:
+```bash
+docker exec -it -e GEMINI_API_KEY=$GEMINI_API_KEY schsrch-www node doLinkTopics.bin.js <subject_code> [limit] [year] [paper]
+```
+- **subject_code**: e.g., `9709` (Maths), `0625` (Physics).
+- **limit**: Number of papers to process (defaults to 5).
+- **year**: (Optional) Filter by year (e.g., `23` for 2023).
+- **paper**: (Optional) Filter by paper number (e.g., `1`) or paper+variant (e.g., `13`).
+
+> [!NOTE]
+> This requires `GEMINI_API_KEY` to be set in the environment.
+
 > [!IMPORTANT]
 > **Dropbox Sync Warning**: If you encounter `Unknown system error -35` during indexing, it is likely because macOS is offloading the PDF files to the cloud. **Ensure the Dropbox folder is set to "Make available offline"** before indexing.
 
-### 5. Database Persistence
+### 6. Database Persistence
 - **MongoDB**: Stores file metadata and binary blobs.
 - **Elasticsearch**: Stores searchable text content.
 - Volumes: `mw-mongo-data` and `mw-es-data`.

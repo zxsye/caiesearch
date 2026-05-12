@@ -370,6 +370,13 @@ export default class PaperViewer extends React.Component {
                           <div className='title'>
                             {d.qT}
                           </div>
+                          {Array.isArray(d.topics) && d.topics.length > 0 ? (
+                            <div className='topic-pills'>
+                              {d.topics.map((topic, ti) => (
+                                <span className='topic-badge' key={ti}>{topic}</span>
+                              ))}
+                            </div>
+                          ) : null}
                           <div className='jump'>
                             Goto:
                             {sortedTypeStrArr.map(ts => {
