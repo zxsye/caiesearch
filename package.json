@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/micromaomao/schsrch#readme",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "bowser": "^1.9.4",
     "cheerio": "^1.0.0-rc.2",
     "express": ">=4.0.0",

@@ -61,6 +61,11 @@ export default class PaperSet extends React.Component {
                 </span>
               </div>
               <IndexContent content={firstDoc.index.content} search={this.props.query || ''} />
+              {firstDoc.index.topics && firstDoc.index.topics.length > 0 && (
+                <div className='topics'>
+                  {firstDoc.index.topics.map(t => <span key={t} className='topic-badge'>{t}</span>)}
+                </div>
+              )}
             </div>
           )
           : null}
