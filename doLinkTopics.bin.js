@@ -16,6 +16,8 @@ const { GoogleGenAI } = require('@google/genai')
 const syllabusTopics = require('./lib/syllabus_topics.js')
 const elasticsearch = require('elasticsearch')
 const sspdf = require('./lib/sspdf.js')
+const fs = require('fs')
+const path = require('path')
 
 // Default to container environment variables if not provided
 const DB_URI = MONGODB || 'mongodb://mw-mongo/schsrch'
@@ -30,8 +32,9 @@ if (!GEMINI_API_KEY) {
 
 const targetSubject = process.argv[2] || '9709'
 const limit = parseInt(process.argv[3]) || 5
-const targetYear = process.argv[4] // e.g. '23'
-const targetPaper = process.argv[5] // e.g. '1' or '13'
+const targetYear = process.argv[4] // e.g. '23' or '20-23'
+const targetPaper = process.argv[5] // e.g. '1', '13', or '1,2,11'
+const force = process.argv.includes('--force')
 
 if (!syllabusTopics[targetSubject]) {
   console.error(`No syllabus topics defined for subject ${targetSubject}`)
@@ -99,17 +102,18 @@ function sliceQuestionTexts(pageDatas, dirs) {
 
 // ─── Phase 2: Gemini 3 (Thinking) tagging ─────────────────────────────────────
 
-async function tagQuestionWithGemini(qN, questionText, subjectId) {
-  const topics = syllabusTopics[subjectId]
+async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) {
   if (!questionText || questionText.length < 10) return []
 
+  const syllabusStr = JSON.stringify(syllabusData, null, 2)
   const prompt =
     `You are a CIE (Cambridge International) examiner for subject ${subjectId}. ` +
     `Below is the exact text of Question ${qN} extracted from a past exam paper.\n\n` +
-    `Your task: identify which of the following syllabus topics this question covers.\n\n` +
-    `Syllabus Topics:\n${topics.join(', ')}\n\n` +
+    `Your task: identify which of the following syllabus topics this question covers. ` +
+    `Use the provided syllabus structure (topics, subtopics, and learning outcomes) for precision.\n\n` +
+    `Syllabus Structure:\n${syllabusStr}\n\n` +
     `Question Text:\n${questionText}\n\n` +
-    `Return ONLY a JSON array of matching topic name strings. ` +
+    `Return ONLY a JSON array of matching TOPIC NAMES (the 'topic_name' field from the JSON). ` +
     `If no topics match, return []. Do not include explanations or markdown.`
 
   try {
@@ -172,18 +176,44 @@ db.on('open', async () => {
   console.log(`Connected to database. Processing subject ${targetSubject}${targetYear ? ` (Year: ${targetYear})` : ''}${targetPaper ? ` (Paper: ${targetPaper})` : ''} (limit: ${limit} papers)...`)
   const { PastPaperDoc } = await require('./lib/dbModel.js')(db, es)
 
+  // Load tagging config
+  let taggingConfig = {}
+  try {
+    const configPath = path.join(__dirname, 'lib', 'tagging', 'config.json')
+    if (fs.existsSync(configPath)) {
+      taggingConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'))
+    }
+  } catch (e) {
+    console.warn(`Failed to load tagging config: ${e.message}`)
+  }
+
   try {
     const query = { subject: targetSubject, type: 'qp' }
     if (targetYear) {
-      query.time = new RegExp(`${targetYear}$`)
+      if (targetYear.includes('-')) {
+        const [start, end] = targetYear.split('-').map(y => parseInt(y.trim()))
+        const years = []
+        for (let y = start; y <= end; y++) {
+          years.push(y.toString().slice(-2).padStart(2, '0'))
+        }
+        query.time = new RegExp(`(${years.join('|')})$`)
+      } else {
+        query.time = new RegExp(`${targetYear}$`)
+      }
     }
 
     if (targetPaper) {
-      if (targetPaper.length === 1) {
-        query.paper = parseInt(targetPaper)
-      } else if (targetPaper.length === 2) {
-        query.paper = parseInt(targetPaper[0])
-        query.variant = parseInt(targetPaper[1])
+      const parts = targetPaper.split(',').map(p => p.trim())
+      const paperFilters = []
+      for (const part of parts) {
+        if (part.length === 1) {
+          paperFilters.push({ paper: parseInt(part) })
+        } else if (part.length === 2) {
+          paperFilters.push({ paper: parseInt(part[0]), variant: parseInt(part[1]) })
+        }
+      }
+      if (paperFilters.length > 0) {
+        query.$or = paperFilters
       }
     }
 
@@ -209,22 +239,60 @@ db.on('open', async () => {
 
       const dirs = doc.dir.dirs
       const untagged = dirs.filter(d => !d.topics || d.topics.length === 0)
-      if (untagged.length === 0) {
-        console.log('  All questions already tagged. Skipping.')
+      if (untagged.length === 0 && !force) {
+        console.log('  All questions already tagged. Skipping (use --force to overwrite).')
         continue
       }
-      console.log(`  ${untagged.length}/${dirs.length} question(s) need tagging.`)
+      console.log(`  ${force ? dirs.length : untagged.length}/${dirs.length} question(s) need tagging.`)
 
       console.log('  Loading PDF layout data...')
       const blob = await doc.getFileBlob()
       const pageDatas = await sspdf.getPDFContentAll(blob)
       const questionSlices = sliceQuestionTexts(pageDatas, dirs)
 
+      // Determine syllabus level (AS vs A2)
+      let level = 'AS'
+      const subjectConfig = taggingConfig[doc.subject]
+      if (subjectConfig) {
+        if (subjectConfig.A2 && subjectConfig.A2.includes(doc.paper)) {
+          level = 'A2'
+        } else if (subjectConfig.AS && subjectConfig.AS.includes(doc.paper)) {
+          level = 'AS'
+        }
+      } else {
+        // Fallback default logic for A-Level
+        if (doc.subject.startsWith('9') && doc.paper >= 4) {
+          level = 'A2'
+        }
+      }
+      const taggingDir = path.join(__dirname, 'lib', 'tagging', doc.subject)
+      const taggingFile = path.join(taggingDir, `${level}.json`)
+      
+      let syllabusData = []
+      if (fs.existsSync(taggingFile)) {
+        try {
+          syllabusData = JSON.parse(fs.readFileSync(taggingFile, 'utf8'))
+        } catch (e) {
+          console.warn(`  Failed to parse syllabus file ${taggingFile}: ${e.message}`)
+        }
+      }
+
+      // Fallback to legacy syllabus_topics.js if tagging file is empty/missing
+      if (syllabusData.length === 0 && syllabusTopics[doc.subject]) {
+        console.log(`  Using legacy syllabus topics for ${doc.subject} (Level: ${level})`)
+        syllabusData = syllabusTopics[doc.subject].map(t => ({ topic_name: t, subtopics: [] }))
+      }
+
+      if (syllabusData.length === 0) {
+        console.warn(`  No syllabus data available for ${doc.subject} ${level}. Skipping tagging.`)
+        continue
+      }
+
       for (const { qN, text } of questionSlices) {
         const dirEntry = dirs.find(d => d.qN === qN)
-        if (dirEntry && dirEntry.topics && dirEntry.topics.length > 0) continue
+        if (dirEntry && dirEntry.topics && dirEntry.topics.length > 0 && !force) continue
 
-        const detectedTopics = await tagQuestionWithGemini(qN, text, targetSubject)
+        const detectedTopics = await tagQuestionWithGemini(qN, text, targetSubject, syllabusData)
         await saveTopicsToDoc(doc, qN, detectedTopics)
 
         // Respect rate limits (Thinking mode might be slower/stricter)

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TaggingConfigSchema",
+  "description": "Schema for the tagging configuration that maps papers to AS/A2 levels.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "properties": {
+      "subject_name": {
+        "type": "string",
+        "description": "The name of the subject for easier identification."
+      },
+      "AS": {
+        "type": "array",
+        "items": { "type": "integer" }
+      },
+      "A2": {
+        "type": "array",
+        "items": { "type": "integer" }
+      }
+    },
+    "required": ["AS", "A2"]
+  }
+}

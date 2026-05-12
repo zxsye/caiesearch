@@ -1,0 +1,22 @@
+{
+  "9709": {
+    "subject_name": "Mathematics",
+    "AS": [1, 2, 4, 5],
+    "A2": [3, 6]
+  },
+  "9701": {
+    "subject_name": "Chemistry",
+    "AS": [1, 2, 3],
+    "A2": [4, 5]
+  },
+  "9702": {
+    "subject_name": "Physics",
+    "AS": [1, 2, 3],
+    "A2": [4, 5]
+  },
+  "9700": {
+    "subject_name": "Biology",
+    "AS": [1, 2, 3],
+    "A2": [4, 5]
+  }
+}

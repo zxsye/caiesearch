@@ -1,0 +1,443 @@
+[
+  {
+    "topic_id": "23",
+    "topic_name": "Chemical energetics",
+    "subtopics": [
+      {
+        "id": "23.1",
+        "name": "Lattice energy and Born-Haber cycles",
+        "learning_outcomes": [
+          "Define and use: enthalpy change of atomisation and lattice energy (gas phase ions to solid lattice) [cite: 7, 8, 9]",
+          "Define and use first electron affinity (EA) [cite: 10]",
+          "Explain factors affecting electron affinities [cite: 11]",
+          "Describe and explain trends in electron affinities for Group 16 and 17 [cite: 12]",
+          "Construct and use Born-Haber cycles for ionic solids (+1/+2 cations, -1/-2 anions) [cite: 13, 14]",
+          "Perform calculations involving Born-Haber cycles [cite: 15]",
+          "Explain qualitative effects of ionic charge and radius on lattice energy magnitude [cite: 16]"
+        ]
+      },
+      {
+        "id": "23.2",
+        "name": "Enthalpies of solution and hydration",
+        "learning_outcomes": [
+          "Define and use enthalpy change of hydration and solution [cite: 20]",
+          "Construct and use energy cycles involving solution, lattice, and hydration enthalpies [cite: 21]",
+          "Carry out calculations involving these energy cycles [cite: 22]",
+          "Explain qualitative effects of ionic charge and radius on hydration enthalpy magnitude [cite: 23]"
+        ]
+      },
+      {
+        "id": "23.3",
+        "name": "Entropy change, ΔS",
+        "learning_outcomes": [
+          "Define entropy (S) as the number of possible arrangements of particles and energy [cite: 30]",
+          "Predict and explain signs of entropy changes during state changes, temperature changes, and reactions affecting gaseous molecule numbers [cite: 31, 32, 33, 34]",
+          "Calculate reaction entropy change using standard entropies of reactants and products [cite: 35]"
+        ]
+      },
+      {
+        "id": "23.4",
+        "name": "Gibbs free energy change, ΔG",
+        "learning_outcomes": [
+          "State and use the Gibbs equation: ΔG° = ΔH° – TΔS° [cite: 40]",
+          "Perform calculations using the Gibbs equation [cite: 41]",
+          "State process feasibility based on the sign of ΔG [cite: 42]",
+          "Predict the effect of temperature change on reaction feasibility [cite: 43]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "24",
+    "topic_name": "Electrochemistry",
+    "subtopics": [
+      {
+        "id": "24.1",
+        "name": "Electrolysis",
+        "learning_outcomes": [
+          "Predict substances liberated based on state, redox series position, and concentration [cite: 49]",
+          "Apply the relationship F = Le [cite: 50]",
+          "Calculate charge passed (Q = It) and mass/volume of substances liberated [cite: 53, 54]",
+          "Describe determining the Avogadro constant via electrolytic methods [cite: 55]"
+        ]
+      },
+      {
+        "id": "24.2",
+        "name": "Standard electrode potentials, standard cell potentials and the Nernst equation",
+        "learning_outcomes": [
+          "Define standard electrode (reduction) potential and standard cell potential [cite: 62, 63, 64]",
+          "Describe the standard hydrogen electrode [cite: 65]",
+          "Describe measurement methods for electrode potentials of metal/ions and ions in different oxidation states [cite: 67, 68, 69]",
+          "Calculate standard cell potential from two standard electrode potentials [cite: 70]",
+          "Use cell potentials to deduce polarity, electron flow, and reaction feasibility [cite: 71, 72, 73]",
+          "Deduce relative reactivity of species as oxidising or reducing agents [cite: 74]",
+          "Construct redox equations from half-equations [cite: 75]",
+          "Predict qualitatively and quantitatively (Nernst equation) how potential varies with ion concentration [cite: 76, 79, 80]",
+          "Understand and use ΔG° = –nE°cellF [cite: 82]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "25",
+    "topic_name": "Equilibria",
+    "subtopics": [
+      {
+        "id": "25.1",
+        "name": "Acids and bases",
+        "learning_outcomes": [
+          "Use terms conjugate acid and conjugate base and identify pairs in reactions [cite: 91, 92]",
+          "Define mathematically and use pH, Ka, pKa, and Kw in calculations [cite: 93]",
+          "Calculate [H+(aq)] and pH for strong acids, strong alkalis, and weak acids [cite: 94, 95, 96, 97]",
+          "Define buffers, explain their formation and pH control (using equations), and describe uses (including blood pH) [cite: 98, 99, 100, 101]",
+          "Calculate buffer solution pH [cite: 102]",
+          "Understand, write expressions for, and calculate solubility product (Ksp) [cite: 103, 104, 105]",
+          "Understand and perform calculations for the common ion effect [cite: 106, 108]"
+        ]
+      },
+      {
+        "id": "25.2",
+        "name": "Partition coefficients",
+        "learning_outcomes": [
+          "State meaning of partition coefficient (Kpc) [cite: 112]",
+          "Calculate and use Kpc for solutes in the same physical state in two solvents [cite: 113]",
+          "Understand factors affecting Kpc numerical value based on solute/solvent polarities [cite: 114]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "26",
+    "topic_name": "Reaction kinetics",
+    "subtopics": [
+      {
+        "id": "26.1",
+        "name": "Simple rate equations, orders of reaction and rate constants",
+        "learning_outcomes": [
+          "Explain and use terms: rate equation, order of reaction, rate constant, half-life, rate-determining step, and intermediate [cite: 123]",
+          "Use rate equations, deduce orders from graphs/experimental data, and calculate initial rates [cite: 125, 126, 127, 128]",
+          "Understand and use first-order reaction half-life (independent of concentration) in calculations [cite: 130, 131, 134]",
+          "Calculate rate constants using initial rates or half-life [cite: 132, 133, 134]",
+          "Suggest or deduce mechanisms, rate equations, and intermediates/catalysts for multi-step reactions [cite: 136, 138, 139, 140]",
+          "Describe qualitative effect of temperature change on rate constant and rate [cite: 141]"
+        ]
+      },
+      {
+        "id": "26.2",
+        "name": "Homogeneous and heterogeneous catalysts",
+        "learning_outcomes": [
+          "Explain the difference between homogeneous and heterogeneous catalysts [cite: 145]",
+          "Describe mode of action for heterogeneous catalysts (adsorption, bond weakening, desorption) [cite: 146]",
+          "Describe mode of action for homogeneous catalysts (one step use, later step reformation) [cite: 149]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "27",
+    "topic_name": "Group 2",
+    "subtopics": [
+      {
+        "id": "27.1",
+        "name": "Similarities and trends in the properties of the Group 2 metals and their compounds",
+        "learning_outcomes": [
+          "Explain trends in thermal stability of nitrates and carbonates (polarisation effect) [cite: 161]",
+          "Explain variation in solubility and enthalpy change of solution for hydroxides and sulfates [cite: 162]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "28",
+    "topic_name": "Chemistry of transition elements",
+    "subtopics": [
+      {
+        "id": "28.1",
+        "name": "General physical and chemical properties",
+        "learning_outcomes": [
+          "Define transition elements (incomplete d orbitals in stable ions) [cite: 168]",
+          "Sketch 3dxy and 3dz2 orbitals [cite: 169]",
+          "Explain variable oxidation states, catalytic behavior, and complex ion formation [cite: 171, 172, 173, 175, 176, 177]"
+        ]
+      },
+      {
+        "id": "28.2",
+        "name": "General characteristic chemical properties",
+        "learning_outcomes": [
+          "Describe complex formation with ligands (water, ammonia, hydroxide, chloride) [cite: 186]",
+          "Define ligands (mono-, bi-, polydentate) and complexes [cite: 187, 190, 191, 192]",
+          "Describe complex geometries and predict formulas/charges [cite: 193, 195]",
+          "Explain ligand exchange and predict redox reaction feasibility using E° [cite: 196, 197]",
+          "Perform calculations for specific redox systems (manganate/oxalate, etc.) [cite: 199, 200, 201]"
+        ]
+      },
+      {
+        "id": "28.3",
+        "name": "Colour of complexes",
+        "learning_outcomes": [
+          "Define degenerate and non-degenerate d orbitals [cite: 206]",
+          "Describe d orbital splitting in octahedral and tetrahedral complexes [cite: 208, 209]",
+          "Explain color based on light absorption during electron promotion [cite: 210]",
+          "Describe effects of different ligands on splitting magnitude and observed color [cite: 211]"
+        ]
+      },
+      {
+        "id": "28.4",
+        "name": "Stereoisomerism in transition element complexes",
+        "learning_outcomes": [
+          "Describe geometrical (cis/trans) and optical isomerism in specific complexes [cite: 220, 221]",
+          "Deduce overall polarity of complexes [cite: 222]"
+        ]
+      },
+      {
+        "id": "28.5",
+        "name": "Stability constants, Kstab",
+        "learning_outcomes": [
+          "Define stability constant (Kstab) [cite: 226]",
+          "Write Kstab expressions and perform calculations [cite: 227, 228]",
+          "Explain ligand exchange in terms of Kstab values [cite: 229]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "29",
+    "topic_name": "An introduction to A Level organic chemistry",
+    "subtopics": [
+      {
+        "id": "29.1",
+        "name": "Formulas, functional groups and naming",
+        "learning_outcomes": [
+          "Interpret and use general, structural, displayed, and skeletal formulas [cite: 246]",
+          "Use systematic nomenclature for aliphatic (up to C6) and simple aromatic molecules [cite: 247, 248]"
+        ]
+      },
+      {
+        "id": "29.2",
+        "name": "Characteristic organic reactions",
+        "learning_outcomes": [
+          "Understand terminology: electrophilic substitution and addition-elimination [cite: 252, 253]"
+        ]
+      },
+      {
+        "id": "29.3",
+        "name": "Shapes of aromatic organic molecules; σ and π bonds",
+        "learning_outcomes": [
+          "Describe/explain the shape of benzene (sp2 hybridisation, delocalised π system) [cite: 257]"
+        ]
+      },
+      {
+        "id": "29.4",
+        "name": "Isomerism: optical",
+        "learning_outcomes": [
+          "Understand enantiomer properties, optical activity, and racemic mixtures [cite: 261, 263]",
+          "Explain chirality relevance to drug synthesis (biological activity, separation, chiral catalysts) [cite: 265, 266, 267, 268]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "30",
+    "topic_name": "Hydrocarbons",
+    "subtopics": [
+      {
+        "id": "30.1",
+        "name": "Arenes",
+        "learning_outcomes": [
+          "Describe reactions: substitution (Cl2/Br2), nitration, Friedel-Crafts alkylation/acylation, side-chain oxidation, hydrogenation [cite: 279, 280, 281, 282, 283, 284, 285]",
+          "Describe electrophilic substitution mechanisms and effect of delocalisation [cite: 285, 286, 287]",
+          "Predict halogenation position and understand directing effects of substituents [cite: 288, 289]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "31",
+    "topic_name": "Halogen compounds",
+    "subtopics": [
+      {
+        "id": "31.1",
+        "name": "Halogen compounds",
+        "learning_outcomes": [
+          "Recall halogenoarene production [cite: 294]",
+          "Explain reactivity differences between halogenoalkanes and halogenoarenes [cite: 295]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "32",
+    "topic_name": "Hydroxy compounds",
+    "subtopics": [
+      {
+        "id": "32.1",
+        "name": "Alcohols",
+        "learning_outcomes": [
+          "Describe reaction with acyl chlorides to form esters [cite: 303]"
+        ]
+      },
+      {
+        "id": "32.2",
+        "name": "Phenol",
+        "learning_outcomes": [
+          "Recall phenol production from phenylamine (diazonium salt route) [cite: 307, 308, 309]",
+          "Describe phenol chemistry: bases, Na, diazonium salts (azo), nitration, bromination [cite: 310, 311, 312, 313, 314, 315]",
+          "Explain/compare acidities (water, phenol, ethanol) [cite: 316, 317]",
+          "Explain directing effects and reagent differences vs benzene [cite: 318, 319]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "33",
+    "topic_name": "Carboxylic acids and derivatives",
+    "subtopics": [
+      {
+        "id": "33.1",
+        "name": "Carboxylic acids",
+        "learning_outcomes": [
+          "Recall benzoic acid production [cite: 325]",
+          "Describe acyl chloride formation using PCl3, PCl5, or SOCl2 [cite: 327]",
+          "Describe oxidation of methanoic and ethanedioic acids [cite: 329, 330]",
+          "Explain relative acidities of carboxylic acids, phenols, alcohols, and Cl-substituted acids [cite: 331, 332]"
+        ]
+      },
+      {
+        "id": "33.2",
+        "name": "Esters",
+        "learning_outcomes": [
+          "Recall ester production from alcohols and acyl chlorides [cite: 339, 340]"
+        ]
+      },
+      {
+        "id": "33.3",
+        "name": "Acyl chlorides",
+        "learning_outcomes": [
+          "Recall production methods [cite: 344, 345]",
+          "Describe reactions: hydrolysis, with alcohols, phenols, ammonia, and amines [cite: 346, 347, 348, 349, 350, 351]",
+          "Describe addition-elimination mechanism [cite: 352]",
+          "Explain relative ease of hydrolysis vs alkyl/aryl chlorides [cite: 353]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "34",
+    "topic_name": "Nitrogen compounds",
+    "subtopics": [
+      {
+        "id": "34.1",
+        "name": "Primary and secondary amines",
+        "learning_outcomes": [
+          "Recall production from halogenoalkanes, amides, and nitriles [cite: 358, 359, 360, 361]",
+          "Describe condensation with acyl chlorides and explain basicity [cite: 362, 363]"
+        ]
+      },
+      {
+        "id": "34.2",
+        "name": "Phenylamine and azo compounds",
+        "learning_outcomes": [
+          "Describe phenylamine preparation and its reactions (Br2, diazonium salt) [cite: 370, 372, 373]",
+          "Explain relative basicities (ammonia, ethylamine, phenylamine) [cite: 375]",
+          "Recall azo coupling, identifying the azo group, and dye uses [cite: 376, 377, 378]"
+        ]
+      },
+      {
+        "id": "34.3",
+        "name": "Amides",
+        "learning_outcomes": [
+          "Recall production from acyl chlorides [cite: 383, 384, 385]",
+          "Describe hydrolysis and reduction [cite: 387, 388]",
+          "Explain why amides are weaker bases than amines [cite: 389]"
+        ]
+      },
+      {
+        "id": "34.4",
+        "name": "Amino acids",
+        "learning_outcomes": [
+          "Describe zwitterion formation and isoelectric point [cite: 393]",
+          "Describe peptide bond formation and predict electrophoresis results [cite: 394, 395]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "35",
+    "topic_name": "Polymerisation",
+    "subtopics": [
+      {
+        "id": "35.1",
+        "name": "Condensation polymerisation",
+        "learning_outcomes": [
+          "Describe formation of polyesters and polyamides [cite: 403, 406]",
+          "Deduce repeat units and identify monomers [cite: 410, 411]"
+        ]
+      },
+      {
+        "id": "35.2",
+        "name": "Predicting the type of polymerisation",
+        "learning_outcomes": [
+          "Predict/deduce polymerisation type for monomers or sections [cite: 415, 416]"
+        ]
+      },
+      {
+        "id": "35.3",
+        "name": "Degradable polymers",
+        "learning_outcomes": [
+          "Recognise poly(alkenes) inertness and biodegradability of polyesters/polyamides [cite: 420, 422]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "36",
+    "topic_name": "Organic synthesis",
+    "subtopics": [
+      {
+        "id": "36.1",
+        "name": "Organic synthesis",
+        "learning_outcomes": [
+          "Identify functional groups and predict reactions [cite: 427, 428]",
+          "Devise multi-step synthetic routes and analyse given routes [cite: 429]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "37",
+    "topic_name": "Analytical techniques",
+    "subtopics": [
+      {
+        "id": "37.1",
+        "name": "Thin-layer chromatography",
+        "learning_outcomes": [
+          "Understand/interpret stationary phase, mobile phase, Rf values, and solubility factors [cite: 438, 441, 443, 444]"
+        ]
+      },
+      {
+        "id": "37.2",
+        "name": "Gas/liquid chromatography",
+        "learning_outcomes": [
+          "Understand/interpret stationary/mobile phases, retention time, and chromatograms [cite: 448, 451, 452, 453]"
+        ]
+      },
+      {
+        "id": "37.3",
+        "name": "Carbon-13 NMR spectroscopy",
+        "learning_outcomes": [
+          "Analyse spectra to deduce carbon environments and possible structures [cite: 457, 458, 459]",
+          "Predict number of peaks [cite: 460]"
+        ]
+      },
+      {
+        "id": "37.4",
+        "name": "Proton (H) NMR spectroscopy",
+        "learning_outcomes": [
+          "Analyse chemical shift, peak area, and splitting patterns (n+1 rule) [cite: 468, 469, 470, 471, 472]",
+          "Predict shifts and splitting; use of TMS and deuterated solvents [cite: 474, 475, 476]",
+          "Identify O-H/N-H protons using D2O exchange [cite: 477]"
+        ]
+      }
+    ]
+  }
+]

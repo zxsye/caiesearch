@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SyllabusTopicSchema",
+  "description": "A schema to represent AS and A Level syllabus topics and learning outcomes.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["topic_id", "topic_name", "subtopics"],
+    "properties": {
+      "topic_id": {
+        "type": "string",
+        "description": "The main topic number from the syllabus."
+      },
+      "topic_name": {
+        "type": "string",
+        "description": "The title of the main chemistry topic."
+      },
+      "subtopics": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["id", "name", "learning_outcomes"],
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The subtopic section number (e.g., 23.1)."
+            },
+            "name": {
+              "type": "string",
+              "description": "The specific focus area title."
+            },
+            "learning_outcomes": {
+              "type": "array",
+              "description": "A list of competencies the candidate should be able to perform.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

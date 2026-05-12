@@ -28,13 +28,14 @@ The project uses Gemini 3.1 Flash-Lite to automatically categorize questions int
 
 To run the tagging script:
 ```bash
-docker exec -it -e GEMINI_API_KEY=$GEMINI_API_KEY schsrch-www node doLinkTopics.bin.js <subject_code> [limit] [year] [paper]
+docker exec -it -e GEMINI_API_KEY=$GEMINI_API_KEY schsrch-www node doLinkTopics.bin.js <subject_code> [limit] [year] [paper] [--force]
 ```
 
 - **subject_code**: The 4-digit CIE subject code (e.g., `9709`, `0625`).
 - **limit**: Number of papers to process (defaults to 5).
-- **year**: (Optional) Filter by year (e.g., `23` for 2023).
-- **paper**: (Optional) Filter by paper number (e.g., `1`) or paper+variant (e.g., `13`).
+- **year**: (Optional) Filter by year (e.g., `23`) or range (e.g., `20-23`).
+- **paper**: (Optional) Filter by paper (e.g., `1`), variant (e.g., `13`), or list (e.g., `1,2,11`).
+- **--force**: (Optional) Overwrite existing topic tags.
 
 > [!NOTE]
 > Ensure `GEMINI_API_KEY` is defined in your `docker-compose.yml` or environment.

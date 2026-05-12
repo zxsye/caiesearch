@@ -1,0 +1,498 @@
+[
+  {
+    "topic_id": "1",
+    "topic_name": "Atomic Structure",
+    "subtopics": [
+      {
+        "id": "1.1",
+        "name": "Particles in the atom and atomic radius",
+        "learning_outcomes": [
+          "Understand that atoms are mostly empty space surrounding a very small, dense nucleus containing protons and neutrons.",
+          "Electrons are found in shells in the empty space around the nucleus.",
+          "Identify and describe protons, neutrons, and electrons in terms of relative charges and relative masses.",
+          "Understand the terms atomic and proton number; mass and nucleon number.",
+          "Describe the distribution of mass and charge within an atom.",
+          "Describe the behaviour of beams of protons, neutrons, and electrons moving at the same velocity in an electric field.",
+          "Determine the numbers of protons, neutrons, and electrons in atoms and ions given atomic number, mass number, and charge.",
+          "State and explain qualitatively the variations in atomic and ionic radius across a period and down a group."
+        ]
+      },
+      {
+        "id": "1.2",
+        "name": "Isotopes",
+        "learning_outcomes": [
+          "Define the term isotope in terms of numbers of protons and neutrons.",
+          "Understand the notation ^A_Z X for isotopes, where A is nucleon number and Z is proton number.",
+          "State and explain why isotopes of the same element have the same chemical properties.",
+          "State and explain why isotopes have different physical properties (limited to mass and density)."
+        ]
+      },
+      {
+        "id": "1.3",
+        "name": "Electrons, energy levels and atomic orbitals",
+        "learning_outcomes": [
+          "Understand the terms: shells, sub-shells, orbitals, principal quantum number (n), and ground state.",
+          "Describe the number of orbitals in s, p, and d sub-shells and the number of electrons that fill them.",
+          "Describe the order of increasing energy of sub-shells within the first three shells and the 4s and 4p sub-shells.",
+          "Describe electronic configurations including the number of electrons in each shell, sub-shell, and orbital.",
+          "Explain electronic configurations in terms of electron energy and inter-electron repulsion.",
+          "Determine the electronic configuration of atoms and ions from hydrogen to krypton.",
+          "Understand and use the 'electrons in boxes' notation.",
+          "Describe and sketch the shapes of s and p orbitals.",
+          "Describe a free radical as a species with one or more unpaired electrons."
+        ]
+      },
+      {
+        "id": "1.4",
+        "name": "Ionisation energy",
+        "learning_outcomes": [
+          "Define and use the term first ionisation energy (IE).",
+          "Construct equations for first, second, and subsequent ionisation energies.",
+          "Identify and explain trends in ionisation energies across a period and down a group.",
+          "Identify and explain the variation in successive ionisation energies of an element.",
+          "Understand that ionisation energies are due to attraction between the nucleus and the outer electron.",
+          "Explain factors influencing ionisation energy: nuclear charge, radius, shielding, and spin-pair repulsion.",
+          "Deduce electronic configurations and Periodic Table positions using successive ionisation energy data."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "2",
+    "topic_name": "Atoms, molecules and stoichiometry",
+    "subtopics": [
+      {
+        "id": "2.1",
+        "name": "Relative masses of atoms and molecules",
+        "learning_outcomes": [
+          "Define the unified atomic mass unit as one-twelfth of the mass of a carbon-12 atom.",
+          "Define relative atomic mass (Ar), relative isotopic mass, relative molecular mass (Mr), and relative formula mass."
+        ]
+      },
+      {
+        "id": "2.2",
+        "name": "The mole and the Avogadro constant",
+        "learning_outcomes": [
+          "Define and use the term mole in terms of the Avogadro constant."
+        ]
+      },
+      {
+        "id": "2.3",
+        "name": "Formulas",
+        "learning_outcomes": [
+          "Write formulas of ionic compounds from charges and oxidation numbers.",
+          "Predict ionic charge from Periodic Table position.",
+          "Recall names and formulas for specific ions: NO3-, CO32-, SO42-, OH-, NH4+, Zn2+, Ag+, HCO3-, PO43-.",
+          "Write balanced chemical and ionic equations (excluding spectator ions) with state symbols.",
+          "Define and use the terms empirical formula, molecular formula, anhydrous, hydrated, and water of crystallisation.",
+          "Calculate empirical and molecular formulas from given data."
+        ]
+      },
+      {
+        "id": "2.4",
+        "name": "Reacting masses and volumes",
+        "learning_outcomes": [
+          "Perform calculations involving reacting masses, percentage yield, gas volumes, solution concentrations, and limiting/excess reagents.",
+          "Deduce stoichiometric relationships from these calculations."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3",
+    "topic_name": "Chemical bonding",
+    "subtopics": [
+      {
+        "id": "3.1",
+        "name": "Electronegativity and bonding",
+        "learning_outcomes": [
+          "Define electronegativity as the power of an atom to attract electrons to itself.",
+          "Explain factors influencing electronegativity: nuclear charge, radius, and shielding.",
+          "State and explain trends in electronegativity across a period and down a group.",
+          "Use Pauling electronegativity differences to predict ionic or covalent bond formation."
+        ]
+      },
+      {
+        "id": "3.2",
+        "name": "Ionic bonding",
+        "learning_outcomes": [
+          "Define ionic bonding as the electrostatic attraction between oppositely charged ions.",
+          "Describe ionic bonding in NaCl, MgO, and CaF2."
+        ]
+      },
+      {
+        "id": "3.3",
+        "name": "Metallic bonding",
+        "learning_outcomes": [
+          "Define metallic bonding as the electrostatic attraction between positive metal ions and delocalised electrons."
+        ]
+      },
+      {
+        "id": "3.4",
+        "name": "Covalent and coordinate bonding",
+        "learning_outcomes": [
+          "Define covalent bonding as electrostatic attraction between the nuclei of two atoms and a shared pair of electrons.",
+          "Describe covalent bonding in H2, O2, N2, Cl2, HCl, CO2, NH3, CH4, C2H6, and C2H4.",
+          "Understand octet expansion in Period 3 elements like SO2, PCl5, and SF6.",
+          "Describe coordinate (dative) bonding in NH4+ and Al2Cl6.",
+          "Describe σ (direct overlap) and π (sideways overlap of p orbitals) bonds.",
+          "Use the concept of hybridisation to describe sp, sp2, and sp3 orbitals.",
+          "Define and use bond energy and bond length to compare reactivity."
+        ]
+      },
+      {
+        "id": "3.5",
+        "name": "Shapes of molecules",
+        "learning_outcomes": [
+          "Use VSEPR theory to explain shapes and bond angles (e.g., BF3, CO2, CH4, NH3, H2O, SF6, PF5)."
+        ]
+      },
+      {
+        "id": "3.6",
+        "name": "Intermolecular forces",
+        "learning_outcomes": [
+          "Describe hydrogen bonding (limited to N-H and O-H groups) and explain the anomalous properties of H2O.",
+          "Use electronegativity to explain bond polarity and dipole moments.",
+          "Describe van der Waals' forces, including London dispersion forces and permanent dipole-permanent dipole forces.",
+          "Understand that intramolecular bonds (ionic, covalent, metallic) are generally stronger than intermolecular forces."
+        ]
+      },
+      {
+        "id": "3.7",
+        "name": "Dot-and-cross diagrams",
+        "learning_outcomes": [
+          "Use dot-and-cross diagrams to illustrate ionic, covalent, and coordinate bonding."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "4",
+    "topic_name": "States of matter",
+    "subtopics": [
+      {
+        "id": "4.1",
+        "name": "The gaseous state",
+        "learning_outcomes": [
+          "Explain gas pressure in terms of molecular collisions with container walls.",
+          "Understand ideal gas assumptions: zero particle volume and no intermolecular forces.",
+          "State and use the ideal gas equation pV=nRT."
+        ]
+      },
+      {
+        "id": "4.2",
+        "name": "Bonding and structure",
+        "learning_outcomes": [
+          "Describe lattice structures: giant ionic (NaCl, MgO), simple molecular (I2, C60, ice), giant molecular (SiO2, graphite, diamond), and giant metallic (Cu).",
+          "Predict the effect of structure and bonding on physical properties (melting/boiling point, conductivity, solubility)."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "5",
+    "topic_name": "Chemical energetics",
+    "subtopics": [
+      {
+        "id": "5.1",
+        "name": "Enthalpy change, ΔH",
+        "learning_outcomes": [
+          "Understand exothermic (ΔH negative) and endothermic (ΔH positive) reactions.",
+          "Construct and interpret reaction pathway diagrams.",
+          "Define standard conditions (298K, 101 kPa) and enthalpy changes of reaction, formation, combustion, and neutralisation.",
+          "Calculate enthalpy changes using bond energies and experimental results (q=mcΔT)."
+        ]
+      },
+      {
+        "id": "5.2",
+        "name": "Hess’s law",
+        "learning_outcomes": [
+          "Apply Hess’s law to construct energy cycles and perform calculations."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6",
+    "topic_name": "Electrochemistry",
+    "subtopics": [
+      {
+        "id": "6.1",
+        "name": "Redox processes",
+        "learning_outcomes": [
+          "Calculate oxidation numbers and use them to balance equations.",
+          "Define and use terms: redox, oxidation, reduction, disproportionation, oxidising agent, and reducing agent."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "7",
+    "topic_name": "Equilibria",
+    "subtopics": [
+      {
+        "id": "7.1",
+        "name": "Chemical equilibria",
+        "learning_outcomes": [
+          "Understand reversible reactions and dynamic equilibrium in closed systems.",
+          "Use Le Chatelier's principle to deduce effects of changes in temperature, concentration, pressure, or catalysts.",
+          "Deduce expressions for and perform calculations with Kc and Kp.",
+          "Explain conditions used in the Haber and Contact processes."
+        ]
+      },
+      {
+        "id": "7.2",
+        "name": "Brønsted–Lowry theory of acids and bases",
+        "learning_outcomes": [
+          "Recall names/formulas of common acids and alkalis.",
+          "Describe Brønsted–Lowry theory and distinguish between strong and weak acids/bases.",
+          "Understand neutralisation and salt formation.",
+          "Sketch pH titration curves and select suitable indicators."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "8",
+    "topic_name": "Reaction kinetics",
+    "subtopics": [
+      {
+        "id": "8.1",
+        "name": "Rate of reaction",
+        "learning_outcomes": [
+          "Explain rate in terms of collision frequency and effective collisions.",
+          "Explain effects of concentration and pressure on reaction rates."
+        ]
+      },
+      {
+        "id": "8.2",
+        "name": "Effect of temperature",
+        "learning_outcomes": [
+          "Define activation energy (EA).",
+          "Use Boltzmann distributions to explain the effect of temperature on rates."
+        ]
+      },
+      {
+        "id": "8.3",
+        "name": "Catalysts",
+        "learning_outcomes": [
+          "Explain how catalysts provide an alternative mechanism with lower activation energy.",
+          "Interpret reaction pathway diagrams for catalyzed reactions."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "9",
+    "topic_name": "The Periodic Table: chemical periodicity",
+    "subtopics": [
+      {
+        "id": "9.1",
+        "name": "Periodicity of physical properties in Period 3",
+        "learning_outcomes": [
+          "Describe variations in atomic radius, ionic radius, melting point, and electrical conductivity.",
+          "Explain variations in melting point and conductivity based on structure and bonding."
+        ]
+      },
+      {
+        "id": "9.2",
+        "name": "Periodicity of chemical properties in Period 3",
+        "learning_outcomes": [
+          "Describe reactions of Period 3 elements with oxygen, chlorine, and water.",
+          "Explain variation in oxidation numbers and acid/base behavior of oxides and hydroxides.",
+          "Describe reactions of chlorides and oxides with water, including pH of resulting solutions."
+        ]
+      },
+      {
+        "id": "9.3",
+        "name": "Chemical periodicity of other elements",
+        "learning_outcomes": [
+          "Predict properties of elements in a group and identify unknown elements based on trends."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "10",
+    "topic_name": "Group 2",
+    "subtopics": [
+      {
+        "id": "10",
+        "name": "Group 2 Metals and Compounds",
+        "learning_outcomes": [
+          "Describe reactions of Group 2 metals (Mg to Ba) with oxygen, water, and acids.",
+          "Describe reactions of Group 2 oxides, hydroxides, and carbonates.",
+          "Describe the trend in thermal stability of nitrates and carbonates.",
+          "State trends in solubility for hydroxides and sulfates."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "11",
+    "topic_name": "Group 17",
+    "subtopics": [
+      {
+        "id": "11",
+        "name": "Halogens and Halides",
+        "learning_outcomes": [
+          "Describe trends in colour, volatility, and bond strength of halogens.",
+          "Describe relative reactivity as oxidising agents and in reactions with hydrogen.",
+          "Explain thermal stability of hydrogen halides in terms of bond strength.",
+          "Describe reactivity of halide ions as reducing agents and their reactions with silver ions/ammonia and sulfuric acid.",
+          "Describe disproportionation of chlorine in cold/hot NaOH and its use in water purification."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "12",
+    "topic_name": "Nitrogen and sulfur",
+    "subtopics": [
+      {
+        "id": "12",
+        "name": "Compounds of Nitrogen and Sulfur",
+        "learning_outcomes": [
+          "Explain the lack of reactivity of N2.",
+          "Describe the basicity of ammonia and the structure/formation of the ammonium ion.",
+          "Explain occurrences of nitrogen oxides and their role in catalytic converters, photochemical smog, and acid rain."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "13",
+    "topic_name": "Introduction to AS Level organic chemistry",
+    "subtopics": [
+      {
+        "id": "13.1",
+        "name": "Formulas, functional groups and naming",
+        "learning_outcomes": [
+          "Define hydrocarbon and understand functional groups.",
+          "Use general, structural, displayed, and skeletal formulas.",
+          "Use systematic nomenclature for molecules up to six carbon atoms."
+        ]
+      },
+      {
+        "id": "13.2",
+        "name": "Characteristic organic reactions",
+        "learning_outcomes": [
+          "Use terminology: homologous series, saturated/unsaturated, fission (homolytic/heterolytic), and free radicals.",
+          "Understand reaction types: addition, substitution, elimination, hydrolysis, condensation, oxidation, and reduction.",
+          "Understand mechanisms: free-radical substitution, electrophilic addition, nucleophilic substitution, and nucleophilic addition."
+        ]
+      },
+      {
+        "id": "13.3",
+        "name": "Shapes and bonding",
+        "learning_outcomes": [
+          "Describe straight-chain, branched, and cyclic molecules.",
+          "Explain shapes and bond angles using sp, sp2, and sp3 hybridisation."
+        ]
+      },
+      {
+        "id": "13.4",
+        "name": "Isomerism",
+        "learning_outcomes": [
+          "Describe structural isomerism (chain, positional, functional group).",
+          "Describe stereoisomerism: geometrical (cis/trans) and optical (chiral centres/enantiomers)."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "14-20",
+    "topic_name": "Organic Compounds (Specific Classes)",
+    "subtopics": [
+      {
+        "id": "14",
+        "name": "Alkanes",
+        "learning_outcomes": [
+          "Recall production (hydrogenation, cracking), combustion, and free-radical substitution mechanisms."
+        ]
+      },
+      {
+        "id": "15",
+        "name": "Alkenes",
+        "learning_outcomes": [
+          "Recall production (elimination, dehydration), electrophilic addition reactions, and oxidation with KMnO4. Explain Markovnikov addition."
+        ]
+      },
+      {
+        "id": "16",
+        "name": "Halogenoalkanes",
+        "learning_outcomes": [
+          "Classify as primary/secondary/tertiary; describe nucleophilic substitution (SN1 and SN2) and elimination."
+        ]
+      },
+      {
+        "id": "17",
+        "name": "Alcohols",
+        "learning_outcomes": [
+          "Recall production and reactions (combustion, substitution, oxidation, dehydration, esterification). Use the tri-iodomethane test."
+        ]
+      },
+      {
+        "id": "18",
+        "name": "Carbonyls",
+        "learning_outcomes": [
+          "Produce aldehydes/ketones by oxidation; describe reduction and nucleophilic addition with HCN. Use 2,4-DNPH, Fehling’s, and Tollens’ reagents."
+        ]
+      },
+      {
+        "id": "19",
+        "name": "Carboxylic acids/Esters",
+        "learning_outcomes": [
+          "Recall production, redox, neutralisation, and esterification."
+        ]
+      },
+      {
+        "id": "20",
+        "name": "Nitrogen compounds",
+        "learning_outcomes": [
+          "Produce primary amines and nitriles."
+        ]
+      },
+      {
+        "id": "20.1",
+        "name": "Polymerisation",
+        "learning_outcomes": [
+          "Describe addition polymerisation (e.g., poly(ethene), PVC) and disposal issues."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "21",
+    "topic_name": "Organic synthesis",
+    "subtopics": [
+      {
+        "id": "21",
+        "name": "Synthetic Routes",
+        "learning_outcomes": [
+          "Identify functional groups and devise multi-step synthetic routes."
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "22",
+    "topic_name": "Analytical techniques",
+    "subtopics": [
+      {
+        "id": "22.1",
+        "name": "Infrared spectroscopy",
+        "learning_outcomes": [
+          "Identify functional groups from a spectrum."
+        ]
+      },
+      {
+        "id": "22.2",
+        "name": "Mass spectrometry",
+        "learning_outcomes": [
+          "Calculate Ar, deduce molecular mass from the molecular ion peak, and identify fragments. Use [M+1]+ to find carbon atoms and [M+2]+ for Br/Cl."
+        ]
+      }
+    ]
+  }
+]
