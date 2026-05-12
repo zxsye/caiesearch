@@ -27,6 +27,9 @@ export default class Sidebar extends React.Component {
           <div className={'menuitem' + (view === 'subjects' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'subjects'})}>
             <span className='icon'>📚</span> Browse Subjects
           </div>
+          <div className={'menuitem' + (view === 'topics' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'topics'})}>
+            <span className='icon'>🔖</span> Browse by Topic
+          </div>
           <div className={'menuitem' + (AppState.getState().showHelp ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'show-help'})}>
             <span className='icon'>❓</span> Help
           </div>

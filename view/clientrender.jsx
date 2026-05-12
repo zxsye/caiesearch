@@ -96,6 +96,8 @@ if (history.state) {
       console.error(e)
       AppState.dispatch({type: 'subjects'})
     }
+  } else if (loc === '/topics/') {
+    AppState.dispatch({type: 'topics'})
   } else if (loc === '/help/') {
     AppState.dispatch({type: 'home'})
     AppState.dispatch({type: 'show-help'})

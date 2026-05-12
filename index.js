@@ -476,6 +476,46 @@ module.exports = ({mongodb: db, elasticsearch: es, siteOrigin}) => {
       }, err => next(err))
     })
 
+    const topicQuery = require('./lib/topicQuery')
+
+    rMain.get('/topics/', function (req, res, next) {
+      renderView({ view: 'topics' }, res)
+    })
+
+    rMain.get('/topics/syllabus/', function (req, res, next) {
+      const { subject, level } = req.query
+      if (!subject || !level) {
+        res.status(400).json({ error: 'subject and level query params required' })
+        return
+      }
+      const syllabus = topicQuery.loadSyllabus(subject.toString(), level.toString())
+      if (!syllabus) {
+        res.status(404).json({ error: `No syllabus found for ${subject} ${level}` })
+        return
+      }
+      res.json(syllabus)
+    })
+
+    rMain.post('/topics/questions/', function (req, res, next) {
+      postJsonReceiver(req, res, next, function (body) {
+        if (!body.subject || !body.level || !Array.isArray(body.selections)) {
+          res.status(400).json({ error: 'subject, level, and selections are required' })
+          return
+        }
+        topicQuery.queryQuestions(body, PastPaperDoc).then(result => {
+          res.json(result)
+        }, err => next(err))
+      })
+    })
+
+    rMain.post('/topics/export/qp.pdf', function (req, res) {
+      res.status(501).json({ error: 'Question paper PDF export not yet implemented' })
+    })
+
+    rMain.post('/topics/export/ms.pdf', function (req, res) {
+      res.status(501).json({ error: 'Mark scheme PDF export not yet implemented' })
+    })
+
     rMain.get('/robots.txt', function (req, res) {
       res.type('txt')
       res.send('')

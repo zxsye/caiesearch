@@ -10,6 +10,7 @@ import * as bowser from 'bowser'
 import SubjectsView from './subjectsview.jsx'
 import Help from './help.jsx'
 import PaperViewer from './paperviewer.jsx'
+import TopicBrowser from './topicbrowser.jsx'
 
 export default class SchSrch extends React.Component {
   constructor (props) {
@@ -96,6 +97,8 @@ export default class SchSrch extends React.Component {
           return this.renderViewCollection()
         case 'subjects':
           return this.renderViewSubjects()
+        case 'topics':
+          return this.renderViewTopics()
       }
     })()
     return (
@@ -270,6 +273,13 @@ export default class SchSrch extends React.Component {
     return (
       <div className='view view-subjects'>
         <SubjectsView statistics={AppState.getState().subjectStatistics} />
+      </div>
+    )
+  }
+  renderViewTopics () {
+    return (
+      <div className='view view-topics'>
+        <TopicBrowser />
       </div>
     )
   }

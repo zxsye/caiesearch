@@ -2711,3 +2711,304 @@ $feedback-top-height: 2rem + 1.3rem
   height: auto
   position: absolute
   top: 100%
+
+// ─── Topic Browser ───────────────────────────────────────────────────────────
+.view-topics
+  overflow-y: auto
+  flex: 1
+
+.topic-browser
+  display: flex
+  flex-direction: column
+  height: 100%
+  min-height: 0
+
+  .tb-header
+    padding: 1rem 1.5rem 0.5rem
+    border-bottom: 1px solid rgba($color-secondary-text, 0.15)
+
+  .tb-title
+    margin: 0
+    font-size: 1.2rem
+    font-weight: 600
+
+  .tb-body
+    display: flex
+    flex: 1
+    min-height: 0
+    gap: 0
+    overflow: hidden
+
+  .tb-panel
+    display: flex
+    flex-direction: column
+    overflow-y: auto
+    padding: 1rem
+
+  .tb-panel-left
+    width: 280px
+    min-width: 220px
+    border-right: 1px solid rgba($color-secondary-text, 0.15)
+    flex-shrink: 0
+
+  .tb-panel-right
+    width: 220px
+    min-width: 180px
+    border-right: 1px solid rgba($color-secondary-text, 0.15)
+    flex-shrink: 0
+
+  .tb-panel-center
+    flex: 1
+    min-width: 0
+
+  .tb-section-title
+    font-size: 0.75rem
+    font-weight: 700
+    text-transform: uppercase
+    letter-spacing: 0.05em
+    color: $color-secondary-text
+    margin-bottom: 0.5rem
+
+  .tb-selection-count
+    font-weight: 400
+    color: $color-primary
+
+  .tb-subject-row
+    display: flex
+    flex-direction: column
+    gap: 0.5rem
+    margin-bottom: 0.5rem
+
+  .tb-select
+    width: 100%
+    padding: 0.3rem 0.4rem
+    border: 1px solid rgba($color-secondary-text, 0.3)
+    border-radius: 4px
+    font-size: 0.85rem
+    background: transparent
+    color: inherit
+
+  .tb-level-tabs
+    display: flex
+    gap: 0.25rem
+
+  .tb-level-tab
+    flex: 1
+    padding: 0.25rem 0.5rem
+    border: 1px solid rgba($color-secondary-text, 0.3)
+    border-radius: 4px
+    background: transparent
+    cursor: pointer
+    font-size: 0.85rem
+    color: inherit
+    &.active
+      background: $color-primary
+      color: white
+      border-color: $color-primary
+
+  .tb-clear-btn
+    margin-top: 0.75rem
+    padding: 0.3rem 0.75rem
+    border: 1px solid rgba($color-secondary-text, 0.3)
+    border-radius: 4px
+    background: transparent
+    cursor: pointer
+    font-size: 0.8rem
+    color: $color-secondary-text
+    align-self: flex-start
+    &:hover
+      border-color: $color-secondary-text
+
+  .tb-filter-group
+    margin-bottom: 0.75rem
+
+  .tb-label
+    display: block
+    font-size: 0.75rem
+    font-weight: 600
+    color: $color-secondary-text
+    margin-bottom: 0.25rem
+
+  .tb-year-row
+    display: flex
+    align-items: center
+    gap: 0.25rem
+
+  .tb-year-sep
+    color: $color-secondary-text
+
+  .tb-input
+    padding: 0.25rem 0.4rem
+    border: 1px solid rgba($color-secondary-text, 0.3)
+    border-radius: 4px
+    font-size: 0.85rem
+    background: transparent
+    color: inherit
+    width: 100%
+    box-sizing: border-box
+
+  .tb-year-input
+    width: 70px
+
+  .tb-checkbox-row,
+  .tb-radio-row
+    display: flex
+    flex-wrap: wrap
+    gap: 0.35rem 0.75rem
+
+  .tb-checkbox-label,
+  .tb-radio-label
+    font-size: 0.85rem
+    display: flex
+    align-items: center
+    gap: 0.25rem
+    cursor: pointer
+
+  .tb-apply-btn
+    width: 100%
+    padding: 0.4rem 0.75rem
+    background: $color-primary
+    color: white
+    border: none
+    border-radius: 4px
+    font-size: 0.9rem
+    cursor: pointer
+    margin-top: 0.5rem
+    &:hover
+      opacity: 0.9
+
+  .tb-export-bar
+    display: flex
+    gap: 0.5rem
+    margin-top: 0.75rem
+    flex-wrap: wrap
+
+  .tb-export-btn
+    flex: 1
+    padding: 0.3rem 0.4rem
+    border: 1px solid rgba($color-secondary-text, 0.3)
+    border-radius: 4px
+    background: transparent
+    color: $color-secondary-text
+    font-size: 0.8rem
+    cursor: not-allowed
+    opacity: 0.6
+
+  .tb-status
+    padding: 1rem 0
+    color: $color-secondary-text
+    font-size: 0.9rem
+
+  .tb-hint
+    font-style: italic
+
+  .tb-error
+    color: #c0392b
+
+  .tb-warning
+    font-size: 0.8rem
+    color: #e67e22
+    margin-top: 0.25rem
+
+  .tb-seed
+    font-size: 0.75rem
+    color: $color-secondary-text
+    font-family: monospace
+
+  .tb-results-header
+    margin-bottom: 0.5rem
+
+  .tb-result-count
+    font-weight: 400
+    color: $color-secondary-text
+
+  .tb-result-list
+    display: flex
+    flex-direction: column
+
+  .tb-result-row
+    padding: 0.6rem 0.75rem
+    border-bottom: 1px solid rgba($color-secondary-text, 0.1)
+    cursor: pointer
+    display: flex
+    flex-direction: column
+    gap: 0.2rem
+    &:hover
+      background: rgba($color-primary, 0.05)
+
+  .tb-result-qn
+    font-weight: 700
+    font-size: 0.95rem
+
+  .tb-result-meta
+    font-size: 0.8rem
+    color: $color-secondary-text
+    display: flex
+    gap: 0.5rem
+
+  .tb-result-topics
+    display: flex
+    flex-wrap: wrap
+    gap: 0.25rem
+    margin-top: 0.15rem
+
+  .subpart-badge
+    background: rgba($color-primary, 0.12)
+    color: $color-primary
+
+// ─── Syllabus Tree ────────────────────────────────────────────────────────────
+.syllabus-tree
+  display: flex
+  flex-direction: column
+
+.syllabus-topic
+  border-bottom: 1px solid rgba($color-secondary-text, 0.08)
+
+  .syllabus-topic-row
+    display: flex
+    align-items: center
+    padding: 0.35rem 0
+    gap: 0.4rem
+    cursor: default
+
+  .syllabus-topic-name
+    flex: 1
+    font-size: 0.85rem
+    cursor: pointer
+    &:hover
+      color: $color-primary
+
+  .syllabus-topic-num
+    color: $color-secondary-text
+    font-size: 0.8rem
+
+  .syllabus-expand-btn
+    color: $color-secondary-text
+    cursor: pointer
+    font-size: 0.75rem
+    padding: 0 0.2rem
+    &:hover
+      color: $color-primary
+
+  .syllabus-checkbox
+    flex-shrink: 0
+    cursor: pointer
+
+.syllabus-subtopics
+  padding-left: 1.5rem
+  padding-bottom: 0.25rem
+
+  .syllabus-subtopic-row
+    display: flex
+    align-items: center
+    padding: 0.2rem 0
+    gap: 0.4rem
+
+  .syllabus-subtopic-name
+    font-size: 0.82rem
+    flex: 1
+
+.syllabus-tree-empty
+  color: $color-secondary-text
+  font-size: 0.85rem
+  font-style: italic

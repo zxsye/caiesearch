@@ -196,6 +196,11 @@ let AppState = createStore(function (state = {}, action) {
         view: 'subjects',
         subjectStatistics: null
       })
+    case 'topics':
+      return Object.assign({}, state, {
+        view: 'topics',
+        showSidebar: false
+      })
     case 'subjects-stst-perpare':
       return Object.assign({}, state, {
         subjectStatistics: Object.assign({}, state.subjectStatistics || {}, {
