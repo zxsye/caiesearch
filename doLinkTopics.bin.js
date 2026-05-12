@@ -109,12 +109,15 @@ async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) 
   const prompt =
     `You are a CIE (Cambridge International) examiner for subject ${subjectId}. ` +
     `Below is the exact text of Question ${qN} extracted from a past exam paper.\n\n` +
-    `Your task: identify which of the following syllabus topics this question covers. ` +
-    `Use the provided syllabus structure (topics, subtopics, and learning outcomes) for precision.\n\n` +
+    `Your task: identify which syllabus topics each part of this question covers.\n\n` +
     `Syllabus Structure:\n${syllabusStr}\n\n` +
     `Question Text:\n${questionText}\n\n` +
-    `Return ONLY a JSON array of matching TOPIC NAMES (the 'topic_name' field from the JSON). ` +
-    `If no topics match, return []. Do not include explanations or markdown.`
+    `Return a JSON array of objects for each main part of the question (e.g. (a), (b), (c)). ` +
+    `Focus only on the primary sub-question levels (a, b, c); do not create separate entries for sub-sub-parts like (i), (ii) or (1), (2). ` +
+    `Each object should have:\n` +
+    `- "part": The label of the part (e.g. "(a)", "(b)", or null if it's the main question body).\n` +
+    `- "topics": A JSON array of matching TOPIC NAMES from the syllabus.\n\n` +
+    `Return ONLY the JSON array. Do not include markdown or explanations.`
 
   try {
     const response = await ai.models.generateContentStream({
@@ -146,11 +149,26 @@ async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) 
     const match = text.match(/\[.*\]/s)
     if (match) {
       const detected = JSON.parse(match[0])
-      console.log(`  [Q${qN}] Topics: ${detected.length > 0 ? detected.join(', ') : 'None'}`)
-      return detected
+      const uniqueTopics = new Set()
+      const subparts = []
+
+      for (const item of detected) {
+        if (!item.topics || item.topics.length === 0) continue
+        subparts.push({
+          part: item.part,
+          topics: item.topics
+        })
+        for (const t of item.topics) {
+          uniqueTopics.add(t)
+        }
+      }
+      
+      const topicsArr = Array.from(uniqueTopics)
+      console.log(`  [Q${qN}] Detected ${subparts.length} parts, ${topicsArr.length} unique topics.`)
+      return { topics: topicsArr, subparts }
     } else {
       console.warn(`  [Q${qN}] No JSON array found in Gemini response: ${text.substring(0, 100)}`)
-      return []
+      return { topics: [], subparts: [] }
     }
   } catch (e) {
     console.error(`  [Q${qN}] Gemini error: ${e.message}`)
@@ -158,14 +176,73 @@ async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) 
   }
 }
 
+async function tagQuestionsBulkWithGemini(questionsBatch, subjectId, syllabusData, maxTopics) {
+  if (!questionsBatch || questionsBatch.length === 0) return []
+
+  const syllabusStr = JSON.stringify(syllabusData, null, 2)
+  let questionsPrompt = questionsBatch.map(q => `Question ${q.qN}:\n${q.text}\n`).join('\n---\n')
+
+  const prompt =
+    `You are a CIE (Cambridge International) examiner for subject ${subjectId}. ` +
+    `Below are the exact texts of ${questionsBatch.length} multiple-choice questions extracted from a past exam paper.\n\n` +
+    `Your task: identify which syllabus topics each question covers. ` +
+    `Since these are multiple-choice questions, they do not have sub-parts. ` +
+    `You MUST identify at most ${maxTopics} topic(s) per question.\n\n` +
+    `Syllabus Structure:\n${syllabusStr}\n\n` +
+    `Questions:\n${questionsPrompt}\n\n` +
+    `Return ONLY a JSON array of objects, one for each question. ` +
+    `Each object should have:\n` +
+    `- "qN": The integer question number.\n` +
+    `- "topics": A JSON array of matching TOPIC NAMES from the syllabus (maximum ${maxTopics}).\n\n` +
+    `Return ONLY the JSON array. Do not include markdown or explanations.`
+
+  try {
+    const response = await ai.models.generateContentStream({
+      model: MODEL_NAME,
+      config: {
+        thinkingConfig: {
+          thinkingLevel: 'MINIMAL'
+        }
+      },
+      contents: [{ role: 'user', parts: [{ text: prompt }] }]
+    })
+
+    let fullText = ''
+    for await (const chunk of response) {
+      if (chunk.text) fullText += chunk.text
+    }
+
+    let text = fullText.trim()
+    text = text.replace(/^```(?:json)?/m, '').replace(/```$/m, '').trim()
+
+    const match = text.match(/\[.*\]/s)
+    if (match) {
+      const detected = JSON.parse(match[0])
+      console.log(`  [Bulk] Processed ${detected.length} questions.`)
+      // Convert to expected format {qN, result: {topics, subparts}}
+      return detected.map(item => ({
+        qN: item.qN,
+        result: { topics: item.topics || [], subparts: [] } // No subparts for MCQ
+      }))
+    } else {
+      console.warn(`  [Bulk] No JSON array found in Gemini response: ${text.substring(0, 100)}`)
+      return []
+    }
+  } catch (e) {
+    console.error(`  [Bulk] Gemini error: ${e.message}`)
+    return []
+  }
+}
+
 // ─── Phase 3: MongoDB write ───────────────────────────────────────────────────
 
-async function saveTopicsToDoc(doc, qN, topics) {
+async function saveTopicsToDoc(doc, qN, result) {
   const dirs = doc.dir && doc.dir.dirs
   if (!Array.isArray(dirs)) return
   const entry = dirs.find(d => d.qN === qN)
   if (!entry) return
-  entry.topics = topics
+  entry.topics = result.topics
+  entry.subparts = result.subparts
   doc.markModified('dir')
   await doc.save()
 }
@@ -288,15 +365,37 @@ db.on('open', async () => {
         continue
       }
 
-      for (const { qN, text } of questionSlices) {
-        const dirEntry = dirs.find(d => d.qN === qN)
-        if (dirEntry && dirEntry.topics && dirEntry.topics.length > 0 && !force) continue
+      const isMcq = subjectConfig && subjectConfig.mcq_papers && subjectConfig.mcq_papers.includes(doc.paper)
+      const mcqBulkSize = (subjectConfig && subjectConfig.mcq_bulk_size) || 5
+      const mcqMaxTopics = (subjectConfig && subjectConfig.mcq_max_topics) || 2
 
-        const detectedTopics = await tagQuestionWithGemini(qN, text, targetSubject, syllabusData)
-        await saveTopicsToDoc(doc, qN, detectedTopics)
+      if (isMcq) {
+        let questionsToProcess = []
+        for (const qs of questionSlices) {
+          const dirEntry = dirs.find(d => d.qN === qs.qN)
+          if (dirEntry && dirEntry.topics && dirEntry.topics.length > 0 && !force) continue
+          questionsToProcess.push(qs)
+        }
 
-        // Respect rate limits (Thinking mode might be slower/stricter)
-        await new Promise(resolve => setTimeout(resolve, 2000))
+        for (let i = 0; i < questionsToProcess.length; i += mcqBulkSize) {
+          const batch = questionsToProcess.slice(i, i + mcqBulkSize)
+          const bulkResults = await tagQuestionsBulkWithGemini(batch, targetSubject, syllabusData, mcqMaxTopics)
+          for (const res of bulkResults) {
+            await saveTopicsToDoc(doc, res.qN, res.result)
+          }
+          await new Promise(resolve => setTimeout(resolve, 2000))
+        }
+      } else {
+        for (const { qN, text } of questionSlices) {
+          const dirEntry = dirs.find(d => d.qN === qN)
+          if (dirEntry && dirEntry.topics && dirEntry.topics.length > 0 && !force) continue
+
+          const result = await tagQuestionWithGemini(qN, text, targetSubject, syllabusData)
+          await saveTopicsToDoc(doc, qN, result)
+
+          // Respect rate limits (Thinking mode might be slower/stricter)
+          await new Promise(resolve => setTimeout(resolve, 2000))
+        }
       }
       console.log(`  ✓ Finished ${paperName}.`)
     }

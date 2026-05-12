@@ -17,6 +17,19 @@
       "A2": {
         "type": "array",
         "items": { "type": "integer" }
+      },
+      "mcq_papers": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "List of paper numbers that are multiple choice (e.g. [1])."
+      },
+      "mcq_bulk_size": {
+        "type": "integer",
+        "description": "How many questions to send to Gemini at once for MCQ papers."
+      },
+      "mcq_max_topics": {
+        "type": "integer",
+        "description": "Maximum number of topics to allow per MCQ question."
       }
     },
     "required": ["AS", "A2"]

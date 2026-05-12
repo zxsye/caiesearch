@@ -7,16 +7,25 @@
   "9701": {
     "subject_name": "Chemistry",
     "AS": [1, 2, 3],
-    "A2": [4, 5]
+    "A2": [4, 5],
+    "mcq_papers": [1],
+    "mcq_bulk_size": 5,
+    "mcq_max_topics": 2
   },
   "9702": {
     "subject_name": "Physics",
     "AS": [1, 2, 3],
-    "A2": [4, 5]
+    "A2": [4, 5],
+    "mcq_papers": [1],
+    "mcq_bulk_size": 5,
+    "mcq_max_topics": 2
   },
   "9700": {
     "subject_name": "Biology",
     "AS": [1, 2, 3],
-    "A2": [4, 5]
+    "A2": [4, 5],
+    "mcq_papers": [1],
+    "mcq_bulk_size": 5,
+    "mcq_max_topics": 2
   }
 }
