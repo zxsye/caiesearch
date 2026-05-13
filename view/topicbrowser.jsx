@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { AppState } from './appstate.js'
+import HomeButton from './homebutton.jsx'
 import SyllabusTree from './syllabustree.jsx'
 const PaperUtils = require('./paperutils.js')
 import * as FetchErrorPromise from './fetcherrorpromise.jsx'
@@ -81,7 +82,8 @@ export default class TopicBrowser extends React.Component {
       // Export
       exporting: null, // null | 'qp' | 'ms'
       exportError: null,
-      exportWarnings: null
+      exportWarnings: null,
+      lastExportNote: null
     }
 
     this.handleApply = this.handleApply.bind(this)
@@ -221,7 +223,7 @@ export default class TopicBrowser extends React.Component {
     }
 
     const body = this.buildQueryBody()
-    this.setState({ exporting: kind, exportError: null, exportWarnings: null })
+    this.setState({ exporting: kind, exportError: null, exportWarnings: null, lastExportNote: null })
 
     fetch(`/topics/export/${kind}.pdf`, {
       method: 'POST',
@@ -243,9 +245,10 @@ export default class TopicBrowser extends React.Component {
         if (wh) {
           try { warnings = JSON.parse(decodeURIComponent(wh)) } catch (e) {}
         }
-        return r.blob().then(blob => ({ blob, filename, warnings }))
+        const qCount = parseInt(r.headers.get('X-Export-Question-Count') || '0', 10) || null
+        return r.blob().then(blob => ({ blob, filename, warnings, qCount }))
       })
-      .then(({ blob, filename, warnings }) => {
+      .then(({ blob, filename, warnings, qCount }) => {
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
@@ -254,7 +257,10 @@ export default class TopicBrowser extends React.Component {
         a.click()
         a.remove()
         setTimeout(() => URL.revokeObjectURL(url), 1000)
-        this.setState({ exporting: null, exportWarnings: warnings })
+        const note = qCount
+          ? `${qCount} matched question${qCount === 1 ? '' : 's'} highlighted in the PDF.`
+          : 'Matched questions are highlighted on each page.'
+        this.setState({ exporting: null, exportWarnings: warnings, lastExportNote: warnings ? null : note })
       })
       .catch(err => {
         this.setState({ exporting: null, exportError: err.message || String(err) })
@@ -273,7 +279,7 @@ export default class TopicBrowser extends React.Component {
   }
 
   renderExportBar () {
-    const { exporting, exportError, exportWarnings, selections } = this.state
+    const { exporting, exportError, exportWarnings, lastExportNote, selections } = this.state
     const disabled = exporting !== null || selections.length === 0
     const qpLabel = exporting === 'qp' ? 'Exporting…' : 'Export QP PDF'
     const msLabel = exporting === 'ms' ? 'Exporting…' : 'Export MS PDF'
@@ -307,6 +313,7 @@ export default class TopicBrowser extends React.Component {
             </ul>
           </div>
         )}
+        {lastExportNote && <div className='tb-export-note'>{lastExportNote}</div>}
       </div>
     )
   }
@@ -584,6 +591,7 @@ export default class TopicBrowser extends React.Component {
       <div className='topic-browser'>
         <div className='tb-header'>
           <h2 className='tb-title'>Browse by Topic</h2>
+          <HomeButton />
         </div>
         <div className='tb-body'>
           {this.renderSubjectPanel()}

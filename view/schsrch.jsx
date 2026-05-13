@@ -272,6 +272,12 @@ export default class SchSrch extends React.Component {
   renderViewSubjects () {
     return (
       <div className='view view-subjects'>
+        {!this.state.showSidebar && !this.state.server
+          ? (
+              <div className='sidebarbtn' onClick={evt => AppState.dispatch({type: 'show-sidebar'})}>
+                <svg className="icon ii-bars"><use href="#ii-bars" xlinkHref="#ii-bars"></use></svg>
+              </div>
+            ) : null}
         <SubjectsView statistics={AppState.getState().subjectStatistics} />
       </div>
     )

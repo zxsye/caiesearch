@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as FetchErrorPromise from './fetcherrorpromise.jsx'
 import { AppState } from './appstate.js'
+import { navigateHome } from './homebutton.jsx'
 
 export default class Sidebar extends React.Component {
   constructor (props) {
@@ -21,7 +22,7 @@ export default class Sidebar extends React.Component {
           ) : null}
         <div className='menu'>
           <div className='menu-section'>Navigation</div>
-          <div className={'menuitem' + (view === 'home' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'home'})}>
+          <div className={'menuitem' + (view === 'home' ? ' current' : '')} onClick={evt => navigateHome()}>
             <span className='icon'>🏠</span> Home
           </div>
           <div className={'menuitem' + (view === 'subjects' ? ' current' : '')} onClick={evt => AppState.dispatch({type: 'subjects'})}>

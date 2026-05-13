@@ -1,6 +1,6 @@
 const should = require('should')
 const { PDFDocument } = require('pdf-lib')
-const { exportPdf, computePageIndices, TopicExportError, MAX_OUTPUT_PAGES } = require('../lib/topicExport')
+const { exportPdf, computePageIndices, groupMatchesBySourcePage, TopicExportError, MAX_OUTPUT_PAGES } = require('../lib/topicExport')
 
 // Build a small PDF buffer with `numPages` blank pages (US-Letter sized).
 async function makeFixturePdf (numPages) {
@@ -121,7 +121,7 @@ module.exports = () =>
         const docs = [
           makeDoc({
             id: 'a', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
-            numPages: 6,
+            numPages: 4,
             dirs: [
               { qN: 1, page: 1, topics: ['Chemical Bonding'] },
               { qN: 2, page: 2, topics: ['Chemical Bonding'] },
@@ -192,7 +192,7 @@ module.exports = () =>
         })
         const ms = makeDoc({
           id: 'ms1', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'ms',
-          numPages: 4,
+          numPages: 3,
           dirs: [
             { qN: 1, page: 1 },
             { qN: 2, page: 2 }
@@ -274,7 +274,7 @@ module.exports = () =>
         })
         const ms1 = makeDoc({
           id: 'ms1', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'ms',
-          numPages: 4,
+          numPages: 2,
           dirs: [{ qN: 1, page: 1 }]
         })
         const { buffer, meta } = await exportPdf(baseReq, 'ms', mockDb([qp1, qp2, ms1]))
@@ -302,6 +302,136 @@ module.exports = () =>
           e.code.should.equal('TOO_LARGE')
           e.status.should.equal(413)
         }
+      })
+    })
+
+    describe('exportPdf – same-page merge', function () {
+      it('emits one page when two matched qNs share the same source page', async function () {
+        const doc = makeDoc({
+          id: 'sp', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 4,
+          dirs: [
+            { qN: 1, page: 2, topics: ['Chemical Bonding'] },
+            { qN: 2, page: 2, topics: ['Chemical Bonding'] },
+            { qN: 3, page: 3, topics: [] }
+          ]
+        })
+        const { buffer, meta } = await exportPdf(baseReq, 'qp', mockDb([doc]))
+        const merged = await PDFDocument.load(buffer)
+        merged.getPageCount().should.equal(1)
+        meta.questionCount.should.equal(2)
+        meta.pageCount.should.equal(1)
+      })
+
+      it('two matched qNs on different pages still produce two pages', async function () {
+        const doc = makeDoc({
+          id: 'dp', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 4,
+          dirs: [
+            { qN: 1, page: 1, topics: ['Chemical Bonding'] },
+            { qN: 2, page: 2, topics: ['Chemical Bonding'] },
+            { qN: 3, page: 3, topics: [] }
+          ]
+        })
+        const { buffer, meta } = await exportPdf(baseReq, 'qp', mockDb([doc]))
+        const merged = await PDFDocument.load(buffer)
+        merged.getPageCount().should.equal(2)
+        meta.questionCount.should.equal(2)
+        meta.pageCount.should.equal(2)
+      })
+    })
+
+    describe('exportPdf – markings metadata', function () {
+      it('meta.markings contains one entry per matched qN start page', async function () {
+        const doc = makeDoc({
+          id: 'mk', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 3,
+          dirs: [
+            { qN: 1, page: 1, topics: ['Chemical Bonding'], qNRect: { x1: 60, x2: 80, y1: 100, y2: 115 } },
+            { qN: 2, page: 2, topics: ['Chemical Bonding'], qNRect: { x1: 60, x2: 80, y1: 100, y2: 115 } }
+          ]
+        })
+        const { meta } = await exportPdf(baseReq, 'qp', mockDb([doc]))
+        meta.markings.should.be.an.Array()
+        meta.markings.length.should.equal(2)
+        meta.markings[0].qN.should.equal(1)
+        meta.markings[1].qN.should.equal(2)
+        meta.markings[0].matchedTopics.should.deepEqual(['Chemical Bonding'])
+        meta.markings.every(m => typeof m.docId === 'string').should.be.true()
+        meta.markings.every(m => typeof m.page === 'number').should.be.true()
+      })
+
+      it('continuation pages are emitted but do not add markings entries', async function () {
+        const doc = makeDoc({
+          id: 'cont', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 6,
+          dirs: [
+            { qN: 1, page: 1, topics: ['Chemical Bonding'], qNRect: { x1: 60, x2: 80, y1: 100, y2: 115 } },
+            { qN: 2, page: 4, topics: [] }
+          ]
+        })
+        // qN 1 spans pages 1–3
+        const { buffer, meta } = await exportPdf(baseReq, 'qp', mockDb([doc]))
+        const merged = await PDFDocument.load(buffer)
+        merged.getPageCount().should.equal(3)
+        meta.markings.length.should.equal(1)
+        meta.markings[0].qN.should.equal(1)
+      })
+    })
+
+    describe('exportPdf – MS row highlight', function () {
+      it('two matched qNs on same MS page produce one page with two markings', async function () {
+        const qp = makeDoc({
+          id: 'qp-mh', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 4,
+          dirs: [
+            { qN: 1, page: 1, topics: ['Chemical Bonding'] },
+            { qN: 2, page: 2, topics: ['Chemical Bonding'] },
+            { qN: 3, page: 3 }
+          ]
+        })
+        const ms = makeDoc({
+          id: 'ms-mh', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'ms',
+          numPages: 2,
+          dirs: [
+            { qN: 1, page: 1, qNRect: { x1: 60, x2: 80, y1: 50, y2: 65 } },
+            { qN: 2, page: 1, qNRect: { x1: 60, x2: 80, y1: 100, y2: 115 } }
+          ]
+        })
+        const { buffer, meta } = await exportPdf(baseReq, 'ms', mockDb([qp, ms]))
+        const merged = await PDFDocument.load(buffer)
+        merged.getPageCount().should.equal(1)
+        meta.pageCount.should.equal(1)
+        meta.markings.should.be.an.Array()
+        meta.markings.length.should.equal(2)
+      })
+    })
+
+    describe('exportPdf – renderer option', function () {
+      it('rejects unknown renderer with BAD_RENDERER', async function () {
+        const doc = makeDoc({
+          id: 'rr', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 3,
+          dirs: [{ qN: 1, page: 1, topics: ['Chemical Bonding'] }]
+        })
+        try {
+          await exportPdf(baseReq, 'qp', mockDb([doc]), { renderer: 'nonexistent' })
+          should.fail('expected throw')
+        } catch (e) {
+          e.should.be.an.instanceOf(TopicExportError)
+          e.code.should.equal('BAD_RENDERER')
+          e.status.should.equal(400)
+        }
+      })
+
+      it('accepts explicit renderer: highlight', async function () {
+        const doc = makeDoc({
+          id: 'rh', subject: '9701', time: 's22', paper: 1, variant: 1, type: 'qp',
+          numPages: 3,
+          dirs: [{ qN: 1, page: 1, topics: ['Chemical Bonding'] }]
+        })
+        const { buffer } = await exportPdf(baseReq, 'qp', mockDb([doc]), { renderer: 'highlight' })
+        should(buffer).be.an.instanceOf(Buffer)
       })
     })
   })

@@ -2076,10 +2076,19 @@ $feedback-top-height: 2rem + 1.3rem
     margin-top: 1rem
 
 .schsrch .view.view-subjects
+  position: relative
   padding: var(--cs-space-4) var(--cs-space-8)
   overflow-y: auto !important
   @media (max-width: 768px)
     padding: var(--cs-space-4)
+
+  .sidebarbtn
+    position: absolute
+    top: var(--cs-space-4)
+    left: var(--cs-space-4)
+    width: auto
+    height: auto
+    z-index: 1
 
   .subjects-redesign
     max-width: 1200px
@@ -2712,6 +2721,35 @@ $feedback-top-height: 2rem + 1.3rem
   position: absolute
   top: 100%
 
+// ─── Shared nav controls ─────────────────────────────────────────────────────
+.schsrch-home-btn
+  display: inline-flex
+  align-items: center
+  gap: 0.35rem
+  flex-shrink: 0
+  padding: 0.35rem 0.65rem
+  border: 1px solid rgba($color-secondary-text, 0.35)
+  border-radius: 4px
+  background: transparent
+  cursor: pointer
+  font-size: 0.875rem
+  font-family: inherit
+  color: inherit
+  line-height: 1.2
+  &:hover
+    border-color: $color-primary
+    color: $color-primary
+  &:focus-visible
+    outline: 2px solid $color-primary
+    outline-offset: 2px
+
+  &__icon
+    font-size: 1rem
+    line-height: 1
+
+  &__label
+    white-space: nowrap
+
 // ─── Topic Browser ───────────────────────────────────────────────────────────
 .view-topics
   overflow-y: auto
@@ -2724,11 +2762,17 @@ $feedback-top-height: 2rem + 1.3rem
   min-height: 0
 
   .tb-header
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 0.75rem
     padding: 1rem 1.5rem 0.5rem
     border-bottom: 1px solid rgba($color-secondary-text, 0.15)
 
   .tb-title
     margin: 0
+    flex: 1
+    min-width: 0
     font-size: 1.2rem
     font-weight: 600
 
@@ -2970,6 +3014,12 @@ $feedback-top-height: 2rem + 1.3rem
       padding-left: 1rem
     li
       list-style: disc
+
+  .tb-export-note
+    margin-top: 0.4rem
+    font-size: 0.75rem
+    color: $color-secondary-text
+    font-style: italic
 
   .tb-status
     padding: 1rem 0
