@@ -51,6 +51,45 @@ db.on('open', () => {
       if (debug) {
         process.stderr.write(`Reading ${path}\n`)
       }
+
+      // Quick mode: when QUICK=1, skip sspdf text extraction and Elasticsearch
+      // indexing for files whose metadata is fully encoded in the filename.
+      // Files that need cover-page detection still go through the full path.
+      if (noCacheSSPDF) {
+        const nameMat = fname.match(/^(\d+)_([a-z]\d\d)_([a-zA-Z0-9]+)_(\d{1,2})\.pdf$/)
+        const nameErMat = fname.match(/^(\d+)_([a-z]\d\d)_([a-zA-Z0-9]+)\.pdf$/)
+        if (nameMat || nameErMat) {
+          let mt
+          if (nameMat) {
+            const pv = nameMat[4]
+            mt = {
+              subject: nameMat[1], time: nameMat[2], type: nameMat[3],
+              paper: parseInt(pv.length === 1 || pv[0] === '0' ? pv[pv.length - 1] : pv[0]),
+              variant: parseInt(pv.length === 2 && pv[0] !== '0' ? pv[1] : 0)
+            }
+          } else {
+            mt = { subject: nameErMat[1], time: nameErMat[2], type: nameErMat[3], paper: 0, variant: 0 }
+          }
+          const setStr = PaperUtils.setToString(mt)
+          if (raceLock[setStr] && raceLock[setStr][mt.type]) {
+            if (debug) process.stderr.write(`Duplicate raceLock for ${path}, discarding.\n`)
+            return void resolve()
+          }
+          const lt = raceLock[setStr] || (raceLock[setStr] = {})
+          lt[mt.type] = true
+          fs.readFile(path, (err, data) => {
+            if (err) return void reject(err)
+            const doc = new PastPaperDoc({ ...mt, fileBlob: null, fileType: 'pdf' })
+            storeData(data, doc)
+              .then(() => PastPaperDoc.find(mt, { _id: true }).exec())
+              .then(docs => Promise.all(docs.map(d => removeDoc(d))))
+              .then(() => doc.save())
+              .then(resolve, reject)
+          })
+          return
+        }
+      }
+
       fs.readFile(path, (err, data) => {
         if (err) {
           reject(err)

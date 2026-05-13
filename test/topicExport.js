@@ -25,6 +25,7 @@ function makeDoc ({ id, subject, time, paper, variant, type, dirs, numPages, fil
     this._fixtureBlob = await makeFixturePdf(doc.numPages)
     return this._fixtureBlob
   }
+  doc.ensureDir = async function () { return this.dir }
   return doc
 }
 

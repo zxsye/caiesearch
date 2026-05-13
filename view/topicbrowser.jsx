@@ -68,7 +68,7 @@ export default class TopicBrowser extends React.Component {
       randomSeed: '',
       samplingMode: 'all',
       samplingTotal: '20',
-      samplingPerTopic: [],
+      samplingWeights: {},
 
       showAdvanced: false,
 
@@ -141,7 +141,7 @@ export default class TopicBrowser extends React.Component {
     const {
       subject, level, selections,
       yearFrom, yearTo, seasons, papers, variants,
-      orderingMode, randomSeed, samplingMode, samplingTotal, samplingPerTopic
+      orderingMode, randomSeed, samplingMode, samplingTotal, samplingWeights
     } = this.state
 
     const body = {
@@ -169,8 +169,14 @@ export default class TopicBrowser extends React.Component {
 
     if (samplingMode !== 'all') {
       body.sampling = { mode: samplingMode, total: parseInt(samplingTotal) || 20 }
-      if (samplingMode === 'proportions' && samplingPerTopic.length > 0) {
-        body.sampling.perTopic = samplingPerTopic
+      if (samplingMode === 'proportions') {
+        body.sampling.perSelection = selections
+          .map(s => ({
+            kind: s.kind,
+            name: s.name,
+            weight: Number(samplingWeights[`${s.kind}:${s.name}`] ?? 1)
+          }))
+          .filter(p => Number.isFinite(p.weight) && p.weight > 0)
       }
     }
 
@@ -373,6 +379,7 @@ export default class TopicBrowser extends React.Component {
     const {
       yearFrom, yearTo, seasons, papers,
       orderingMode, randomSeed, samplingMode, samplingTotal,
+      selections, samplingWeights,
       showAdvanced
     } = this.state
 
@@ -494,6 +501,42 @@ export default class TopicBrowser extends React.Component {
               style={{ marginTop: '4px' }}
             />
           )}
+          {samplingMode === 'proportions' && selections.length > 0 && (() => {
+            const total = parseInt(samplingTotal) || 0
+            const weights = selections.map(s =>
+              Number(samplingWeights[`${s.kind}:${s.name}`] ?? 1))
+            const sumW = weights.reduce((a, b) => a + (b > 0 ? b : 0), 0)
+            return (
+              <div className='tb-ratio-editor'>
+                {selections.map((sel, i) => {
+                  const key = `${sel.kind}:${sel.name}`
+                  const w = weights[i]
+                  const approx = sumW > 0 && w > 0 ? Math.round(total * w / sumW) : 0
+                  return (
+                    <div className='tb-ratio-row' key={key}>
+                      <span className='tb-ratio-kind'>{sel.kind === 'topic' ? 'T' : 'S'}</span>
+                      <span className='tb-ratio-label' title={sel.name}>{sel.name}</span>
+                      <input
+                        className='tb-ratio-input'
+                        type='number' min='0' step='1'
+                        value={samplingWeights[key] ?? 1}
+                        onChange={e => {
+                          const v = e.target.value
+                          this.setState(prev => ({
+                            samplingWeights: { ...prev.samplingWeights, [key]: v }
+                          }))
+                        }}
+                      />
+                      <span className='tb-ratio-approx'>&#8776; {approx}</span>
+                    </div>
+                  )
+                })}
+                <div className='tb-ratio-summary'>
+                  Ratio sum: {sumW || 0} &rarr; {total} question{total !== 1 ? 's' : ''} total
+                </div>
+              </div>
+            )
+          })()}
         </div>
 
         <button className='tb-apply-btn' onClick={this.handleApply}>

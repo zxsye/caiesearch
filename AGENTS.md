@@ -51,37 +51,134 @@ docker exec -it schsrch-www npm run webpack
 docker exec -it schsrch-www npm run webpack-dev
 ```
 
-### 4. How to Index (or Reindex) Papers
-The papers are mounted into the container at `/papers` from the user's Dropbox directory:
-`/Users/zilin/Library/CloudStorage/Dropbox/== Work ==/Tutoring/CIE Past Papers`
+### 4. Database Persistence
+- **MongoDB**: Stores file metadata and binary blobs via `PastPaperPaperBlob` chunks.
+- **Elasticsearch**: Stores searchable text content via `PastPaperIndex`.
+- Volumes: `mw-mongo-data` and `mw-es-data` survive container restarts and rebuilds.
 
-To index new papers or reindex existing ones:
+---
+
+## 📋 Indexing Pipeline
+
+Papers go through three stages: **ingest → dir population → topic tagging**. Each is independent; you can pause/resume at any point.
+
+### Understanding the Index Types
+
+1. **`dir` (MongoDB doc field)** — per-question location map
+   - Built by `Recognizer.dir()` when `ensureDir()` is called.
+   - Stores page numbers, text, and position rects for each question (QP) or answer (MS).
+   - Without it: Topic Browser doesn't work; MS export fails; question metadata is empty.
+
+2. **`PastPaperIndex` (Elasticsearch)** — page-by-page full-text search
+   - Built during `doIndex` when it extracts text via sspdf and indexes to ES.
+   - Enables keyword search ("photosynthesis", "enzyme", etc.).
+   - Quick-mode (`--quick`) skips this; rebuild later with `reIndexElasticSearch.bin.js`.
+
+3. **Gemini topics (in `dir.dirs[i].topics`)** — curriculum tags per question
+   - Built by `doLinkTopics` after `dir` exists.
+   - Powers the Topic Browser sidebar filtering by syllabus topics.
+   - Without it: users can't filter by "Chemical Bonding", etc.
+
+### Features that Depend on Each Index
+
+| Feature | Needs | Why |
+|---------|-------|-----|
+| Topic Browser (subtopic filtering) | QP `dir` | Maps selected topics to question numbers. Without it, can't find which questions match. |
+| MS Export PDF | QP `dir` + MS `dir` | Needs QP dir to know which questions were selected, needs MS dir to locate answers in the MS. |
+| Question display in browser | QP `dir` | Shows page number, question text, metadata. Without it, no question data appears. |
+| Full-text search | `PastPaperIndex` | Enables keyword search. Quick-mode skips this; rebuild with `reIndexElasticSearch.bin.js`. |
+| Gemini topic tagging | QP `dir` (prerequisite) | Reads `dir.dirs` to extract text per question for AI classification. |
+
+### Stage 1: Ingest Papers (`reindex.bin.js`)
+
 ```bash
-# Full indexing of the mounted volume
-docker exec -it schsrch-www node doIndex.bin.js /papers
+# Show all options
+docker exec -it schsrch-www node reindex.bin.js --help
+
+# Full re-index from scratch (⚠ destructive — wipes topic tags)
+docker exec -it schsrch-www node reindex.bin.js --full /papers
+
+# Full re-index in quick mode (blob storage only, no sspdf/ES — much faster)
+docker exec -it schsrch-www node reindex.bin.js --full --quick /papers
+
+# Add papers uploaded after the initial ingest (safe — doesn't modify existing docs)
+docker exec -it schsrch-www node reindex.bin.js --new /papers
+
+# Add new papers in quick mode, then repair dirs and rebuild search
+docker exec -it schsrch-www node reindex.bin.js --new --quick /papers
+docker exec -it schsrch-www node reindex.bin.js --repair-dirs
+docker exec -it schsrch-www node reIndexElasticSearch.bin.js
 ```
 
-### 5. How to Link Topics (Gemini Tagging)
-To automatically categorize questions into syllabus topics using Gemini 3.1 Flash-Lite:
-```bash
-docker exec -it -e GEMINI_API_KEY=$GEMINI_API_KEY schsrch-www node doLinkTopics.bin.js <subject_code> [limit] [year] [paper] [--force]
+**Quick mode (`--quick`):** Skips sspdf text extraction and Elasticsearch indexing for files whose identity (subject/time/type/paper/variant) is encoded in the filename (e.g. `9701_s20_qp_1.pdf`). Files without standard names still go through the full path (sspdf for cover-page detection). After a quick ingest, `dir` fields and search index are empty — run `--repair-dirs` then `reIndexElasticSearch.bin.js` to complete. Recommended for bulk ingests of hundreds of papers.
+
+**Ingest checklist:**
 ```
-- **subject_code**: e.g., `9709` (Maths), `0625` (Physics).
-- **limit**: Number of papers to process (defaults to 5).
-- **year**: (Optional) Filter by year (e.g., `23`) or range (e.g., `20-23`).
-- **paper**: (Optional) Filter by paper (e.g., `1`), variant (e.g., `13`), or list (e.g., `1,2,11`).
-- **--force**: (Optional) Overwrite existing topic tags.
+┌─ After --full or --new
+│
+├─ Normal mode:    ✓ blobs stored  ✓ dir populated   ✓ ES indexed   → ready for Stage 2
+├─ Quick mode:     ✓ blobs stored  ✗ dir empty       ✗ ES empty     → run --repair-dirs + reIndexElasticSearch
+│
+└─ Use --repair-dirs to backfill empty dirs (safe — skips docs already processed)
+   Use reIndexElasticSearch.bin.js to rebuild search index
+```
+
+### Stage 2: Populate `dir` (question locations)
+
+For any docs with empty `dir` (common after quick-mode ingest or when MS docs haven't been opened):
+
+```bash
+# Backfill dir for MS docs only
+docker exec -it schsrch-www node reindex.bin.js --repair-ms
+
+# Backfill dir for QP docs only
+docker exec -it schsrch-www node reindex.bin.js --repair-qp
+
+# Backfill both QP and MS dirs in one pass (safe, run after any ingest)
+docker exec -it schsrch-www node reindex.bin.js --repair-dirs
+```
+
+These call `ensureDir()` on docs with empty `dir`, which runs the recognizer and saves the result. Safe to run anytime — skips docs that already have `dir`. MS export also calls `ensureDir()` on demand, so never-viewed MS docs get indexed on first export.
+
+### Stage 3: Link Topics to Syllabus (`doLinkTopics.bin.js`)
+
+After `dir` is populated, tag questions with curriculum topics:
+
+```bash
+GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js
+```
+
+- Reads **QP docs only** (MS docs are never touched).
+- For each QP, sends question text to Gemini and writes `topics: [...]` to each `dir.dirs[i]`.
+- Syllabus definitions live in [`lib/tagging/`](lib/tagging/) (JSON per subject/level).
+- Safe to re-run: only updates `topics` fields, does not remove or recreate docs.
 
 > [!NOTE]
-> This requires `GEMINI_API_KEY` to be set in the environment.
+> Requires `GEMINI_API_KEY` environment variable.
+
+---
+
+## Common Commands
+
+```bash
+# Start the stack
+docker-compose up -d
+
+# Rebuild frontend JS after JSX/SASS changes
+docker exec -it schsrch-www npm run webpack
+
+# Run tests (requires native sspdf.node — use inside Docker)
+docker exec -it schsrch-www npm test
+
+# Full workflow: ingest new papers, populate dirs, rebuild search
+docker exec -it schsrch-www node reindex.bin.js --new /papers
+docker exec -it schsrch-www node reindex.bin.js --repair-dirs
+docker exec -it schsrch-www node reIndexElasticSearch.bin.js
+GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js
+```
 
 > [!IMPORTANT]
 > **Dropbox Sync Warning**: If you encounter `Unknown system error -35` during indexing, it is likely because macOS is offloading the PDF files to the cloud. **Ensure the Dropbox folder is set to "Make available offline"** before indexing.
-
-### 6. Database Persistence
-- **MongoDB**: Stores file metadata and binary blobs.
-- **Elasticsearch**: Stores searchable text content.
-- Volumes: `mw-mongo-data` and `mw-es-data`.
 
 ## 📁 Key Directories
 - `src/`: React frontend source code.

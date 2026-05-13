@@ -1,5 +1,5 @@
 const should = require('should')
-const { loadSyllabus, resolveSelectedTags, queryQuestions } = require('../lib/topicQuery')
+const { loadSyllabus, resolveSelectedTags, resolveSelectionTagSets, queryQuestions } = require('../lib/topicQuery')
 
 // Minimal mock PastPaperDoc.find that returns docs with pre-built dirs
 function mockFind (docs) {
@@ -16,10 +16,12 @@ function mockFind (docs) {
 }
 
 function makeDoc (subject, time, paper, variant, type, dirs) {
+  const dirObj = { dirs }
   return {
     _id: { toString: () => `${subject}_${time}_${paper}_${variant}` },
     subject, time, paper, variant, type,
-    ensureDir: async () => ({ dirs })
+    dir: dirObj,
+    ensureDir: async () => dirObj
   }
 }
 
@@ -179,71 +181,180 @@ module.exports = () =>
       })
     })
 
-    describe('queryQuestions – sampling proportions', function () {
-      // Two topic pools: 6 Bonding + 4 Energetics
-      const docs = [
-        makeDoc('9701', 's22', 1, 1, 'qp', [
-          makeDir(1, ['Chemical Bonding']),
-          makeDir(2, ['Chemical Bonding']),
-          makeDir(3, ['Chemical Bonding']),
-          makeDir(4, ['Chemical Bonding']),
-          makeDir(5, ['Chemical Bonding']),
-          makeDir(6, ['Chemical Bonding'])
-        ]),
-        makeDoc('9701', 's22', 2, 1, 'qp', [
-          makeDir(1, ['Chemical Energetics']),
-          makeDir(2, ['Chemical Energetics']),
-          makeDir(3, ['Chemical Energetics']),
-          makeDir(4, ['Chemical Energetics'])
-        ])
-      ]
-      const DB = mockFind(docs)
-      const base = {
-        subject: '9701', level: 'AS',
-        selections: [
-          { kind: 'subtopic', name: 'Chemical Bonding' },
-          { kind: 'subtopic', name: 'Chemical Energetics' }
-        ],
-        ordering: { mode: 'deterministic' },
-        sampling: {
-          mode: 'proportions',
-          total: 10,
-          perTopic: [
-            { topic: 'Chemical Bonding', pct: 60 },
-            { topic: 'Chemical Energetics', pct: 40 }
-          ]
+    describe('queryQuestions – sampling proportions (perSelection)', function () {
+      // Three topic pools, all from a single doc to simplify
+      function buildDocs (counts) {
+        const dirs = []
+        let qN = 1
+        for (const [topic, n] of counts) {
+          for (let i = 0; i < n; i++) dirs.push(makeDir(qN++, [topic]))
         }
+        return [makeDoc('9701', 's22', 1, 1, 'qp', dirs)]
       }
 
-      it('total adds up to requested total', async function () {
-        const { rows } = await queryQuestions(base, DB)
-        rows.length.should.equal(10)
-      })
+      const selectionsThree = [
+        { kind: 'subtopic', name: 'Chemical Bonding' },
+        { kind: 'subtopic', name: 'Chemical Energetics' },
+        { kind: 'subtopic', name: 'Isotopes' }
+      ]
+      const baseThree = {
+        subject: '9701', level: 'AS',
+        selections: selectionsThree,
+        ordering: { mode: 'deterministic' }
+      }
 
-      it('proportions roughly match: 6 Bonding and 4 Energetics', async function () {
-        const { rows } = await queryQuestions(base, DB)
-        const bonding = rows.filter(r => r.matchedTopics.includes('Chemical Bonding')).length
-        const energetics = rows.filter(r => r.matchedTopics.includes('Chemical Energetics')).length
-        bonding.should.equal(6)
-        energetics.should.equal(4)
-      })
-
-      it('rounding remainder goes to highest-pct bucket', async function () {
-        // total=10, 70/30 split → 7+3=10 exactly (no remainder)
-        // total=10, 60/41 split → 6+4=10, but 60+41=101 (unusual)
-        // Test: total=3, 50/50 → round(1.5) + round(1.5) → 2+2=4 ≠ 3; remainder corrects higher-pct
-        const req3 = Object.assign({}, base, {
+      it('1:2:1 of 100 yields 25/50/25 buckets and total=100', async function () {
+        const DB = mockFind(buildDocs([
+          ['Chemical Bonding', 40],
+          ['Chemical Energetics', 60],
+          ['Isotopes', 30]
+        ]))
+        const { rows, meta } = await queryQuestions(Object.assign({}, baseThree, {
           sampling: {
-            mode: 'proportions',
-            total: 3,
-            perTopic: [
-              { topic: 'Chemical Bonding', pct: 50 },
-              { topic: 'Chemical Energetics', pct: 50 }
+            mode: 'proportions', total: 100,
+            perSelection: [
+              { kind: 'subtopic', name: 'Chemical Bonding', weight: 1 },
+              { kind: 'subtopic', name: 'Chemical Energetics', weight: 2 },
+              { kind: 'subtopic', name: 'Isotopes', weight: 1 }
             ]
           }
-        })
-        const { rows } = await queryQuestions(req3, DB)
-        rows.length.should.equal(3)
+        }), DB)
+        rows.length.should.equal(100)
+        meta.total.should.equal(100)
+        const bonding = rows.filter(r => r.matchedTopics.includes('Chemical Bonding')).length
+        const energetics = rows.filter(r => r.matchedTopics.includes('Chemical Energetics')).length
+        const isotopes = rows.filter(r => r.matchedTopics.includes('Isotopes')).length
+        bonding.should.equal(25)
+        energetics.should.equal(50)
+        isotopes.should.equal(25)
+        meta.perSelectionCounts['subtopic:Chemical Bonding'].picked.should.equal(25)
+        meta.perSelectionCounts['subtopic:Chemical Energetics'].picked.should.equal(50)
+        meta.perSelectionCounts['subtopic:Isotopes'].picked.should.equal(25)
+        should(meta.warning).be.undefined()
+      })
+
+      it('underfilled bucket: take what is available and surface warning', async function () {
+        const DB = mockFind(buildDocs([
+          ['Chemical Bonding', 100],
+          ['Chemical Energetics', 5],   // quota 25 but only 5 available
+          ['Isotopes', 100]
+        ]))
+        const { rows, meta } = await queryQuestions(Object.assign({}, baseThree, {
+          sampling: {
+            mode: 'proportions', total: 100,
+            perSelection: [
+              { kind: 'subtopic', name: 'Chemical Bonding', weight: 1 },
+              { kind: 'subtopic', name: 'Chemical Energetics', weight: 1 },
+              { kind: 'subtopic', name: 'Isotopes', weight: 2 }
+            ]
+          }
+        }), DB)
+        // 25 + 5 + 50 = 80
+        rows.length.should.equal(80)
+        meta.perSelectionCounts['subtopic:Chemical Energetics']
+          .should.deepEqual({ picked: 5, available: 5, quota: 25 })
+        meta.perSelectionCounts['subtopic:Chemical Bonding'].picked.should.equal(25)
+        meta.perSelectionCounts['subtopic:Isotopes'].picked.should.equal(50)
+        meta.warning.should.be.a.String()
+        meta.warning.should.containEql('subtopic:Chemical Energetics (5/25)')
+      })
+
+      it('weight 0 excludes that selection entirely', async function () {
+        const DB = mockFind(buildDocs([
+          ['Chemical Bonding', 50],
+          ['Chemical Energetics', 50],
+          ['Isotopes', 50]
+        ]))
+        const { rows, meta } = await queryQuestions(Object.assign({}, baseThree, {
+          sampling: {
+            mode: 'proportions', total: 20,
+            perSelection: [
+              { kind: 'subtopic', name: 'Chemical Bonding', weight: 1 },
+              { kind: 'subtopic', name: 'Chemical Energetics', weight: 0 },
+              { kind: 'subtopic', name: 'Isotopes', weight: 1 }
+            ]
+          }
+        }), DB)
+        rows.length.should.equal(20)
+        rows.filter(r => r.matchedTopics.includes('Chemical Energetics')).length.should.equal(0)
+        should(meta.perSelectionCounts['subtopic:Chemical Energetics']).be.undefined()
+      })
+
+      it('selection-order priority: row matching A and B lands in A bucket when A is first', async function () {
+        // Single question matches both selections via two distinct topic tags.
+        const docs = [makeDoc('9701', 's22', 1, 1, 'qp', [
+          makeDir(1, ['Chemical Bonding', 'Isotopes'])
+        ])]
+        const DB = mockFind(docs)
+        const { rows, meta } = await queryQuestions({
+          subject: '9701', level: 'AS',
+          selections: [
+            { kind: 'subtopic', name: 'Chemical Bonding' },
+            { kind: 'subtopic', name: 'Isotopes' }
+          ],
+          ordering: { mode: 'deterministic' },
+          sampling: {
+            mode: 'proportions', total: 1,
+            perSelection: [
+              { kind: 'subtopic', name: 'Chemical Bonding', weight: 1 },
+              { kind: 'subtopic', name: 'Isotopes', weight: 1 }
+            ]
+          }
+        }, DB)
+        rows.length.should.equal(1)
+        // Only 1 question, 2 buckets, weight 1:1, total 1 → quota 1+0 (rounded up to higher-weight, both equal so first).
+        // Either way the row should be assigned to Bonding bucket (first-match wins).
+        meta.perSelectionCounts['subtopic:Chemical Bonding'].available.should.equal(1)
+        meta.perSelectionCounts['subtopic:Isotopes'].available.should.equal(0)
+      })
+
+      it('random ordering with same seed produces same sample', async function () {
+        const DB = mockFind(buildDocs([
+          ['Chemical Bonding', 30],
+          ['Chemical Energetics', 30],
+          ['Isotopes', 30]
+        ]))
+        const sampling = {
+          mode: 'proportions', total: 12,
+          perSelection: [
+            { kind: 'subtopic', name: 'Chemical Bonding', weight: 1 },
+            { kind: 'subtopic', name: 'Chemical Energetics', weight: 2 },
+            { kind: 'subtopic', name: 'Isotopes', weight: 1 }
+          ]
+        }
+        const req1 = Object.assign({}, baseThree, { ordering: { mode: 'random', seed: 123 }, sampling })
+        const r1 = (await queryQuestions(req1, DB)).rows
+        const r2 = (await queryQuestions(req1, DB)).rows
+        r1.map(r => r.qN).should.deepEqual(r2.map(r => r.qN))
+      })
+
+      it('falls back to cap when no perSelection has positive weight', async function () {
+        const DB = mockFind(buildDocs([
+          ['Chemical Bonding', 20]
+        ]))
+        const { rows } = await queryQuestions(Object.assign({}, baseThree, {
+          selections: [{ kind: 'subtopic', name: 'Chemical Bonding' }],
+          sampling: {
+            mode: 'proportions', total: 5,
+            perSelection: [
+              { kind: 'subtopic', name: 'Chemical Bonding', weight: 0 }
+            ]
+          }
+        }), DB)
+        rows.length.should.equal(5)
+      })
+    })
+
+    describe('resolveSelectionTagSets', function () {
+      const syllabus = loadSyllabus('9701', 'AS')
+      it('returns one tag set per selection keyed by kind:name', function () {
+        const map = resolveSelectionTagSets([
+          { kind: 'subtopic', name: 'Isotopes' },
+          { kind: 'topic', name: syllabus.topics[0].topic_name }
+        ], syllabus)
+        map.size.should.equal(2)
+        map.get('subtopic:Isotopes').has('Isotopes').should.be.true()
+        map.get(`topic:${syllabus.topics[0].topic_name}`).size.should.be.above(1)
       })
     })
 
