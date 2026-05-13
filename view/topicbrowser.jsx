@@ -76,11 +76,18 @@ export default class TopicBrowser extends React.Component {
       rows: null,
       meta: null,
       resultsLoading: false,
-      resultsError: null
+      resultsError: null,
+
+      // Export
+      exporting: null, // null | 'qp' | 'ms'
+      exportError: null,
+      exportWarnings: null
     }
 
     this.handleApply = this.handleApply.bind(this)
     this.handleOpenRow = this.handleOpenRow.bind(this)
+    this.handleExportQp = this.handleExport.bind(this, 'qp')
+    this.handleExportMs = this.handleExport.bind(this, 'ms')
   }
 
   componentDidMount () {
@@ -130,17 +137,12 @@ export default class TopicBrowser extends React.Component {
     })
   }
 
-  handleApply () {
+  buildQueryBody () {
     const {
       subject, level, selections,
       yearFrom, yearTo, seasons, papers, variants,
       orderingMode, randomSeed, samplingMode, samplingTotal, samplingPerTopic
     } = this.state
-
-    if (selections.length === 0) {
-      this.setState({ resultsError: 'Select at least one topic or subtopic.' })
-      return
-    }
 
     const body = {
       subject,
@@ -172,6 +174,16 @@ export default class TopicBrowser extends React.Component {
       }
     }
 
+    return body
+  }
+
+  handleApply () {
+    if (this.state.selections.length === 0) {
+      this.setState({ resultsError: 'Select at least one topic or subtopic.' })
+      return
+    }
+
+    const body = this.buildQueryBody()
     this.setState({ resultsLoading: true, resultsError: null, rows: null, meta: null })
 
     fetch('/topics/questions/', {
@@ -195,13 +207,102 @@ export default class TopicBrowser extends React.Component {
       })
   }
 
+  handleExport (kind) {
+    if (this.state.exporting) return
+    if (this.state.selections.length === 0) {
+      this.setState({ exportError: 'Select at least one topic or subtopic.' })
+      return
+    }
+
+    const body = this.buildQueryBody()
+    this.setState({ exporting: kind, exportError: null, exportWarnings: null })
+
+    fetch(`/topics/export/${kind}.pdf`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(r => {
+        if (!r.ok) {
+          return r.json().then(
+            j => { throw new Error(j.error || `HTTP ${r.status}`) },
+            () => { throw new Error(`HTTP ${r.status}`) }
+          )
+        }
+        const cd = r.headers.get('Content-Disposition') || ''
+        const m = cd.match(/filename="([^"]+)"/)
+        const filename = m ? m[1] : `topics_${kind}.pdf`
+        let warnings = null
+        const wh = r.headers.get('X-Export-Warnings')
+        if (wh) {
+          try { warnings = JSON.parse(decodeURIComponent(wh)) } catch (e) {}
+        }
+        return r.blob().then(blob => ({ blob, filename, warnings }))
+      })
+      .then(({ blob, filename, warnings }) => {
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+        a.remove()
+        setTimeout(() => URL.revokeObjectURL(url), 1000)
+        this.setState({ exporting: null, exportWarnings: warnings })
+      })
+      .catch(err => {
+        this.setState({ exporting: null, exportError: err.message || String(err) })
+      })
+  }
+
   handleOpenRow (row) {
     AppState.dispatch({
       type: 'v2view',
       fileId: row.docId,
-      viewDir: { highlightDirIndex: null },
-      showPaperSetTitle: true
+      tCurrentType: row.type,
+      viewDir: row.page != null ? { page: row.page } : null,
+      showPaperSetTitle: true,
+      asPopup: true
     })
+  }
+
+  renderExportBar () {
+    const { exporting, exportError, exportWarnings, selections } = this.state
+    const disabled = exporting !== null || selections.length === 0
+    const qpLabel = exporting === 'qp' ? 'Exporting…' : 'Export QP PDF'
+    const msLabel = exporting === 'ms' ? 'Exporting…' : 'Export MS PDF'
+    return (
+      <div className='tb-export-wrap'>
+        <div className='tb-export-bar'>
+          <button
+            className={'tb-export-btn' + (disabled ? '' : ' enabled')}
+            disabled={disabled}
+            onClick={this.handleExportQp}
+            title={selections.length === 0 ? 'Select at least one topic first' : 'Download a PDF containing the question pages for the current selection'}
+          >
+            {qpLabel}
+          </button>
+          <button
+            className={'tb-export-btn' + (disabled ? '' : ' enabled')}
+            disabled={disabled}
+            onClick={this.handleExportMs}
+            title={selections.length === 0 ? 'Select at least one topic first' : 'Download a PDF containing the matching markscheme pages'}
+          >
+            {msLabel}
+          </button>
+        </div>
+        {exportError && <div className='tb-export-error'>{exportError}</div>}
+        {exportWarnings && exportWarnings.length > 0 && (
+          <div className='tb-export-warnings'>
+            <div className='tb-export-warnings-title'>Some questions were skipped:</div>
+            <ul>
+              {exportWarnings.slice(0, 5).map((w, i) => <li key={i}>{w}</li>)}
+              {exportWarnings.length > 5 && <li>…and {exportWarnings.length - 5} more</li>}
+            </ul>
+          </div>
+        )}
+      </div>
+    )
   }
 
   renderSubjectPanel () {
@@ -399,22 +500,7 @@ export default class TopicBrowser extends React.Component {
           Apply
         </button>
 
-        <div className='tb-export-bar'>
-          <button
-            className='tb-export-btn'
-            disabled
-            title='PDF export coming soon'
-          >
-            Export QP PDF
-          </button>
-          <button
-            className='tb-export-btn'
-            disabled
-            title='PDF export coming soon'
-          >
-            Export MS PDF
-          </button>
-        </div>
+        {this.renderExportBar()}
       </div>
     )
   }

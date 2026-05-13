@@ -477,6 +477,7 @@ module.exports = ({mongodb: db, elasticsearch: es, siteOrigin}) => {
     })
 
     const topicQuery = require('./lib/topicQuery')
+    const topicExport = require('./lib/topicExport')
 
     rMain.get('/topics/', function (req, res, next) {
       renderView({ view: 'topics' }, res)
@@ -508,13 +509,35 @@ module.exports = ({mongodb: db, elasticsearch: es, siteOrigin}) => {
       })
     })
 
-    rMain.post('/topics/export/qp.pdf', function (req, res) {
-      res.status(501).json({ error: 'Question paper PDF export not yet implemented' })
-    })
+    function handleTopicExport (kind) {
+      return function (req, res, next) {
+        postJsonReceiver(req, res, next, function (body) {
+          if (!body.subject || !body.level || !Array.isArray(body.selections)) {
+            res.status(400).json({ error: 'subject, level, and selections are required' })
+            return
+          }
+          topicExport.exportPdf(body, kind, PastPaperDoc).then(result => {
+            res.type('pdf')
+            res.set('Content-Disposition', `attachment; filename="${result.filename}"`)
+            if (result.meta.warnings) {
+              res.set('X-Export-Warnings', encodeURIComponent(JSON.stringify(result.meta.warnings)))
+            }
+            res.set('X-Export-Question-Count', String(result.meta.questionCount))
+            res.set('X-Export-Page-Count', String(result.meta.pageCount))
+            res.send(result.buffer)
+          }, err => {
+            if (err && err.code && err.status) {
+              res.status(err.status).json({ error: err.message, code: err.code })
+            } else {
+              next(err)
+            }
+          })
+        })
+      }
+    }
 
-    rMain.post('/topics/export/ms.pdf', function (req, res) {
-      res.status(501).json({ error: 'Mark scheme PDF export not yet implemented' })
-    })
+    rMain.post('/topics/export/qp.pdf', handleTopicExport('qp'))
+    rMain.post('/topics/export/ms.pdf', handleTopicExport('ms'))
 
     rMain.get('/robots.txt', function (req, res) {
       res.type('txt')

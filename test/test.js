@@ -72,5 +72,6 @@ function doTests () {
   require('./paperutils.js')()
   require('./dirsbatch.js')(schsrch, dbModel)
   require('./topicQuery.js')()
+  require('./topicExport.js')()
   run()
 }

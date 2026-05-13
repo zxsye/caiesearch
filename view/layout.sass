@@ -2893,6 +2893,33 @@ $feedback-top-height: 2rem + 1.3rem
     font-size: 0.8rem
     cursor: not-allowed
     opacity: 0.6
+    &.enabled
+      cursor: pointer
+      opacity: 1
+      color: inherit
+      border-color: rgba($color-secondary-text, 0.5)
+      &:hover
+        background: rgba($color-primary, 0.08)
+        border-color: $color-primary
+        color: $color-primary
+
+  .tb-export-error
+    margin-top: 0.5rem
+    font-size: 0.8rem
+    color: #c0392b
+
+  .tb-export-warnings
+    margin-top: 0.5rem
+    font-size: 0.75rem
+    color: #e67e22
+    .tb-export-warnings-title
+      font-weight: 600
+      margin-bottom: 0.2rem
+    ul
+      margin: 0
+      padding-left: 1rem
+    li
+      list-style: disc
 
   .tb-status
     padding: 1rem 0
