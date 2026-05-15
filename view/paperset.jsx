@@ -92,20 +92,61 @@ export default class PaperSet extends React.Component {
           </div>
         </div>
         {(() => {
-          // Collect unique topics across all docs in this set (pp results)
-          if (firstDoc !== null) return null // full-text results show topics inline above
-          let topicsSet = new Set()
-          for (let doc of set.types) {
-            if (Array.isArray(doc.topics)) doc.topics.forEach(t => topicsSet.add(t))
+          if (firstDoc !== null) return null
+          const qp = set.types.find(d => d.type === 'qp')
+          const cov = qp && qp.topicCoverage
+          if (cov && cov.totalUnits > 0) {
+            const total = cov.totalUnits
+            const rows = cov.byTopic && Object.keys(cov.byTopic).length > 0
+              ? Object.keys(cov.byTopic)
+                .map(name => ({ name, count: cov.byTopic[name] }))
+                .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name))
+              : []
+            if (rows.length === 0) {
+              return (
+                <div className='pp-topic-coverage'>
+                  <div className='pp-cov-head'>Topic coverage</div>
+                  <div className='pp-cov-note'>
+                    This paper has {total} indexed question part{total === 1 ? '' : 's'} (or whole items), but none are tagged with syllabus topics yet.
+                  </div>
+                </div>
+              )
+            }
+            return (
+              <div className='pp-topic-coverage'>
+                <div className='pp-cov-head'>Topic coverage</div>
+                <div className='pp-cov-note'>
+                  This paper contains {total} subquestion{total === 1 ? '' : 's'} (or individual questions for MCQ). Each subquestion can have multiple topic tags, so the bars add up to more than {total}—the same subquestion can appear in several categories.
+                </div>
+                <div className='pp-cov-chart'>
+                  {rows.map(row => (
+                    <div className='pp-cov-row' key={row.name}>
+                      <div className='pp-cov-label' title={row.name}>{row.name}</div>
+                      <div className='pp-cov-mid'>
+                        <div className='pp-cov-bar-wrap' title={`${row.count} / ${total}`}>
+                          <div
+                            className='pp-cov-bar-fill'
+                            style={{ width: `${Math.min(100, (row.count / total) * 100)}%` }}
+                          />
+                        </div>
+                      </div>
+                      <div className='pp-cov-num'>{row.count}/{total}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
           }
-          if (topicsSet.size === 0) return null
-          return (
-            <div className='pp-topics'>
-              {[...topicsSet].sort().map(t => (
-                <span key={t} className='topic-badge'>{t}</span>
-              ))}
-            </div>
-          )
+          if (qp && Array.isArray(qp.topics) && qp.topics.length > 0) {
+            return (
+              <div className='pp-topics'>
+                {[...qp.topics].sort().map(t => (
+                  <span key={t} className='topic-badge'>{t}</span>
+                ))}
+              </div>
+            )
+          }
+          return null
         })()}
       </div>
     )

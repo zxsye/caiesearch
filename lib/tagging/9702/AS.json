@@ -1,1 +1,405 @@
-[]
+[
+  {
+    "topic_id": "1",
+    "topic_name": "Physical quantities and units",
+    "subtopics": [
+      {
+        "id": "1.1",
+        "name": "Quantities & Magnitudes",
+        "learning_outcomes": [
+          "understand that all physical quantities consist of a numerical magnitude and a unit",
+          "make reasonable estimates of physical quantities included within the syllabus"
+        ]
+      },
+      {
+        "id": "1.2",
+        "name": "SI Base & Derived Units",
+        "learning_outcomes": [
+          "recall the following Sl base quantities and their units: mass (kg), length (m), time (s), current (A), temperature (K)",
+          "express derived units as products or quotients of the Sl base units and use the derived units for quantities listed in this syllabus as appropriate",
+          "use Sl base units to check the homogeneity of physical equations",
+          "recall and use the following prefixes and their symbols to indicate decimal submultiples or multiples of both base and derived units: pico (p), nano (n), micro ( ), milli (m), centi (c), deci (d), kilo (k), mega (M), giga (G), tera (T)"
+        ]
+      },
+      {
+        "id": "1.3",
+        "name": "Errors & Uncertainties",
+        "learning_outcomes": [
+          "understand and explain the effects of systematic errors (including zero errors) and random errors in measurements",
+          "understand the distinction between precision and accuracy",
+          "assess the uncertainty in a derived quantity by simple addition of absolute or percentage uncertainties"
+        ]
+      },
+      {
+        "id": "1.4",
+        "name": "Scalars & Vectors",
+        "learning_outcomes": [
+          "understand the difference between scalar and vector quantities and give examples of scalar and vector quantities included in the syllabus",
+          "add and subtract coplanar vectors",
+          "represent a vector as two perpendicular components"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "2",
+    "topic_name": "Kinematics",
+    "subtopics": [
+      {
+        "id": "2.1",
+        "name": "Equations of Motion",
+        "learning_outcomes": [
+          "define and use distance, displacement, speed, velocity and acceleration",
+          "use graphical methods to represent distance, displacement, speed, velocity and acceleration",
+          "determine displacement from the area under a velocity-time graph",
+          "determine velocity using the gradient of a displacement-time graph",
+          "determine acceleration using the gradient of a velocity-time graph",
+          "derive, from the definitions of velocity and acceleration, equations that represent uniformly accelerated motion in a straight line",
+          "solve problems using equations that represent uniformly accelerated motion in a straight line, including the motion of bodies falling in a uniform gravitational field without air resistance",
+          "describe an experiment to determine the acceleration of free fall using a falling object",
+          "describe and explain motion due to a uniform velocity in one direction and a uniform acceleration in a perpendicular direction"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3",
+    "topic_name": "Dynamics",
+    "subtopics": [
+      {
+        "id": "3.1",
+        "name": "Momentum & Newton's Laws",
+        "learning_outcomes": [
+          "understand that mass is the property of an object that resists change in motion",
+          "recall F=ma and solve problems using it, understanding that acceleration and resultant force are always in the same direction",
+          "define and use linear momentum as the product of mass and velocity",
+          "define and use force as rate of change of momentum",
+          "state and apply each of Newton's laws of motion",
+          "describe and use the concept of weight as the effect of a gravitational field on a mass and recall that the weight of an object is equal to the product of its mass and the acceleration of free fall"
+        ]
+      },
+      {
+        "id": "3.2",
+        "name": "Non-uniform Motion & Drag",
+        "learning_outcomes": [
+          "show a qualitative understanding of frictional forces and viscous/drag forces including air resistance (no treatment of the coefficients of friction and viscosity is required, and a simple model of drag force increasing as speed increases is sufficient)",
+          "describe and explain qualitatively the motion of objects in a uniform gravitational field with air resistance",
+          "understand that objects moving against a resistive force may reach a terminal (constant) velocity"
+        ]
+      },
+      {
+        "id": "3.3",
+        "name": "Momentum Conservation",
+        "learning_outcomes": [
+          "state the principle of conservation of momentum",
+          "apply the principle of conservation of momentum to solve simple problems, including elastic and inelastic interactions between objects in both one and two dimensions (knowledge of the concept of coefficient of restitution is not required)",
+          "recall that, for an elastic collision, total kinetic energy is conserved and the relative speed of approach is equal to the relative speed of separation",
+          "understand that, while momentum of a system is always conserved in interactions between objects, some change in kinetic energy may take place"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "4",
+    "topic_name": "Forces, density and pressure",
+    "subtopics": [
+      {
+        "id": "4.1",
+        "name": "Turning Effects & Moments",
+        "learning_outcomes": [
+          "understand that the weight of an object may be taken as acting at a single point known as its centre of gravity",
+          "define and apply the moment of a force",
+          "understand that a couple is a pair of forces that acts to produce rotation only",
+          "define and apply the torque of a couple"
+        ]
+      },
+      {
+        "id": "4.2",
+        "name": "Equilibrium of Forces",
+        "learning_outcomes": [
+          "state and apply the principle of moments",
+          "understand that, when there is no resultant force and no resultant torque, a system is in equilibrium",
+          "use a vector triangle to represent coplanar forces in equilibrium"
+        ]
+      },
+      {
+        "id": "4.3",
+        "name": "Density & Fluid Pressure",
+        "learning_outcomes": [
+          "define and use density",
+          "define and use pressure",
+          "derive, from the definitions of pressure and density, the equation for hydrostatic pressure Δp=ρgΔh",
+          "use the equation Δp=ρgΔh",
+          "understand that the upthrust acting on an object in a fluid is due to a difference in hydrostatic pressure",
+          "calculate the upthrust acting on an object in a fluid using the equation F=ρgV (Archimedes' principle)"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "5",
+    "topic_name": "Work, energy and power",
+    "subtopics": [
+      {
+        "id": "5.1",
+        "name": "Energy Conservation & Power",
+        "learning_outcomes": [
+          "understand the concept of work, and recall and use work done = force x displacement in the direction of the force",
+          "recall and apply the principle of conservation of energy",
+          "recall and understand that the efficiency of a system is the ratio of useful energy output from the system to the total energy input",
+          "use the concept of efficiency to solve problems",
+          "define power as work done per unit time",
+          "solve problems using P=W/t",
+          "derive P=Fv and use it to solve problems"
+        ]
+      },
+      {
+        "id": "5.2",
+        "name": "GPE & Kinetic Energy",
+        "learning_outcomes": [
+          "derive, using W=Fs the formula ΔEp=mgΔh for gravitational potential energy changes in a uniform gravitational field",
+          "recall and use the formula ΔEp=mgΔh for gravitational potential energy changes in a uniform gravitational field",
+          "derive, using the equations of motion, the formula for kinetic energy Ek=1/2mv^2",
+          "recall and use Ek=1/2mv^2"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6",
+    "topic_name": "Deformation of solids",
+    "subtopics": [
+      {
+        "id": "6.1",
+        "name": "Stress, Strain & Young Modulus",
+        "learning_outcomes": [
+          "understand that deformation is caused by tensile or compressive forces (forces and deformations will be assumed to be in one dimension only)",
+          "understand and use the terms load, extension, compression and limit of proportionality",
+          "recall and use Hooke's law",
+          "recall and use the formula for the spring constant k=F/x",
+          "define and use the terms stress, strain and the Young modulus",
+          "describe an experiment to determine the Young modulus of a metal in the form of a wire"
+        ]
+      },
+      {
+        "id": "6.2",
+        "name": "Elastic & Plastic Behaviour",
+        "learning_outcomes": [
+          "understand and use the terms elastic deformation, plastic deformation and elastic limit",
+          "understand that the area under the force-extension graph represents the work done",
+          "determine the elastic potential energy of a material deformed within its limit of proportionality from the area under the force-extension graph",
+          "recall and use Ep=1/2Fx=1/2kx^2 for a material deformed within its limit of proportionality"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "7",
+    "topic_name": "Waves",
+    "subtopics": [
+      {
+        "id": "7.1",
+        "name": "Progressive Wave Motion",
+        "learning_outcomes": [
+          "describe what is meant by wave motion as illustrated by vibration in ropes, springs and ripple tanks",
+          "understand and use the terms displacement, amplitude, phase difference, period, frequency, wavelength and speed",
+          "understand the use of the time-base and y-gain of a cathode-ray oscilloscope (CRO) to determine frequency and amplitude",
+          "derive, using the definitions of speed, frequency and wavelength, the wave equation v=fλ",
+          "recall and use v=fλ",
+          "understand that energy is transferred by a progressive wave",
+          "recall and use intensity = power/area and intensity ∝ (amplitude)^2 for a progressive wave"
+        ]
+      },
+      {
+        "id": "7.2",
+        "name": "Transverse vs Longitudinal",
+        "learning_outcomes": [
+          "compare transverse and longitudinal waves",
+          "analyse and interpret graphical representations of transverse and longitudinal waves"
+        ]
+      },
+      {
+        "id": "7.3",
+        "name": "Doppler Effect (Sound)",
+        "learning_outcomes": [
+          "understand that when a source of sound waves moves relative to a stationary observer, the observed frequency is different from the source frequency",
+          "use the expression fo=fsv/(v±vs) for the observed frequency when a source of sound waves moves relative to a stationary observer"
+        ]
+      },
+      {
+        "id": "7.4",
+        "name": "Electromagnetic Spectrum",
+        "learning_outcomes": [
+          "state that all electromagnetic waves are transverse waves that travel with the same speed c in free space",
+          "recall the approximate range of wavelengths in free space of the principal regions of the electromagnetic spectrum from radio waves to γ-rays",
+          "recall that wavelengths in the range 400-700 nm in free space are visible to the human eye"
+        ]
+      },
+      {
+        "id": "7.5",
+        "name": "Wave Polarisation",
+        "learning_outcomes": [
+          "understand that polarisation is a phenomenon associated with transverse waves",
+          "recall and use Malus's law (I=I0cos^2θ) to calculate the intensity of a plane-polarised electromagnetic wave"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "8",
+    "topic_name": "Superposition",
+    "subtopics": [
+      {
+        "id": "8.1",
+        "name": "Stationary Waves",
+        "learning_outcomes": [
+          "explain and use the principle of superposition",
+          "show an understanding of experiments that demonstrate stationary waves using microwaves, stretched strings and air columns",
+          "explain the formation of a stationary wave using a graphical method, and identify nodes and antinodes",
+          "understand how wavelength may be determined from the positions of nodes or antinodes of a stationary wave"
+        ]
+      },
+      {
+        "id": "8.2",
+        "name": "Wave Diffraction",
+        "learning_outcomes": [
+          "explain the meaning of the term diffraction",
+          "show an understanding of experiments that demonstrate diffraction including the qualitative effect of the gap width relative to the wavelength of the wave"
+        ]
+      },
+      {
+        "id": "8.3",
+        "name": "Interference & Coherence",
+        "learning_outcomes": [
+          "understand the terms interference and coherence",
+          "show an understanding of experiments that demonstrate two-source interference using water waves, sound, light and microwaves",
+          "understand the conditions required if two-source interference fringes are to be observed",
+          "recall and use λ=ax/D for double-slit interference using light"
+        ]
+      },
+      {
+        "id": "8.4",
+        "name": "Diffraction Gratings",
+        "learning_outcomes": [
+          "recall and used dsinθ=nλ",
+          "describe the use of a diffraction grating to determine the wavelength of light"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "9",
+    "topic_name": "Electricity",
+    "subtopics": [
+      {
+        "id": "9.1",
+        "name": "Electric Current & Charge",
+        "learning_outcomes": [
+          "understand that an electric current is a flow of charge carriers",
+          "understand that the charge on charge carriers is quantised",
+          "recall and use Q=It",
+          "use, for a current-carrying conductor, the expression I=Anvq, where n is the number density of charge carriers"
+        ]
+      },
+      {
+        "id": "9.2",
+        "name": "Potential Difference & Power",
+        "learning_outcomes": [
+          "define the potential difference across a component as the energy transferred per unit charge",
+          "recall and use V=W/Q",
+          "recall and use P=VI, P=I^2R and P=V^2/R"
+        ]
+      },
+      {
+        "id": "9.3",
+        "name": "Resistance & Resistivity",
+        "learning_outcomes": [
+          "define resistance",
+          "recall and use V=IR",
+          "sketch the I-V characteristics of a metallic conductor, a semiconductor diode and a filament lamp",
+          "explain that the resistance of a filament lamp increases as current increases because its temperature increases",
+          "state Ohm's law",
+          "recall and use R=ρL/A",
+          "understand that the resistance of a light-dependent resistor (LDR) decreases as the light intensity increases",
+          "understand that the resistance of a thermistor decreases as the temperature increases"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "10",
+    "topic_name": "D.C. circuits",
+    "subtopics": [
+      {
+        "id": "10.1",
+        "name": "EMF & Practical Circuits",
+        "learning_outcomes": [
+          "recall and use the circuit symbols shown in section 6 of this syllabus",
+          "draw and interpret circuit diagrams containing the circuit symbols",
+          "define and use the electromotive force (e.m.f.) of a source",
+          "distinguish between e.m.f. and potential difference (p.d.) in terms of energy considerations",
+          "understand the effects of the internal resistance of a source of e.m.f. on the terminal potential difference"
+        ]
+      },
+      {
+        "id": "10.2",
+        "name": "Kirchhoff's Laws & Resistors",
+        "learning_outcomes": [
+          "recall Kirchhoff's first law and understand that it is a consequence of conservation of charge",
+          "recall Kirchhoff's second law and understand that it is a consequence of conservation of energy",
+          "derive, using Kirchhoff's laws, a formula for the combined resistance of two or more resistors in series",
+          "use the formula for the combined resistance of two or more resistors in series",
+          "derive, using Kirchhoff's laws, a formula for the combined resistance of two or more resistors in parallel",
+          "use the formula for the combined resistance of two or more resistors in parallel",
+          "use Kirchhoff's laws to solve simple circuit problems"
+        ]
+      },
+      {
+        "id": "10.3",
+        "name": "Potential Dividers",
+        "learning_outcomes": [
+          "understand the principle of a potential divider circuit",
+          "recall and use the principle of the potentiometer as a means of comparing potential differences",
+          "understand the use of a galvanometer in null methods",
+          "explain the use of thermistors and LDRs in potential dividers"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "11",
+    "topic_name": "Particle physics",
+    "subtopics": [
+      {
+        "id": "11.1",
+        "name": "Atoms, Nuclei & Radiation",
+        "learning_outcomes": [
+          "infer from the results of the α-particle scattering experiment the existence and small size of the nucleus",
+          "describe a simple model for the nuclear atom to include protons, neutrons and orbital electrons",
+          "distinguish between nucleon number and proton number",
+          "understand that isotopes are forms of the same element with different numbers of neutrons",
+          "understand and use the notation AZX for the representation of nuclides",
+          "understand that nucleon number and charge are conserved in nuclear processes",
+          "describe the composition, mass and charge of α-, β- and γ-radiations",
+          "understand that an antiparticle has the same mass but opposite charge",
+          "state that antineutrinos are produced during β- decay and neutrinos during β+ decay",
+          "understand that α-particles have discrete energies but β-particles have a continuous range",
+          "represent α- and β-decay by a radioactive decay equation",
+          "use the unified atomic mass unit (u) as a unit of mass"
+        ]
+      },
+      {
+        "id": "11.2",
+        "name": "Fundamental Particles (Quarks)",
+        "learning_outcomes": [
+          "understand that a quark is a fundamental particle and that there are six flavours",
+          "recall and use the charge of each flavour of quark",
+          "recall that protons and neutrons are not fundamental particles and describe their quark composition",
+          "understand that a hadron may be either a baryon or a meson",
+          "describe the changes to quark composition that take place during β- and β+ decay",
+          "recall that electrons and neutrinos are fundamental particles called leptons"
+        ]
+      }
+    ]
+  }
+]

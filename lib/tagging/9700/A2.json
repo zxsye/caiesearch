@@ -1,1 +1,251 @@
-[]
+[
+  {
+    "topic_id": "12",
+    "topic_name": "Energy and Respiration",
+    "subtopics": [
+      {
+        "id": "12.1",
+        "name": "Cellular Energy & ATP Features",
+        "learning_outcomes": [
+          "Outline the need for energy in living organisms, as illustrated by active transport, movement and anabolic reactions [cite: 12]",
+          "Describe the features of ATP that make it suitable as the universal energy currency [cite: 13]",
+          "State that ATP is synthesised by transfer of phosphate in substrate-linked reactions and chemiosmosis [cite: 15, 16]",
+          "Explain the relative energy values of carbohydrates, lipids and proteins as respiratory substrates [cite: 17]",
+          "State the definition and calculation of Respiratory Quotient (RQ) [cite: 18, 19]",
+          "Describe and carry out investigations using simple respirometers to determine the RQ of organisms [cite: 20, 21]"
+        ]
+      },
+      {
+        "id": "12.2",
+        "name": "Stages and Pathways of Respiration",
+        "learning_outcomes": [
+          "State the locations of glycolysis, link reaction, Krebs cycle, and oxidative phosphorylation [cite: 27, 28, 29, 30, 31]",
+          "Outline glycolysis as the phosphorylation of glucose and splitting of fructose 1,6-bisphosphate into triose phosphate and pyruvate [cite: 32]",
+          "Describe the link reaction and the role of coenzyme A [cite: 33, 34]",
+          "Outline the Krebs cycle involving oxaloacetate and citrate [cite: 35, 36, 37]",
+          "Describe the role of NAD and FAD in hydrogen transfer [cite: 38]",
+          "Explain the process of oxidative phosphorylation, the electron transport chain, and ATP synthesis [cite: 39, 40, 41, 42, 43]",
+          "Relate mitochondrial structure to function using diagrams and micrographs [cite: 44]",
+          "Outline anaerobic respiration (lactate and ethanol fermentation) and compare ATP yields to aerobic conditions [cite: 44, 51]",
+          "Explain rice adaptations (aerenchyma and ethanol fermentation) for submerged growth [cite: 51]",
+          "Investigate respiration rates using redox indicators and respirometers [cite: 51]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "13",
+    "topic_name": "Photosynthesis",
+    "subtopics": [
+      {
+        "id": "13.1",
+        "name": "Photosynthesis: Light & Calvin Cycle",
+        "learning_outcomes": [
+          "Relate chloroplast structure to its function in energy transfer [cite: 65]",
+          "Explain the use of ATP and reduced NADP from the light-dependent stage in the Calvin cycle [cite: 66]",
+          "Identify the thylakoids and stroma as the sites of specific photosynthetic stages [cite: 67]",
+          "Describe the roles of pigments (chlorophylls, carotene, xanthophyll) and interpret absorption/action spectra [cite: 68, 69]",
+          "Use chromatography to separate and identify chloroplast pigments using Rf values [cite: 70]",
+          "Explain cyclic and non-cyclic photophosphorylation and the synthesis of ATP/reduced NADP [cite: 71, 72, 73, 76, 81]",
+          "Describe the role of the electron transport chain and chemiosmosis in the thylakoid membrane [cite: 89, 92, 93]",
+          "Outline the three stages of the Calvin cycle: carbon fixation, reduction of GP, and regeneration of RuBP [cite: 89]",
+          "State how Calvin cycle intermediates produce carbohydrates, lipids, and amino acids [cite: 89]"
+        ]
+      },
+      {
+        "id": "13.2",
+        "name": "Photosynthesis: Limiting Factors",
+        "learning_outcomes": [
+          "State that light intensity, CO2 concentration, and temperature are limiting factors [cite: 89]",
+          "Explain the effects of changes in these limiting factors on the rate of photosynthesis [cite: 89]",
+          "Investigate light intensity and wavelength using redox indicators and chloroplast suspensions [cite: 89]",
+          "Investigate environmental effects on whole aquatic or terrestrial plants [cite: 89]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "14",
+    "topic_name": "Homeostasis",
+    "subtopics": [
+      {
+        "id": "14.1",
+        "name": "Mammalian Homeostasis & Kidneys",
+        "learning_outcomes": [
+          "Explain the principles of homeostasis, including negative feedback, receptors, and effectors [cite: 105, 106]",
+          "Describe kidney structure and the parts of a nephron [cite: 108, 117]",
+          "Explain urine formation via ultrafiltration and selective reabsorption [cite: 124, 125, 126, 127]",
+          "Describe osmoregulation involving the hypothalamus, ADH, and aquaporins [cite: 128]",
+          "Explain blood glucose control via cell signalling, insulin, and glucagon [cite: 134]",
+          "Explain the operation of glucose test strips and biosensors [cite: 134]"
+        ]
+      },
+      {
+        "id": "14.2",
+        "name": "Plant Homeostasis & Stomata",
+        "learning_outcomes": [
+          "Explain how stomatal aperture balances CO2 uptake and transpiration [cite: 134]",
+          "Describe the mechanism of guard cell action and the role of abscisic acid during water stress [cite: 134]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "15",
+    "topic_name": "Control and Coordination",
+    "subtopics": [
+      {
+        "id": "15.1",
+        "name": "Mammalian Nervous & Muscular Control",
+        "learning_outcomes": [
+          "Compare the features of the endocrine and nervous systems [cite: 145, 146]",
+          "Describe neurone structures and the sequence of events leading to an action potential [cite: 147, 149]",
+          "Explain changes in membrane potential, saltatory conduction, and the refractory period [cite: 150, 154, 155]",
+          "Describe the structure and function of a cholinergic synapse [cite: 156]",
+          "Describe the stimulation and ultrastructure of striated muscle [cite: 157, 158]",
+          "Explain the sliding filament model of muscular contraction [cite: 159]"
+        ]
+      },
+      {
+        "id": "15.2",
+        "name": "Plant Growth & Coordination",
+        "learning_outcomes": [
+          "Describe the rapid response and closure mechanism of the Venus fly trap [cite: 163]",
+          "Explain the role of auxin in elongation growth and cell wall acidification [cite: 163]",
+          "Describe the role of gibberellin in barley germination [cite: 163]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "16",
+    "topic_name": "Inheritance",
+    "subtopics": [
+      {
+        "id": "16.1",
+        "name": "Inheritance: Meiosis & Variation",
+        "learning_outcomes": [
+          "Explain haploid and diploid terms and the need for reduction division [cite: 173]",
+          "Describe the behaviour of chromosomes during the main stages of meiosis [cite: 173]",
+          "Explain how crossing over and independent assortment produce genetic variation [cite: 173]"
+        ]
+      },
+      {
+        "id": "16.2",
+        "name": "Inheritance: Genetic Crosses & Phenotypes",
+        "learning_outcomes": [
+          "Define key genetic terms (allele, dominant, linkage, epistasis, etc.) [cite: 173]",
+          "Construct genetic diagrams for monohybrid and dihybrid crosses [cite: 173]",
+          "Apply the chi-squared test to determine the significance of results [cite: 173]",
+          "Explain the relationship between specific genes (TYR, HBB, F8, HTT) and disease phenotypes [cite: 180]"
+        ]
+      },
+      {
+        "id": "16.3",
+        "name": "Inheritance: Gene Control Mechanisms",
+        "learning_outcomes": [
+          "Distinguish between structural/regulatory genes and repressible/inducible enzymes [cite: 180]",
+          "Explain the lac operon in prokaryotes and transcription factors in eukaryotes [cite: 180]",
+          "Explain how gibberellin activates genes by breaking down DELLA proteins [cite: 180]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "17",
+    "topic_name": "Selection and Evolution",
+    "subtopics": [
+      {
+        "id": "17.1",
+        "name": "Evolution: Types of Variation",
+        "learning_outcomes": [
+          "Explain the genetic and environmental basis of continuous and discontinuous variation [cite: 191]",
+          "Use the t-test to compare means of different samples [cite: 191]"
+        ]
+      },
+      {
+        "id": "17.2",
+        "name": "Evolution: Selection & Breeding",
+        "learning_outcomes": [
+          "Explain natural selection as a 'struggle for existence' leading to survival of the best adapted [cite: 191]",
+          "Describe stabilising, disruptive, and directional selection, and genetic drift [cite: 191]",
+          "Apply the Hardy-Weinberg principle to calculate allele frequencies [cite: 191]",
+          "Outline principles and examples of selective breeding (artificial selection) [cite: 191]"
+        ]
+      },
+      {
+        "id": "17.3",
+        "name": "Evolution: Speciation & DNA",
+        "learning_outcomes": [
+          "Outline evolution as a process of gene pool changes over time [cite: 196]",
+          "Discuss the use of DNA sequence data to show evolutionary relationships [cite: 196]",
+          "Explain allopatric and sympatric speciation via genetic isolation [cite: 196]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "18",
+    "topic_name": "Classification, Biodiversity and Conservation",
+    "subtopics": [
+      {
+        "id": "18.1",
+        "name": "Biodiversity: Classification Systems",
+        "learning_outcomes": [
+          "Discuss biological, morphological, and ecological species concepts [cite: 211]",
+          "Describe the three domains (Archaea, Bacteria, Eukarya) and the taxonomic hierarchy [cite: 212, 216]",
+          "Outline characteristic features of the five kingdoms and the classification of viruses [cite: 217, 218]"
+        ]
+      },
+      {
+        "id": "18.2",
+        "name": "Biodiversity: Fieldwork & Indices",
+        "learning_outcomes": [
+          "Define ecosystem and niche, and explain levels of biodiversity assessment [cite: 221, 222]",
+          "Describe field methods (quadrats, transects, mark-release-recapture) [cite: 227]",
+          "Use Spearman’s rank, Pearson’s correlation, and Simpson’s index of diversity [cite: 233]"
+        ]
+      },
+      {
+        "id": "18.3",
+        "name": "Biodiversity: Conservation Strategies",
+        "learning_outcomes": [
+          "Explain causes of extinction and reasons for maintaining biodiversity [cite: 233]",
+          "Outline the roles of zoos, botanic gardens, seed banks, and assisted reproduction [cite: 233]",
+          "Describe the roles of IUCN, CITES, and the control of invasive alien species [cite: 233]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "19",
+    "topic_name": "Genetic Technology",
+    "subtopics": [
+      {
+        "id": "19.1",
+        "name": "Genetic Tech: Tools & Principles",
+        "learning_outcomes": [
+          "Define recombinant DNA and explain the roles of restriction enzymes, ligase, and vectors [cite: 241]",
+          "Explain the use of promoters, marker genes, and gene editing [cite: 241]",
+          "Describe PCR, gel electrophoresis, microarrays, and the use of genetic databases [cite: 241]"
+        ]
+      },
+      {
+        "id": "19.2",
+        "name": "Genetic Tech: Medical Applications",
+        "learning_outcomes": [
+          "Explain the advantages of recombinant proteins, genetic screening, and gene therapy [cite: 248]",
+          "Discuss social and ethical considerations of genetic technology in medicine [cite: 248]"
+        ]
+      },
+      {
+        "id": "19.3",
+        "name": "Genetic Tech: GMOs in Agriculture",
+        "learning_outcomes": [
+          "Explain how genetic engineering improves crop productivity and quality (e.g., GM salmon, soybean) [cite: 248]",
+          "Discuss ethical and social implications of GMOs in food production [cite: 248]"
+        ]
+      }
+    ]
+  }
+]

@@ -51,7 +51,21 @@ docker exec -it schsrch-www npm run webpack
 docker exec -it schsrch-www npm run webpack-dev
 ```
 
-### 4. Database Persistence
+### 4. Restarting vs. Rebuilding Frontend
+
+These two commands do different things and are not interchangeable:
+
+| Command | What it does | When to use it |
+|---------|--------------|----------------|
+| `docker-compose restart www` | Stops and restarts the Node.js/Express server process | After changing **server-side** files: `index.js`, anything in `lib/`, `view/*.js` (non-SASS), `doSearch.js`, etc. |
+| `docker exec -it schsrch-www npm run webpack` | Recompiles React JSX + SASS into `dist/` bundles (server keeps running) | After changing **frontend** files: `view/*.jsx`, `view/*.sass`, anything Webpack bundles |
+| `docker exec -it schsrch-www npm run rebuild` | Runs webpack **then** restarts the server in one step | After changing **both** frontend and backend files, or when unsure which layer changed |
+
+After `webpack` finishes, just refresh the browser — no server restart needed. After `restart www`, the new server code is live immediately.
+
+**`npm run rebuild`** is the safe default when you've touched multiple files across layers — it runs webpack first, and only restarts the server if webpack succeeds (so a broken build won't leave the server in a bad state).
+
+### 5. Database Persistence
 - **MongoDB**: Stores file metadata and binary blobs via `PastPaperPaperBlob` chunks.
 - **Elasticsearch**: Stores searchable text content via `PastPaperIndex`.
 - Volumes: `mw-mongo-data` and `mw-es-data` survive container restarts and rebuilds.

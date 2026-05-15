@@ -9,6 +9,7 @@
     "prepare": "if [ -e webpack.config.js ]; then npm run webpack; fi",
     "webpack-dev": "NODE_ENV=development webpack --progress --colors --watch",
     "webpack": "NODE_ENV=production webpack --progress; if [ $? -eq 0 ]; then echo OK.; else echo Failed && exit 1.; fi",
+    "rebuild": "npm run webpack && docker-compose restart www",
     "test": "mocha --delay --exit",
     "coverage": "node_modules/.bin/istanbul cover -x \"**/dist-server/**\" --report lcovonly node_modules/.bin/_mocha -- --delay --exit -R spec",
     "coverage-html": "node_modules/.bin/istanbul cover -x \"**/dist-server/**\" node_modules/.bin/_mocha -- --delay --exit"

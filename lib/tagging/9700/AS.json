@@ -1,1 +1,336 @@
-[]
+[
+  {
+    "topic_id": "1",
+    "topic_name": "Cell structure",
+    "subtopics": [
+      {
+        "id": "1.1",
+        "name": "Microscopy in cell studies",
+        "learning_outcomes": [
+          "make temporary preparations of cellular material suitable for viewing with a light microscope [cite: 8]",
+          "draw cells from microscope slides and photomicrographs [cite: 8]",
+          "calculate magnifications of images and actual sizes of specimens from drawings, photomicrographs and electron micrographs (scanning and transmission) [cite: 8]",
+          "use an eyepiece graticule and stage micrometer scale to make measurements and use the appropriate units, millimetre (mm), micrometre (µm) and nanometre (nm) [cite: 8]",
+          "define resolution and magnification and explain the differences between these terms, with reference to light microscopy and electron microscopy [cite: 8]"
+        ]
+      },
+      {
+        "id": "1.2",
+        "name": "Eukaryotic and prokaryotic cell structures",
+        "learning_outcomes": [
+          "recognise organelles and other cell structures found in eukaryotic cells and outline their structures and functions [cite: 8]",
+          "describe and interpret photomicrographs, electron micrographs and drawings of typical plant and animal cells [cite: 17, 18]",
+          "compare the structure of typical plant and animal cells [cite: 19]",
+          "state that cells use ATP from respiration for energy-requiring processes [cite: 20]",
+          "outline key structural features of a prokaryotic cell as found in a typical bacterium [cite: 21, 22]",
+          "compare the structure of a prokaryotic cell as found in a typical bacterium with the structures of typical eukaryotic cells in plants and animals [cite: 29]",
+          "state that all viruses are non-cellular structures with a nucleic acid core and a capsid made of protein [cite: 30]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "2",
+    "topic_name": "Biological molecules",
+    "subtopics": [
+      {
+        "id": "2.1",
+        "name": "Testing for biological molecules",
+        "learning_outcomes": [
+          "describe and carry out the Benedict's test for reducing sugars, the iodine test for starch, the emulsion test for lipids and the biuret test for proteins [cite: 44]",
+          "describe and carry out a semi-quantitative Benedict's test on a reducing sugar solution [cite: 44]",
+          "describe and carry out a test to identify the presence of non-reducing sugars, using acid hydrolysis and Benedict's solution [cite: 44]"
+        ]
+      },
+      {
+        "id": "2.2",
+        "name": "Carbohydrates and lipids structure",
+        "learning_outcomes": [
+          "describe and draw the ring forms of a-glucose and ß-glucose [cite: 44]",
+          "define the terms monomer, polymer, macromolecule, monosaccharide, disaccharide and polysaccharide [cite: 44]",
+          "state the role of covalent bonds in joining smaller molecules together to form polymers [cite: 44]",
+          "state that glucose, fructose and maltose are reducing sugars and that sucrose is a non-reducing sugar [cite: 44]",
+          "describe the formation of a glycosidic bond by condensation [cite: 44]",
+          "describe the breakage of a glycosidic bond in polysaccharides and disaccharides by hydrolysis [cite: 54]",
+          "describe the molecular structure of starch and glycogen and relate their structures to functions [cite: 55]",
+          "describe the molecular structure of cellulose and its role in plant cell walls [cite: 56]",
+          "state that triglycerides are non-polar hydrophobic molecules and describe their molecular structure [cite: 57]",
+          "relate the molecular structure of triglycerides to their functions in living organisms [cite: 58]",
+          "describe the molecular structure of phospholipids with reference to hydrophilic heads and hydrophobic tails [cite: 59]"
+        ]
+      },
+      {
+        "id": "2.3",
+        "name": "Protein structure and function",
+        "learning_outcomes": [
+          "describe and draw the general structure of an amino acid and the formation and breakage of a peptide bond [cite: 62]",
+          "explain the meaning of the terms primary structure, secondary structure, tertiary structure and quaternary structure of proteins [cite: 63, 64]",
+          "describe the types of interaction that hold protein molecules in shape [cite: 65]",
+          "state that globular proteins are generally soluble and fibrous proteins are generally insoluble [cite: 70]",
+          "describe the structure of a molecule of haemoglobin as an example of a globular protein [cite: 71]",
+          "relate the structure of haemoglobin to its function [cite: 72]",
+          "describe the structure of a molecule of collagen as an example of a fibrous protein [cite: 73, 74]",
+          "relate the structures of collagen molecules and collagen fibres to their function [cite: 75]"
+        ]
+      },
+      {
+        "id": "2.4",
+        "name": "Water properties and roles",
+        "learning_outcomes": [
+          "explain how hydrogen bonding occurs between water molecules and relate properties to solvent action, high specific heat capacity and latent heat of vaporisation [cite: 83]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3",
+    "topic_name": "Enzymes",
+    "subtopics": [
+      {
+        "id": "3.1",
+        "name": "Enzyme mode of action",
+        "learning_outcomes": [
+          "state that enzymes are globular proteins that catalyse reactions inside or outside cells [cite: 91]",
+          "explain the mode of action of enzymes in terms of an active site, enzyme-substrate complex, lowering of activation energy and specificity [cite: 91]",
+          "investigate the progress of enzyme-catalysed reactions by measuring rates [cite: 91]",
+          "outline the use of a colorimeter for measuring the progress of enzyme-catalysed reactions [cite: 91]"
+        ]
+      },
+      {
+        "id": "3.2",
+        "name": "Factors affecting enzyme action",
+        "learning_outcomes": [
+          "investigate and explain the effects of temperature, pH, enzyme, substrate, and inhibitor concentration on enzyme-catalysed reactions [cite: 91]",
+          "explain that the maximum rate of reaction (Vmax) is used to derive the Michaelis-Menten constant (Km) [cite: 91]",
+          "explain the effects of reversible inhibitors, both competitive and non-competitive, on enzyme activity [cite: 91]",
+          "investigate the difference in activity between an immobilised enzyme and the same enzyme free in solution [cite: 91]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "4",
+    "topic_name": "Cell membranes and transport",
+    "subtopics": [
+      {
+        "id": "4.1",
+        "name": "Fluid mosaic membrane model",
+        "learning_outcomes": [
+          "describe the fluid mosaic model of membrane structure [cite: 103]",
+          "describe the arrangement of cholesterol, glycolipids and glycoproteins in cell surface membranes [cite: 103]",
+          "describe the roles of phospholipids, cholesterol, glycolipids, proteins and glycoproteins in cell surface membranes [cite: 103]",
+          "outline the main stages in the process of cell signalling leading to specific responses [cite: 103]"
+        ]
+      },
+      {
+        "id": "4.2",
+        "name": "Movement into and out of cells",
+        "learning_outcomes": [
+          "describe and explain the processes of simple diffusion, facilitated diffusion, osmosis, active transport, endocytosis and exocytosis [cite: 103]",
+          "investigate simple diffusion and osmosis using plant tissue and non-living materials [cite: 103]",
+          "illustrate the principle that surface area to volume ratios decrease with increasing size [cite: 103]",
+          "investigate the effect of changing surface area to volume ratio on diffusion [cite: 103]",
+          "investigate the effects of immersing plant tissues in solutions of different water potentials [cite: 112]",
+          "explain the movement of water between cells and solutions in terms of water potential [cite: 113]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "5",
+    "topic_name": "The mitotic cell cycle",
+    "subtopics": [
+      {
+        "id": "5.1",
+        "name": "Replication and division mechanics",
+        "learning_outcomes": [
+          "describe the structure of a chromosome [cite: 122]",
+          "explain the importance of mitosis in the production of genetically identical daughter cells [cite: 122]",
+          "outline the mitotic cell cycle including interphase, mitosis and cytokinesis [cite: 122]",
+          "outline the role of telomeres in preventing the loss of genes [cite: 122]",
+          "outline the role of stem cells in cell replacement and tissue repair [cite: 122]",
+          "explain how uncontrolled cell division can result in the formation of a tumour [cite: 122]"
+        ]
+      },
+      {
+        "id": "5.2",
+        "name": "Chromosome behaviour in mitosis",
+        "learning_outcomes": [
+          "describe the behaviour of chromosomes, nuclear envelope, cell surface membrane and spindle during prophase, metaphase, anaphase and telophase [cite: 122]",
+          "interpret photomicrographs, diagrams and microscope slides of cells in different stages of the mitotic cell cycle [cite: 122]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6",
+    "topic_name": "Nucleic acids and protein synthesis",
+    "subtopics": [
+      {
+        "id": "6.1",
+        "name": "Structure and replication of DNA",
+        "learning_outcomes": [
+          "describe the structure of nucleotides, including ATP [cite: 133]",
+          "state that adenine and guanine are purines and cytosine, thymine and uracil are pyrimidines [cite: 133]",
+          "describe the structure of a DNA molecule as a double helix [cite: 133]",
+          "describe the semi-conservative replication of DNA during the S phase [cite: 133]",
+          "describe the structure of an RNA molecule using mRNA as an example [cite: 133]"
+        ]
+      },
+      {
+        "id": "6.2",
+        "name": "Protein synthesis and mutations",
+        "learning_outcomes": [
+          "state that a polypeptide is coded for by a gene [cite: 133]",
+          "describe the principle of the universal genetic code [cite: 133]",
+          "describe how information in DNA is used during transcription and translation [cite: 141]",
+          "state the template vs non-transcribed strands of DNA [cite: 148]",
+          "explain the removal of introns and joining of exons to form mRNA in eukaryotes [cite: 149]",
+          "state that a gene mutation is a change in base pairs and may alter a polypeptide [cite: 150]",
+          "explain gene mutation types: substitution, deletion or insertion [cite: 151, 152]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "7",
+    "topic_name": "Transport in plants",
+    "subtopics": [
+      {
+        "id": "7.1",
+        "name": "Structure of plant transport tissues",
+        "learning_outcomes": [
+          "draw plan diagrams of transverse sections of stems, roots and leaves [cite: 160]",
+          "describe the distribution of xylem and phloem in herbaceous dicotyledonous plants [cite: 160]",
+          "draw and label xylem vessel elements, phloem sieve tube elements and companion cells [cite: 160]",
+          "relate the structure of xylem and phloem elements to their functions [cite: 160]"
+        ]
+      },
+      {
+        "id": "7.2",
+        "name": "Plant transport mechanisms",
+        "learning_outcomes": [
+          "state that some mineral ions and organic compounds can be transported dissolved in water [cite: 160]",
+          "describe the transport of water from soil to xylem through apoplast and symplast pathways [cite: 160]",
+          "explain that transpiration involves evaporation and diffusion of water vapour [cite: 160]",
+          "explain how hydrogen bonding of water is involved with cohesion-tension and adhesion [cite: 160]",
+          "make annotated drawings of xerophytic leaves explaining adaptations to reduce water loss [cite: 160]",
+          "state that assimilates move from sources to sinks in phloem sieve tubes [cite: 160]",
+          "explain how companion cells transfer assimilates to phloem sieve tubes [cite: 160]",
+          "explain mass flow in phloem sieve tubes down a hydrostatic pressure gradient [cite: 160]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "8",
+    "topic_name": "Transport in mammals",
+    "subtopics": [
+      {
+        "id": "8.1",
+        "name": "The mammalian circulatory system",
+        "learning_outcomes": [
+          "state that the mammalian system is a closed double circulation [cite: 169]",
+          "describe functions of pulmonary and systemic blood vessels [cite: 169]",
+          "recognise and make plan diagrams of arteries, veins and capillaries [cite: 169]",
+          "explain how blood vessel structures are related to functions [cite: 169]",
+          "recognise and draw red blood cells, monocytes, neutrophils and lymphocytes [cite: 169]",
+          "relate properties of water to its role in mammalian transport [cite: 169]",
+          "state functions and formation of tissue fluid [cite: 169]"
+        ]
+      },
+      {
+        "id": "8.2",
+        "name": "Oxygen and carbon dioxide transport",
+        "learning_outcomes": [
+          "describe the role of red blood cells in transporting oxygen and carbon dioxide [cite: 173]",
+          "describe the chloride shift and explain its importance [cite: 173]",
+          "describe the role of plasma in carbon dioxide transport [cite: 173]",
+          "describe and explain the oxygen dissociation curve of adult haemoglobin [cite: 173]",
+          "explain the importance of the oxygen dissociation curve at different partial pressures [cite: 173]",
+          "describe the Bohr shift and explain its importance [cite: 173]"
+        ]
+      },
+      {
+        "id": "8.3",
+        "name": "Structure and function of the heart",
+        "learning_outcomes": [
+          "describe the external and internal structure of the mammalian heart [cite: 173]",
+          "explain differences in thickness of heart chamber walls [cite: 173]",
+          "describe the cardiac cycle with reference to pressure changes and valves [cite: 173]",
+          "explain the roles of the sinoatrial node, atrioventricular node and Purkyne tissue [cite: 173]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "9",
+    "topic_name": "Gas exchange",
+    "subtopics": [
+      {
+        "id": "9.1",
+        "name": "Human gas exchange system",
+        "learning_outcomes": [
+          "describe the structure of the human gas exchange system [cite: 181]",
+          "describe the distribution of tissues in the gas exchange system [cite: 181]",
+          "recognise gas exchange tissues and structures in micrographs and drawings [cite: 181]",
+          "describe the functions of ciliated epithelial cells, goblet cells and mucous glands [cite: 181]",
+          "describe the functions of cartilage, smooth muscle, elastic fibres and squamous epithelium [cite: 181]",
+          "describe gas exchange between alveoli and capillaries [cite: 181]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "10",
+    "topic_name": "Infectious diseases",
+    "subtopics": [
+      {
+        "id": "10.1",
+        "name": "Causative agents and transmission",
+        "learning_outcomes": [
+          "state that infectious diseases are caused by pathogens and are transmissible [cite: 193]",
+          "state the name and type of pathogen for cholera, malaria, TB and HIV/AIDS [cite: 193]",
+          "explain how cholera, malaria, TB and HIV are transmitted [cite: 193]",
+          "discuss biological, social and economic factors in prevention and control [cite: 193]"
+        ]
+      },
+      {
+        "id": "10.2",
+        "name": "Antibiotics and resistance",
+        "learning_outcomes": [
+          "outline how penicillin acts on bacteria and why antibiotics do not affect viruses [cite: 193]",
+          "discuss the consequences of antibiotic resistance and reduction steps [cite: 193]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "11",
+    "topic_name": "Immunity",
+    "subtopics": [
+      {
+        "id": "11.1",
+        "name": "Mechanisms of the immune system",
+        "learning_outcomes": [
+          "describe the mode of action of phagocytes [cite: 200]",
+          "explain antigens and the difference between self and non-self [cite: 200]",
+          "describe events during a primary immune response including macrophage and lymphocyte roles [cite: 200]",
+          "explain the role of memory cells in the secondary immune response [cite: 200]"
+        ]
+      },
+      {
+        "id": "11.2",
+        "name": "Antibodies and vaccination",
+        "learning_outcomes": [
+          "relate the molecular structure of antibodies to their functions [cite: 200]",
+          "outline the hybridoma method for monoclonal antibody production [cite: 200]",
+          "outline principles of using monoclonal antibodies in diagnosis and treatment [cite: 200]",
+          "describe differences between active/passive and natural/artificial immunity [cite: 200]",
+          "explain that vaccines contain antigens that stimulate immune responses [cite: 200]",
+          "explain how vaccination programmes help control disease spread [cite: 200]"
+        ]
+      }
+    ]
+  }
+]

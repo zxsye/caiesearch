@@ -1,1 +1,466 @@
-[]
+[
+  {
+    "topic_id": "12",
+    "topic_name": "Motion in a circle",
+    "subtopics": [
+      {
+        "id": "12.1",
+        "name": "Circular Kinematics",
+        "learning_outcomes": [
+          "define the radian and express angular displacement in radians",
+          "understand and use the concept of angular speed",
+          "recall and use ω = 2π/T and v = rω"
+        ]
+      },
+      {
+        "id": "12.2",
+        "name": "Centripetal Acceleration",
+        "learning_outcomes": [
+          "understand that a force of constant magnitude that is always perpendicular to the direction of motion causes centripetal acceleration",
+          "understand that centripetal acceleration causes circular motion with a constant angular speed",
+          "recall and use a = rω² and a = v²/r",
+          "recall and use F = mrω² and F = mv²/r"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "13",
+    "topic_name": "Gravitational fields",
+    "subtopics": [
+      {
+        "id": "13.1",
+        "name": "Gravitational Field Concepts",
+        "learning_outcomes": [
+          "understand that a gravitational field is an example of a field of force and define gravitational field as force per unit mass",
+          "represent a gravitational field by means of field lines"
+        ]
+      },
+      {
+        "id": "13.2",
+        "name": "Newtonian Gravitation",
+        "learning_outcomes": [
+          "understand that, for a point outside a uniform sphere, the mass of the sphere may be considered to be a point mass at its centre",
+          "recall and use Newton's law of gravitation F = Gm1m2/r² for the force between two point masses",
+          "analyse circular orbits in gravitational fields by relating the gravitational force to the centripetal acceleration it causes",
+          "understand that a satellite in a geostationary orbit remains at the same point above the Earth's surface, with an orbital period of 24 hours, orbiting from west to east, directly above the Equator"
+        ]
+      },
+      {
+        "id": "13.3",
+        "name": "Point Mass Field Strength",
+        "learning_outcomes": [
+          "derive, from Newton's law of gravitation and the definition of gravitational field, the equation g = GM/r² for the gravitational field strength due to a point mass",
+          "recall and use g = GM/r²",
+          "understand why g is approximately constant for small changes in height near the Earth's surface"
+        ]
+      },
+      {
+        "id": "13.4",
+        "name": "Gravitational Potential Energy",
+        "learning_outcomes": [
+          "define gravitational potential at a point as the work done per unit mass in bringing a small test mass from infinity to the point",
+          "use φ = -GM/r for the gravitational potential in the field due to a point mass",
+          "understand how the concept of gravitational potential leads to the gravitational potential energy of two point masses and use EP = -GMm/r"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "14",
+    "topic_name": "Temperature",
+    "subtopics": [
+      {
+        "id": "14.1",
+        "name": "Thermal Equilibrium",
+        "learning_outcomes": [
+          "understand that (thermal) energy is transferred from a region of higher temperature to a region of lower temperature",
+          "understand that regions of equal temperature are in thermal equilibrium"
+        ]
+      },
+      {
+        "id": "14.2",
+        "name": "Thermodynamic Temperature Scales",
+        "learning_outcomes": [
+          "understand that a physical property that varies with temperature may be used for the measurement of temperature and state examples of such properties",
+          "understand that the scale of thermodynamic temperature does not depend on the property of any particular substance",
+          "convert temperatures between kelvin and degrees Celsius and recall that T/K = θ/°C + 273.15",
+          "understand that the lowest possible temperature is zero kelvin on the thermodynamic temperature scale and that this is known as absolute zero"
+        ]
+      },
+      {
+        "id": "14.3",
+        "name": "Specific Heat & Latent Heat",
+        "learning_outcomes": [
+          "define and use specific heat capacity",
+          "define and use specific latent heat and distinguish between specific latent heat of fusion and specific latent heat of vaporisation"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "15",
+    "topic_name": "Ideal gases",
+    "subtopics": [
+      {
+        "id": "15.1",
+        "name": "The Mole Concept",
+        "learning_outcomes": [
+          "understand that amount of substance is an SI base quantity with the base unit mol",
+          "use molar quantities where one mole of any substance is the amount containing a number of particles of that substance equal to the Avogadro constant NA"
+        ]
+      },
+      {
+        "id": "15.2",
+        "name": "Ideal Gas Equation",
+        "learning_outcomes": [
+          "understand that a gas obeying pV ∝ T where T is the thermodynamic temperature, is known as an ideal gas",
+          "recall and use the equation of state for an ideal gas expressed as pV = nRT and as pV = NkT",
+          "recall that the Boltzmann constant k is given by k = R/NA"
+        ]
+      },
+      {
+        "id": "15.3",
+        "name": "Gas Kinetic Theory",
+        "learning_outcomes": [
+          "state the basic assumptions of the kinetic theory of gases",
+          "explain how molecular movement causes the pressure exerted by a gas and derive and use the relationship pV = 1/3 Nm<c²>",
+          "understand that the root-mean-square speed Cr.m.s. is given by √<c²>",
+          "compare pV = 1/3 Nm<c²> with pV = NkT to deduce that the average translational kinetic energy of a molecule is 3/2 kT"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "16",
+    "topic_name": "Thermodynamics",
+    "subtopics": [
+      {
+        "id": "16.1",
+        "name": "Internal Energy State",
+        "learning_outcomes": [
+          "understand that internal energy is determined by the state of the system and is the sum of random kinetic and potential energies associated with molecules",
+          "relate a rise in temperature of an object to an increase in its internal energy"
+        ]
+      },
+      {
+        "id": "16.2",
+        "name": "First Law of Thermodynamics",
+        "learning_outcomes": [
+          "recall and use W = pΔV for work done at constant pressure",
+          "recall and use the first law of thermodynamics ΔU = q + W"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "17",
+    "topic_name": "Oscillations",
+    "subtopics": [
+      {
+        "id": "17.1",
+        "name": "Simple Harmonic Motion",
+        "learning_outcomes": [
+          "understand and use the terms displacement, amplitude, period, frequency, angular frequency and phase difference",
+          "understand that SHM occurs when acceleration is proportional to displacement and in the opposite direction",
+          "use a = -ω²x and x = x0 sin ωt",
+          "use the equations v = v0 cos ωt and v = ±ω√(x0² - x²)",
+          "analyse and interpret graphical representations of SHM"
+        ]
+      },
+      {
+        "id": "17.2",
+        "name": "Energy in SHM",
+        "learning_outcomes": [
+          "describe the interchange between kinetic and potential energy during simple harmonic motion",
+          "recall and use for the total energy E = 1/2 mω²x0²"
+        ]
+      },
+      {
+        "id": "17.3",
+        "name": "Damping & Resonance",
+        "learning_outcomes": [
+          "understand that a resistive force acting on an oscillating system causes damping",
+          "understand and use the terms light, critical and heavy damping and sketch displacement-time graphs",
+          "understand that resonance involves a maximum amplitude occurring when forced to oscillate at the natural frequency"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "18",
+    "topic_name": "Electric fields",
+    "subtopics": [
+      {
+        "id": "18.1",
+        "name": "Electric Field Concepts",
+        "learning_outcomes": [
+          "understand an electric field as force per unit positive charge",
+          "recall and use F = qE",
+          "represent an electric field by means of field lines"
+        ]
+      },
+      {
+        "id": "18.2",
+        "name": "Uniform Electric Fields",
+        "learning_outcomes": [
+          "recall and use E = ΔV/Δd for parallel plates",
+          "describe the effect of a uniform electric field on the motion of charged particles"
+        ]
+      },
+      {
+        "id": "18.3",
+        "name": "Coulomb's Law",
+        "learning_outcomes": [
+          "understand that charge on a sphere may be considered a point charge at its centre",
+          "recall and use Coulomb’s law F = Q1Q2/(4πε0r²)"
+        ]
+      },
+      {
+        "id": "18.4",
+        "name": "Point Charge Strength",
+        "learning_outcomes": [
+          "recall and use E = Q/(4πε0r²) for field strength"
+        ]
+      },
+      {
+        "id": "18.5",
+        "name": "Electric Potential Energy",
+        "learning_outcomes": [
+          "define electric potential as work done per unit positive charge from infinity",
+          "understand field strength as the negative of potential gradient",
+          "use V = Q/(4πε0r) and EP = Qq/(4πε0r)"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "19",
+    "topic_name": "Capacitance",
+    "subtopics": [
+      {
+        "id": "19.1",
+        "name": "Capacitors in Circuits",
+        "learning_outcomes": [
+          "define capacitance and use C = Q/V",
+          "derive and use formulae for combined capacitance in series and parallel"
+        ]
+      },
+      {
+        "id": "19.2",
+        "name": "Energy Stored in Capacitors",
+        "learning_outcomes": [
+          "determine electric potential energy from the area under a potential-charge graph",
+          "recall and use W = 1/2 QV = 1/2 CV²"
+        ]
+      },
+      {
+        "id": "19.3",
+        "name": "Capacitor Discharge",
+        "learning_outcomes": [
+          "analyse variation with time for potential difference, charge and current",
+          "recall and use the time constant τ = RC",
+          "use equations of the form x = x0e^-(t/RC)"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "20",
+    "topic_name": "Magnetic fields",
+    "subtopics": [
+      {
+        "id": "20.1",
+        "name": "Magnetic Field Lines",
+        "learning_outcomes": [
+          "understand magnetic fields are produced by moving charges or permanent magnets",
+          "represent a magnetic field by field lines"
+        ]
+      },
+      {
+        "id": "20.2",
+        "name": "Magnetic Force on Wires",
+        "learning_outcomes": [
+          "recall and use F = BIL sin θ with Fleming’s left-hand rule",
+          "define magnetic flux density"
+        ]
+      },
+      {
+        "id": "20.3",
+        "name": "Force on Moving Charges",
+        "learning_outcomes": [
+          "recall and use F = BQv sin θ",
+          "understand the origin of Hall voltage and the Hall probe",
+          "describe motion in a uniform magnetic field and explain velocity selection"
+        ]
+      },
+      {
+        "id": "20.4",
+        "name": "Fields due to Currents",
+        "learning_outcomes": [
+          "sketch field patterns for straight wires, coils, and solenoids",
+          "explain forces between current-carrying conductors"
+        ]
+      },
+      {
+        "id": "20.5",
+        "name": "Electromagnetic Induction",
+        "learning_outcomes": [
+          "define magnetic flux and flux linkage",
+          "recall and use Faraday’s and Lenz’s laws"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "21",
+    "topic_name": "Alternating currents",
+    "subtopics": [
+      {
+        "id": "21.1",
+        "name": "RMS & Peak Values",
+        "learning_outcomes": [
+          "understand period, frequency and peak value",
+          "use sinusoidal equations x = x0 sin ωt",
+          "distinguish between r.m.s. and peak values for power, current, and voltage"
+        ]
+      },
+      {
+        "id": "21.2",
+        "name": "AC Rectification & Smoothing",
+        "learning_outcomes": [
+          "distinguish between half-wave and full-wave rectification",
+          "explain the use of bridge rectifiers and capacitor smoothing"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "22",
+    "topic_name": "Quantum physics",
+    "subtopics": [
+      {
+        "id": "22.1",
+        "name": "Photon Energy & Momentum",
+        "learning_outcomes": [
+          "understand the particulate nature of radiation and the photon as a quantum of energy",
+          "recall and use E = hf and the unit electronvolt (eV)",
+          "understand photon momentum p = E/c"
+        ]
+      },
+      {
+        "id": "22.2",
+        "name": "Photoelectric Effect",
+        "learning_outcomes": [
+          "understand threshold frequency and wavelength",
+          "explain photoelectric emission using work function energy",
+          "recall and use hf = Φ + 1/2 mv²max"
+        ]
+      },
+      {
+        "id": "22.3",
+        "name": "Wave-Particle Duality",
+        "learning_outcomes": [
+          "understand evidence for particulate and wave natures",
+          "interpret electron diffraction and de Broglie wavelength",
+          "recall and use λ = h/p"
+        ]
+      },
+      {
+        "id": "22.4",
+        "name": "Atomic Energy Levels",
+        "learning_outcomes": [
+          "understand discrete energy levels and line spectra",
+          "recall and use hf = E1 - E2"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "23",
+    "topic_name": "Nuclear physics",
+    "subtopics": [
+      {
+        "id": "23.1",
+        "name": "Mass Defect & Binding Energy",
+        "learning_outcomes": [
+          "understand E = mc² and mass-energy equivalence",
+          "represent nuclear reactions using equations",
+          "define mass defect, binding energy, fusion and fission"
+        ]
+      },
+      {
+        "id": "23.2",
+        "name": "Radioactive Decay Kinetics",
+        "learning_outcomes": [
+          "understand the random and spontaneous nature of decay",
+          "define activity, decay constant and half-life",
+          "use exponential decay equations and A = λN"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "24",
+    "topic_name": "Medical physics",
+    "subtopics": [
+      {
+        "id": "24.1",
+        "name": "Ultrasound Imaging",
+        "learning_outcomes": [
+          "understand piezoelectric transducers and ultrasound generation",
+          "define acoustic impedance and intensity reflection coefficients",
+          "use the attenuation equation I = I0e^-μx"
+        ]
+      },
+      {
+        "id": "24.2",
+        "name": "X-ray & CT Scanning",
+        "learning_outcomes": [
+          "explain X-ray production and calculate minimum wavelength",
+          "understand contrast and attenuation in X-ray imaging",
+          "describe the principles of Computed Tomography (CT)"
+        ]
+      },
+      {
+        "id": "24.3",
+        "name": "PET Scanning & Annihilation",
+        "learning_outcomes": [
+          "understand tracers and β+ decay",
+          "explain electron-positron annihilation and gamma-ray production",
+          "calculate photon energy and understand image creation from arrival times"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "25",
+    "topic_name": "Astronomy and cosmology",
+    "subtopics": [
+      {
+        "id": "25.1",
+        "name": "Luminosity & Standard Candles",
+        "learning_outcomes": [
+          "define luminosity and radiant flux intensity",
+          "understand the use of standard candles to determine galactic distances"
+        ]
+      },
+      {
+        "id": "25.2",
+        "name": "Stellar Radii Laws",
+        "learning_outcomes": [
+          "recall and use Wien’s displacement law",
+          "use the Stefan-Boltzmann law L = 4πσr²T⁴ to estimate radius"
+        ]
+      },
+      {
+        "id": "25.3",
+        "name": "Hubble’s Law & Redshift",
+        "learning_outcomes": [
+          "understand redshift in spectra and use the redshift equation",
+          "recall and use Hubble’s law v ≈ H0d and explain the Big Bang theory"
+        ]
+      }
+    ]
+  }
+]
