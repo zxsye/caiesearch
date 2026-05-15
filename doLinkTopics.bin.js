@@ -7,13 +7,18 @@
  *
  * Phase 1: Coordinate-based text extraction.
  * Phase 2: Gemini 3 (Thinking) prompt.
- * Phase 3: MongoDB write (doc.dir.dirs[i].topics).
+ * Phase 3: MongoDB write (doc.dir.dirs[i].topics / subparts[].topics) using
+ * canonical subtopic names (subtopics[].name) when the syllabus lists subtopics.
  */
 
 const { MONGODB, ES, GEMINI_API_KEY, DEBUG } = process.env
 const mongoose = require('mongoose')
 const { GoogleGenAI } = require('@google/genai')
 const syllabusTopics = require('./lib/syllabus_topics.js')
+const {
+  collectAllowedTaggingLabels,
+  normalizeTagLabels
+} = require('./lib/tagging/syllabusTagLabels.js')
 const elasticsearch = require('elasticsearch')
 const sspdf = require('./lib/sspdf.js')
 const fs = require('fs')
@@ -103,20 +108,26 @@ function sliceQuestionTexts(pageDatas, dirs) {
 // ─── Phase 2: Gemini 3 (Thinking) tagging ─────────────────────────────────────
 
 async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) {
-  if (!questionText || questionText.length < 10) return []
+  if (!questionText || questionText.length < 10) return { topics: [], subparts: [] }
 
+  const allowed = collectAllowedTaggingLabels(syllabusData)
   const syllabusStr = JSON.stringify(syllabusData, null, 2)
   const prompt =
     `You are a CIE (Cambridge International) examiner for subject ${subjectId}. ` +
     `Below is the exact text of Question ${qN} extracted from a past exam paper.\n\n` +
-    `Your task: identify which syllabus topics each part of this question covers.\n\n` +
+    `Your task: for each main part of the question, list which SYLLABUS SUBTOPICS it assesses.\n\n` +
     `Syllabus Structure:\n${syllabusStr}\n\n` +
     `Question Text:\n${questionText}\n\n` +
-    `Return a JSON array of objects for each main part of the question (e.g. (a), (b), (c)). ` +
-    `Focus only on the primary sub-question levels (a, b, c); do not create separate entries for sub-sub-parts like (i), (ii) or (1), (2). ` +
-    `Each object should have:\n` +
-    `- "part": The label of the part (e.g. "(a)", "(b)", or null if it's the main question body).\n` +
-    `- "topics": A JSON array of matching TOPIC NAMES from the syllabus.\n\n` +
+    `Return a JSON array with one object per main part (e.g. (a), (b), (c)). ` +
+    `Do not split sub-sub-parts like (i), (ii) or (1), (2) into separate rows.\n\n` +
+    `Labelling rules:\n` +
+    `- Prefer the finest level: use each subtopic's exact string value from the field "name" inside "subtopics" (copy character-for-character).\n` +
+    `- If a syllabus topic has an empty "subtopics" array, you may use that topic's "topic_name" instead.\n` +
+    `- Do not return parent topic_name when that topic lists subtopics — choose the relevant subtopic name(s) only.\n` +
+    `- Do not return learning_outcomes text; only subtopic "name" or bare topic_name as above.\n\n` +
+    `Each object must have:\n` +
+    `- "part": The label of the part (e.g. "(a)", "(b)", or null if there is no lettered structure).\n` +
+    `- "topics": A JSON array of those allowed labels (one or more per part).\n\n` +
     `Return ONLY the JSON array. Do not include markdown or explanations.`
 
   try {
@@ -153,18 +164,19 @@ async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) 
       const subparts = []
 
       for (const item of detected) {
-        if (!item.topics || item.topics.length === 0) continue
+        const row = normalizeTagLabels(item.topics, allowed)
+        if (row.length === 0) continue
         subparts.push({
           part: item.part,
-          topics: item.topics
+          topics: row
         })
-        for (const t of item.topics) {
+        for (const t of row) {
           uniqueTopics.add(t)
         }
       }
-      
+
       const topicsArr = Array.from(uniqueTopics)
-      console.log(`  [Q${qN}] Detected ${subparts.length} parts, ${topicsArr.length} unique topics.`)
+      console.log(`  [Q${qN}] Detected ${subparts.length} parts, ${topicsArr.length} unique subtopic label(s).`)
       return { topics: topicsArr, subparts }
     } else {
       console.warn(`  [Q${qN}] No JSON array found in Gemini response: ${text.substring(0, 100)}`)
@@ -172,28 +184,33 @@ async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) 
     }
   } catch (e) {
     console.error(`  [Q${qN}] Gemini error: ${e.message}`)
-    return []
+    return { topics: [], subparts: [] }
   }
 }
 
 async function tagQuestionsBulkWithGemini(questionsBatch, subjectId, syllabusData, maxTopics) {
   if (!questionsBatch || questionsBatch.length === 0) return []
 
+  const allowed = collectAllowedTaggingLabels(syllabusData)
   const syllabusStr = JSON.stringify(syllabusData, null, 2)
   let questionsPrompt = questionsBatch.map(q => `Question ${q.qN}:\n${q.text}\n`).join('\n---\n')
 
   const prompt =
     `You are a CIE (Cambridge International) examiner for subject ${subjectId}. ` +
     `Below are the exact texts of ${questionsBatch.length} multiple-choice questions extracted from a past exam paper.\n\n` +
-    `Your task: identify which syllabus topics each question covers. ` +
-    `Since these are multiple-choice questions, they do not have sub-parts. ` +
-    `You MUST identify at most ${maxTopics} topic(s) per question.\n\n` +
+    `Your task: for each question, list which SYLLABUS SUBTOPICS it assesses (whole question only — no lettered parts).\n\n` +
+    `Labelling rules:\n` +
+    `- Prefer each subtopic's exact string from the field "name" inside "subtopics" in the syllabus JSON (copy character-for-character).\n` +
+    `- If a syllabus topic has an empty "subtopics" array, you may use that topic's "topic_name" instead.\n` +
+    `- Do not return parent topic_name when that topic lists subtopics — choose relevant subtopic name(s) only.\n` +
+    `- Do not return learning_outcomes text.\n` +
+    `- At most ${maxTopics} label(s) per question.\n\n` +
     `Syllabus Structure:\n${syllabusStr}\n\n` +
     `Questions:\n${questionsPrompt}\n\n` +
-    `Return ONLY a JSON array of objects, one for each question. ` +
-    `Each object should have:\n` +
+    `Return ONLY a JSON array of objects, one per question. ` +
+    `Each object must have:\n` +
     `- "qN": The integer question number.\n` +
-    `- "topics": A JSON array of matching TOPIC NAMES from the syllabus (maximum ${maxTopics}).\n\n` +
+    `- "topics": A JSON array of those allowed labels (max ${maxTopics}).\n\n` +
     `Return ONLY the JSON array. Do not include markdown or explanations.`
 
   try {
@@ -219,10 +236,12 @@ async function tagQuestionsBulkWithGemini(questionsBatch, subjectId, syllabusDat
     if (match) {
       const detected = JSON.parse(match[0])
       console.log(`  [Bulk] Processed ${detected.length} questions.`)
-      // Convert to expected format {qN, result: {topics, subparts}}
       return detected.map(item => ({
         qN: item.qN,
-        result: { topics: item.topics || [], subparts: [] } // No subparts for MCQ
+        result: {
+          topics: normalizeTagLabels(item.topics, allowed),
+          subparts: []
+        }
       }))
     } else {
       console.warn(`  [Bulk] No JSON array found in Gemini response: ${text.substring(0, 100)}`)
@@ -241,8 +260,9 @@ async function saveTopicsToDoc(doc, qN, result) {
   if (!Array.isArray(dirs)) return
   const entry = dirs.find(d => d.qN === qN)
   if (!entry) return
-  entry.topics = result.topics
-  entry.subparts = result.subparts
+  if (!result || typeof result !== 'object') return
+  entry.topics = Array.isArray(result.topics) ? result.topics : []
+  entry.subparts = Array.isArray(result.subparts) ? result.subparts : []
   doc.markModified('dir')
   await doc.save()
 }

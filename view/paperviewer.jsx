@@ -16,7 +16,7 @@ export default class PaperViewer extends React.Component {
       pdfs: null,
       initialLoadTime: null,
       dirMenu: null,
-      expandedQuestions: {}
+      expandedQuestionSubtopics: {}
     }
 
     this.paperDirHitRegions = []
@@ -45,7 +45,8 @@ export default class PaperViewer extends React.Component {
       }
       this.setState({
         dirs: null,
-        pdfs: null
+        pdfs: null,
+        expandedQuestionSubtopics: {}
       })
     }
 
@@ -371,38 +372,58 @@ export default class PaperViewer extends React.Component {
                           <div className='title'>
                             {d.qT}
                           </div>
-                          {Array.isArray(d.topics) && d.topics.length > 0 ? (
-                            <div className='topic-pills'>
-                              {!this.state.expandedQuestions[d.qN] ? (
-                                <>
-                                  {d.topics.map((topic, ti) => (
-                                    <span className='topic-badge' key={ti}>{topic}</span>
-                                  ))}
-                                  {Array.isArray(d.subparts) && d.subparts.length > 0 ? (
-                                    <span className='topic-badge toggle' onClick={(e) => { e.stopPropagation(); this.setState({expandedQuestions: {...this.state.expandedQuestions, [d.qN]: true}})}}>
-                                      + Subquestions
-                                    </span>
-                                  ) : null}
-                                </>
-                              ) : (
-                                <div className='subparts-list' style={{display: 'flex', flexDirection: 'column', gap: '8px', width: '100%', marginTop: '4px'}}>
-                                  {d.subparts.map((sp, spi) => (
-                                    <div key={spi} className='subpart-row' style={{display: 'flex', alignItems: 'center', gap: '8px', borderLeft: '2px solid #ddd', paddingLeft: '8px'}}>
-                                      <span className='subpart-label' style={{fontWeight: 'bold', minWidth: '24px'}}>{sp.part || 'Main'}</span>
-                                      <div className='subpart-topics'>
-                                        {sp.topics.map((t, ti) => (
-                                          <span className='topic-badge' key={ti}>{t}</span>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                                  <span className='topic-badge toggle' style={{alignSelf: 'flex-start', marginTop: '4px'}} onClick={(e) => { e.stopPropagation(); this.setState({expandedQuestions: {...this.state.expandedQuestions, [d.qN]: false}})}}>
-                                    - Hide Subquestions
-                                  </span>
+                          {(() => {
+                            const topicTitles = Array.isArray(d.topicTitles) ? d.topicTitles : []
+                            const subparts = Array.isArray(d.subparts) ? d.subparts : []
+                            const hasSubpartTopicPills = subparts.some(sp => Array.isArray(sp.topics) && sp.topics.length > 0)
+                            const expanded = !!this.state.expandedQuestionSubtopics[d.qN]
+                            const showBlock = topicTitles.length > 0 || hasSubpartTopicPills
+                            if (!showBlock) return null
+                            return (
+                              <div className='topic-pills question-subtopic-tags'>
+                                <div className='topic-pills-row topic-pills-row--main'>
+                                  <div className='topic-pills-chips'>
+                                    {topicTitles.map((topic, ti) => (
+                                      <span className='topic-badge' key={ti}>{topic}</span>
+                                    ))}
+                                    {hasSubpartTopicPills ? (
+                                      <span
+                                        className='topic-badge toggle topic-expand-toggle'
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          this.setState({
+                                            expandedQuestionSubtopics: {
+                                              ...this.state.expandedQuestionSubtopics,
+                                              [d.qN]: !expanded
+                                            }
+                                          })
+                                        }}
+                                      >
+                                        {expanded ? '\u2212' : '+'}
+                                      </span>
+                                    ) : null}
+                                  </div>
                                 </div>
-                              )}
-                            </div>
-                          ) : null}
+                                {hasSubpartTopicPills && expanded ? (
+                                  <div className='topic-subparts-block'>
+                                    <span className='topic-pills-label'>By part</span>
+                                    <div className='subparts-list'>
+                                      {subparts.map((sp, spi) => (
+                                        <div key={spi} className='subpart-row'>
+                                          <span className='subpart-label'>{sp.part || '—'}</span>
+                                          <div className='subpart-topics'>
+                                            {(sp.topics || []).map((t, ti) => (
+                                              <span className='topic-badge' key={ti}>{t}</span>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ) : null}
+                              </div>
+                            )
+                          })()}
                           <div className='jump'>
                             Goto:
                             {sortedTypeStrArr.map(ts => {

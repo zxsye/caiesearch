@@ -16,6 +16,19 @@ const mongoose = require.main.require('mongoose')
 const state2meta = require('./view/state2meta.js')
 const Recognizer = require('./lib/recognizer.js')
 const ParseQuery = require('./lib/parseQuery.js')
+const syllabusTagLabels = require('./lib/tagging/syllabusTagLabels.js')
+
+function enrichQpDirsWithTopicTitles (obj, initDoc) {
+  if (!obj || !initDoc || !obj.qp || obj.qp.type !== 'questions' || !Array.isArray(obj.qp.dirs)) return
+  const loaded = syllabusTagLabels.loadSyllabusForSubjectPaper(initDoc.subject, initDoc.paper)
+  const syllabusData = loaded && loaded.syllabusData
+  for (const d of obj.qp.dirs) {
+    const labels = syllabusTagLabels.collectLabelsFromDirEntry(d)
+    d.topicTitles = (syllabusData && syllabusData.length > 0)
+      ? syllabusTagLabels.resolveLabelsToTopicTitles(syllabusData, labels)
+      : []
+  }
+}
 
 let indexPath = path.join(__dirname, 'dist/index.html')
 let indexHtml = fs.readFileSync(indexPath, {encoding: 'utf8'})
@@ -301,6 +314,7 @@ module.exports = ({mongodb: db, elasticsearch: es, siteOrigin}) => {
           initDoc.ensureDir().then(dir => {
             obj[initDoc.type] = dir
             obj[initDoc.type].docid = initDoc._id.toString()
+            enrichQpDirsWithTopicTitles(obj, initDoc)
             res.send(obj)
           }, err => next(err))
         } else {
@@ -332,6 +346,7 @@ module.exports = ({mongodb: db, elasticsearch: es, siteOrigin}) => {
               }
               obj[td.type].docid = td.docid
             }
+            enrichQpDirsWithTopicTitles(obj, initDoc)
             res.send(obj)
           }).catch(err => next(err))
         }
