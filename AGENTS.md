@@ -124,17 +124,17 @@ docker exec -it schsrch-www node reindex.bin.js --repair-dirs
 docker exec -it schsrch-www node reIndexElasticSearch.bin.js
 ```
 
-**Quick mode (`--quick`):** Skips sspdf text extraction and Elasticsearch indexing for files whose identity (subject/time/type/paper/variant) is encoded in the filename (e.g. `9701_s20_qp_1.pdf`). Files without standard names still go through the full path (sspdf for cover-page detection). After a quick ingest, `dir` fields and search index are empty — run `--repair-dirs` then `reIndexElasticSearch.bin.js` to complete. Recommended for bulk ingests of hundreds of papers.
+**Quick mode (`--quick`):** Skips sspdf text extraction and Elasticsearch indexing for files whose identity is encoded in the filename. Files without standard names still go through the full path (sspdf). **Note:** regardless of mode, `dir` fields are always empty after Stage 1 — you must run Stage 2 (`--repair-dirs`) to populate them. Quick mode additionally leaves the search index empty, requiring `reIndexElasticSearch.bin.js`.
 
 **Ingest checklist:**
 ```
 ┌─ After --full or --new
 │
-├─ Normal mode:    ✓ blobs stored  ✓ dir populated   ✓ ES indexed   → ready for Stage 2
-├─ Quick mode:     ✓ blobs stored  ✗ dir empty       ✗ ES empty     → run --repair-dirs + reIndexElasticSearch
+├─ Normal mode:    ✓ blobs stored  ✗ dir empty       ✓ ES indexed   → run Stage 2 (--repair-dirs)
+├─ Quick mode:     ✓ blobs stored  ✗ dir empty       ✗ ES empty     → run Stage 2 + reIndexElasticSearch
 │
-└─ Use --repair-dirs to backfill empty dirs (safe — skips docs already processed)
-   Use reIndexElasticSearch.bin.js to rebuild search index
+└─ Stage 2 (--repair-dirs) is ALWAYS required to populate the question map (dir).
+   reIndexElasticSearch.bin.js is only needed if --quick was used.
 ```
 
 ### Stage 2: Populate `dir` (question locations)
