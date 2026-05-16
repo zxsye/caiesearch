@@ -33,6 +33,15 @@ Modes
 
   --repair-dirs   Run both --repair-ms and --repair-qp in one pass.
 
+  --rerecognize-qp
+                  Re-run the question recognizer on every QP doc that already
+                  has a dir, preserving Gemini topic tags by re-attaching them
+                  by qN. Use this after fixing a recognizer bug to pick up the
+                  fix on already-indexed papers without --full's destructiveness.
+                  Newly detected questions end up untagged; doLinkTopics will
+                  pick them up incrementally on its next run.
+                  Does not need <path>; reads from DB.
+
 Arguments
   <path>          Root folder to scan for PDFs (default: /papers).
                   Required for --full and --new; ignored for repair modes.
@@ -44,6 +53,13 @@ Options
                   --repair-dirs and reIndexElasticSearch.bin.js.
                   Files without standard names still go through the full path.
                   Use with --full or --new to ingest large batches faster.
+
+  --dry-run       For --rerecognize-qp: report what would change without writing.
+
+  --only-changed  For --rerecognize-qp: only save docs whose qN set actually
+                  changes (skip identical rewrites).
+
+  --subject <id>  For --rerecognize-qp: restrict to one subject (e.g. 9701).
 
   --help, -h      Show this message and exit.
 
@@ -68,6 +84,11 @@ Examples
   # Backfill both QP and MS dirs in one go (safe)
   node reindex.bin.js --repair-dirs
 
+  # After fixing a recognizer bug: re-run on existing QP dirs, keep topic tags
+  node reindex.bin.js --rerecognize-qp --dry-run        # preview
+  node reindex.bin.js --rerecognize-qp --only-changed   # apply
+  GEMINI_API_KEY=$GEMINI_API_KEY node doLinkTopics.bin.js  # tag newly found Qs
+
   # Debug a single folder verbosely
   DEBUG=1 node reindex.bin.js --new /papers/9701/s24
 `
@@ -80,16 +101,21 @@ if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
   process.exit(0)
 }
 
-const MODES = ['--full', '--new', '--repair-ms', '--repair-qp', '--repair-dirs']
+const MODES = ['--full', '--new', '--repair-ms', '--repair-qp', '--repair-dirs', '--rerecognize-qp']
 const mode = args.find(a => MODES.includes(a))
 if (!mode) {
   process.stderr.write(`Unknown mode. Allowed: ${MODES.join(', ')}\n\nRun with --help for usage.\n`)
   process.exit(1)
 }
 
-const pathArg = args.find(a => !a.startsWith('--'))
+const FLAGS = new Set(['--quick', '--dry-run', '--only-changed', '--subject', '--help', '-h', ...MODES])
+const subjArgIdx = args.indexOf('--subject')
+const subjectFilter = subjArgIdx >= 0 ? args[subjArgIdx + 1] : null
+const pathArg = args.find((a, i) => !a.startsWith('--') && !(i > 0 && args[i - 1] === '--subject'))
 const scanPath = pathArg || '/papers'
 const quick = args.includes('--quick')
+const dryRun = args.includes('--dry-run')
+const onlyChanged = args.includes('--only-changed')
 const debug = process.env.DEBUG === '1'
 
 // ── DB / ES setup ─────────────────────────────────────────────────────────────
@@ -109,6 +135,7 @@ const fs = require('fs')
 const path = require('path')
 const PaperUtils = require('./view/paperutils.js')
 const sspdf = require('./lib/sspdf.js')
+const Recognizer = require('./lib/recognizer.js')
 
 db.on('error', err => { console.error('MongoDB error:', err); process.exit(1) })
 
@@ -383,6 +410,103 @@ async function repairDirs (models, types) {
   log(`\n✓  Dir repair complete. ${done} populated, ${failed} failed.`)
 }
 
+// Re-run the question recognizer on QP docs that already have a dir, preserving
+// Gemini topic tags by snapshotting them keyed by qN and re-attaching after rebuild.
+// Newly detected questions are left untagged for doLinkTopics to pick up.
+async function rerecognizeQp (models) {
+  log(`\n── Re-recognize QP dirs (preserving topic tags)`)
+  if (dryRun) log(`   DRY RUN — no writes will be performed.`)
+  if (onlyChanged) log(`   --only-changed: skipping docs whose qN set is unchanged.`)
+  if (subjectFilter) log(`   --subject ${subjectFilter}`)
+  log('')
+
+  const query = { type: 'qp' }
+  if (subjectFilter) query.subject = subjectFilter
+  const docs = await models.PastPaperDoc.find(query)
+  log(`   ${docs.length} QP docs to process.\n`)
+
+  let processed = 0, changed = 0, same = 0, failed = 0
+  let topicsPreserved = 0, topicsLost = 0
+
+  for (const doc of docs) {
+    processed++
+    const label = `${doc.subject}/${doc.time}/p${doc.paper}v${doc.variant}`
+    try {
+      if (doc.fileType !== 'pdf') continue
+
+      const oldDirs = (doc.dir && Array.isArray(doc.dir.dirs)) ? doc.dir.dirs : []
+
+      const topicMap = new Map()
+      for (const d of oldDirs) {
+        if (d && typeof d.qN === 'number' &&
+            ((d.topics && d.topics.length) || (d.subparts && d.subparts.length))) {
+          topicMap.set(d.qN, { topics: d.topics || [], subparts: d.subparts || [] })
+        }
+      }
+
+      const blob = await doc.getFileBlob()
+      const pageDatas = await sspdf.getPDFContentAll(blob)
+      const recognizerArg = []
+      for (let p = 0; p < pageDatas.numPages; p++) {
+        recognizerArg[p] = {
+          rects: pageDatas.pageRects[p],
+          content: pageDatas.pageTexts[p],
+          docId: doc._id,
+          page: p
+        }
+      }
+      const newDir = Recognizer.dir(recognizerArg)
+      const newDirs = (newDir && Array.isArray(newDir.dirs)) ? newDir.dirs : []
+
+      const newQNs = new Set(newDirs.map(d => d.qN))
+      let reattached = 0
+      for (const d of newDirs) {
+        const saved = topicMap.get(d.qN)
+        if (saved) {
+          if (saved.topics.length) d.topics = saved.topics
+          if (saved.subparts.length) d.subparts = saved.subparts
+          reattached++
+        }
+      }
+      let lost = 0
+      for (const oldQN of topicMap.keys()) if (!newQNs.has(oldQN)) lost++
+      topicsPreserved += reattached
+      topicsLost += lost
+
+      const oldQNSet = new Set(oldDirs.map(d => d.qN))
+      const sameQNs = oldQNSet.size === newQNs.size && [...oldQNSet].every(q => newQNs.has(q))
+
+      if (sameQNs) {
+        same++
+        if (onlyChanged) continue
+      } else {
+        changed++
+        const added = [...newQNs].filter(q => !oldQNSet.has(q)).sort((a, b) => a - b)
+        const removed = [...oldQNSet].filter(q => !newQNs.has(q)).sort((a, b) => a - b)
+        log(`Δ ${label}: ${oldDirs.length} → ${newDirs.length} qNs ` +
+            `(added: [${added.join(',')}], removed: [${removed.join(',')}], ` +
+            `topics kept: ${reattached}, lost: ${lost})`)
+      }
+
+      if (!dryRun) {
+        doc.set('dir', newDir)
+        doc.markModified('dir')
+        await doc.save()
+      }
+    } catch (e) {
+      failed++
+      warn(`${label}: ${e.message}`)
+    }
+
+    progress(`   ${processed}/${docs.length} done, ${changed} changed, ${failed} failed...`)
+  }
+
+  log(`\n✓  Re-recognize complete.`)
+  log(`   Processed: ${processed}   Changed: ${changed}   Unchanged: ${same}   Failed: ${failed}`)
+  log(`   Topic tags preserved: ${topicsPreserved}   Lost (qN no longer detected): ${topicsLost}`)
+  if (dryRun) log(`   (dry-run — no DB writes performed)`)
+}
+
 // ── main ──────────────────────────────────────────────────────────────────────
 
 db.on('open', async () => {
@@ -398,9 +522,10 @@ db.on('open', async () => {
     switch (mode) {
       case '--full':        await runFull(models); break
       case '--new':         await runNew(models); break
-      case '--repair-ms':   await repairDirs(models, ['ms']); break
-      case '--repair-qp':   await repairDirs(models, ['qp']); break
-      case '--repair-dirs': await repairDirs(models, ['qp', 'ms']); break
+      case '--repair-ms':       await repairDirs(models, ['ms']); break
+      case '--repair-qp':       await repairDirs(models, ['qp']); break
+      case '--repair-dirs':     await repairDirs(models, ['qp', 'ms']); break
+      case '--rerecognize-qp':  await rerecognizeQp(models); break
     }
     process.exit(0)
   } catch (e) {

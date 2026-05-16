@@ -1,217 +1,284 @@
 [
   {
-    "topic_id": "1",
-    "topic_name": "Pure Mathematics 1",
+    "topic_id": "1.1",
+    "topic_name": "(P1) 1.1 Quadratics",
     "subtopics": [
       {
         "id": "1.1a",
-        "name": "P1: Quadratic Solving & Vertex",
+        "name": "(P1) 1.1a Quadratic Solving & Vertex",
         "learning_outcomes": [
-          "Carry out the process of completing the square for a quadratic polynomial ax^2 + bx + c and use a completed square form[cite: 92].",
-          "Solve quadratic equations, and quadratic inequalities, in one unknown[cite: 94].",
-          "Recognise and solve equations in x which are quadratic in some function of x[cite: 96].",
-          "Locate the vertex of the graph of y = ax^2 + bx + c or sketch the graph[cite: 98]."
+          "Carry out the process of completing the square for a quadratic polynomial ax^2 + bx + c and use a completed square form. [cite: 92]",
+          "Solve quadratic equations, and quadratic inequalities, in one unknown. [cite: 94]",
+          "Recognise and solve equations in x which are quadratic in some function of x. [cite: 96]",
+          "Locate the vertex of the graph of y = ax^2 + bx + c or sketch the graph. [cite: 98]"
         ]
       },
       {
         "id": "1.1b",
-        "name": "P1: Roots & Intersections",
+        "name": "(P1) 1.1b Roots & Intersections",
         "learning_outcomes": [
-          "Find the discriminant of a quadratic polynomial ax^2 + bx + c and use the discriminant[cite: 93].",
-          "Determine the number of real roots of the equation ax^2 + bx + c = 0[cite: 99].",
-          "Solve by substitution a pair of simultaneous equations of which one is linear and one is quadratic[cite: 95].",
-          "Determine the set of values of k for which a line intersects, touches, or does not meet a quadratic curve[cite: 138]."
-        ]
-      },
-      {
-        "id": "1.2a",
-        "name": "P1: Function Ops & Inverses",
-        "learning_outcomes": [
-          "Understand the terms function, domain, range, one-one function, inverse function and composition of functions[cite: 111].",
-          "Identify the range of a given function and find the composition of two functions[cite: 112].",
-          "Determine whether a function is one-one and find the inverse of a one-one function[cite: 113]."
-        ]
-      },
-      {
-        "id": "1.2b",
-        "name": "P1: Graph Transforms",
-        "learning_outcomes": [
-          "Illustrate in graphical terms the relation between a one-one function and its inverse, including the mirror line y = x[cite: 114, 122].",
-          "Understand and use transformations: f(x) + a, f(x + a), af(x), f(ax) and their combinations[cite: 115, 116, 117].",
-          "Use terms 'translation', 'reflection' and 'stretch' in describing transformations[cite: 123]."
-        ]
-      },
-      {
-        "id": "1.3a",
-        "name": "P1: Linear Coordinate Geometry",
-        "learning_outcomes": [
-          "Find the equation of a straight line given two points or one point and the gradient[cite: 127, 133].",
-          "Interpret and use forms y = mx + c, y - y1 = m(x - x1), and ax + by + c = 0[cite: 128].",
-          "Use the relationship between the gradients of parallel and perpendicular lines[cite: 134]."
-        ]
-      },
-      {
-        "id": "1.3b",
-        "name": "P1: Circle Geometry",
-        "learning_outcomes": [
-          "Understand that the equation (x - a)^2 + (y - b)^2 = r^2 represents a circle[cite: 129].",
-          "Use expanded form x^2 + y^2 + 2gx + 2fy + c = 0[cite: 135].",
-          "Solve problems involving lines and circles using algebraic methods and elementary geometric properties[cite: 130, 136]."
-        ]
-      },
-      {
-        "id": "1.4",
-        "name": "P1: Circular Measure",
-        "learning_outcomes": [
-          "Understand the definition of a radian and the relationship between radians and degrees[cite: 146].",
-          "Use formulae s = rθ and A = 0.5r^2θ for arc length and sector area[cite: 147]."
-        ]
-      },
-      {
-        "id": "1.5a",
-        "name": "P1: Trig Ratios & Graphs",
-        "learning_outcomes": [
-          "Sketch and use graphs of sine, cosine, and tangent functions for any size angle[cite: 152].",
-          "Use exact values of trigonometric functions for 30, 45, and 60 degrees[cite: 153].",
-          "Use notation for inverse trigonometric relations (principal values)[cite: 154]."
-        ]
-      },
-      {
-        "id": "1.5b",
-        "name": "P1: Trig Identities & Eqns",
-        "learning_outcomes": [
-          "Use identities sinθ/cosθ = tanθ and sin^2θ + cos^2θ = 1[cite: 156, 157].",
-          "Find all solutions of simple trigonometrical equations in a specified interval[cite: 159]."
-        ]
-      },
-      {
-        "id": "1.6a",
-        "name": "P1: Binomial Expansion",
-        "learning_outcomes": [
-          "Use the expansion of (a + b)^n where n is a positive integer[cite: 170].",
-          "Use the notation n! and the binomial coefficient formula[cite: 174, 175]."
-        ]
-      },
-      {
-        "id": "1.6b",
-        "name": "P1: Progressions",
-        "learning_outcomes": [
-          "Recognise arithmetic and geometric progressions[cite: 171].",
-          "Use formulae for the nth term and sum of n terms for both progression types[cite: 171].",
-          "Use the condition for convergence and the sum to infinity for geometric progressions[cite: 172]."
-        ]
-      },
-      {
-        "id": "1.7a",
-        "name": "P1: Derivative Techniques",
-        "learning_outcomes": [
-          "Understand the gradient as a limit and use derivative notation f'(x), f''(x), dy/dx, and d^2y/dx^2[cite: 187, 188].",
-          "Use the derivative of x^n and the chain rule for composite functions[cite: 191]."
-        ]
-      },
-      {
-        "id": "1.7b",
-        "name": "P1: Differentiation Apps",
-        "learning_outcomes": [
-          "Apply differentiation to gradients, tangents, normals, and increasing/decreasing functions[cite: 192].",
-          "Solve problems involving rates of change and connected rates of change[cite: 192, 198].",
-          "Locate stationary points, determine their nature (max/min), and use them in sketching[cite: 193, 199]."
-        ]
-      },
-      {
-        "id": "1.8a",
-        "name": "P1: Integration Techniques",
-        "learning_outcomes": [
-          "Understand integration as the reverse of differentiation and integrate (ax + b)^n[cite: 204].",
-          "Solve problems involving the evaluation of a constant of integration[cite: 205].",
-          "Evaluate definite and improper integrals[cite: 206, 214]."
-        ]
-      },
-      {
-        "id": "1.8b",
-        "name": "P1: Areas & Volumes",
-        "learning_outcomes": [
-          "Find the area of a region bounded by a curve and lines or between two curves[cite: 208].",
-          "Calculate a volume of revolution about one of the axes[cite: 209]."
+          "Find the discriminant of a quadratic polynomial ax^2 + bx + c and use the discriminant. [cite: 93]",
+          "Determine the number of real roots of the equation ax^2 + bx + c = 0. [cite: 99]",
+          "Solve by substitution a pair of simultaneous equations of which one is linear and one is quadratic. [cite: 95]",
+          "Determine the set of values of k for which a line intersects, touches, or does not meet a quadratic curve. [cite: 138]"
         ]
       }
     ]
   },
   {
-    "topic_id": "5",
-    "topic_name": "Probability & Statistics 1",
+    "topic_id": "1.2",
+    "topic_name": "(P1) 1.2 Functions",
+    "subtopics": [
+      {
+        "id": "1.2a",
+        "name": "(P1) 1.2a Function Ops & Inverses",
+        "learning_outcomes": [
+          "Understand the terms function, domain, range, one-one function, inverse function and composition of functions. [cite: 111]",
+          "Identify the range of a given function and find the composition of two functions. [cite: 112]",
+          "Determine whether a function is one-one and find the inverse of a one-one function. [cite: 113]"
+        ]
+      },
+      {
+        "id": "1.2b",
+        "name": "(P1) 1.2b Graph Transforms",
+        "learning_outcomes": [
+          "Illustrate in graphical terms the relation between a one-one function and its inverse, including the mirror line y = x. [cite: 114, 122]",
+          "Understand and use transformations: f(x) + a, f(x + a), af(x), f(ax) and their combinations. [cite: 115, 116, 117]",
+          "Use terms 'translation', 'reflection' and 'stretch' in describing transformations. [cite: 123]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "1.3",
+    "topic_name": "(P1) 1.3 Coordinate Geometry",
+    "subtopics": [
+      {
+        "id": "1.3a",
+        "name": "(P1) 1.3a Linear Coordinate Geometry",
+        "learning_outcomes": [
+          "Find the equation of a straight line given sufficient information. [cite: 127]",
+          "Interpret and use forms y = mx + c, y - y1 = m(x - x1), and ax + by + c = 0. [cite: 128]",
+          "Use the relationship between the gradients of parallel and perpendicular lines. [cite: 134]"
+        ]
+      },
+      {
+        "id": "1.3b",
+        "name": "(P1) 1.3b Circle Geometry",
+        "learning_outcomes": [
+          "Understand that the equation (x - a)^2 + (y - b)^2 = r^2 represents a circle. [cite: 129]",
+          "Use expanded form x^2 + y^2 + 2gx + 2fy + c = 0. [cite: 135]",
+          "Solve problems involving lines and circles using algebraic methods and elementary geometric properties. [cite: 130, 136]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "1.4",
+    "topic_name": "(P1) 1.4 Circular Measure",
+    "subtopics": [
+      {
+        "id": "1.4a",
+        "name": "(P1) 1.4a Radian Measure & Sectors",
+        "learning_outcomes": [
+          "Understand the definition of a radian and the relationship between radians and degrees. [cite: 146]",
+          "Use formulae s = rθ and A = 0.5r^2θ for arc length and sector area. [cite: 147]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "1.5",
+    "topic_name": "(P1) 1.5 Trigonometry",
+    "subtopics": [
+      {
+        "id": "1.5a",
+        "name": "(P1) 1.5a Trig Ratios & Graphs",
+        "learning_outcomes": [
+          "Sketch and use graphs of sine, cosine, and tangent functions for any size angle. [cite: 152]",
+          "Use exact values of trigonometric functions for 30, 45, and 60 degrees. [cite: 153]",
+          "Use notation for inverse trigonometric relations as examples of inverse functions. [cite: 154, 164]"
+        ]
+      },
+      {
+        "id": "1.5b",
+        "name": "(P1) 1.5b Trig Identities & Eqns",
+        "learning_outcomes": [
+          "Use identities sinθ/cosθ = tanθ and sin^2θ + cos^2θ = 1. [cite: 156, 157]",
+          "Find all solutions of simple trigonometrical equations in a specified interval. [cite: 159]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "1.6",
+    "topic_name": "(P1) 1.6 Series",
+    "subtopics": [
+      {
+        "id": "1.6a",
+        "name": "(P1) 1.6a Binomial Expansion",
+        "learning_outcomes": [
+          "Use the expansion of (a + b)^n where n is a positive integer. [cite: 170]",
+          "Use the notations n! and the binomial coefficient formula. [cite: 174, 175]"
+        ]
+      },
+      {
+        "id": "1.6b",
+        "name": "(P1) 1.6b Progressions",
+        "learning_outcomes": [
+          "Recognise arithmetic and geometric progressions. [cite: 171]",
+          "Use formulae for the nth term and sum of n terms for both progression types. [cite: 171]",
+          "Use the condition for convergence and the sum to infinity for geometric progressions. [cite: 172]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "1.7",
+    "topic_name": "(P1) 1.7 Differentiation",
+    "subtopics": [
+      {
+        "id": "1.7a",
+        "name": "(P1) 1.7a Derivative Techniques",
+        "learning_outcomes": [
+          "Understand the gradient as a limit and use derivative notation f'(x), f''(x), dy/dx, and d^2y/dx^2. [cite: 187, 188, 190]",
+          "Use the derivative of x^n and the chain rule for composite functions. [cite: 191]"
+        ]
+      },
+      {
+        "id": "1.7b",
+        "name": "(P1) 1.7b Differentiation Apps",
+        "learning_outcomes": [
+          "Apply differentiation to gradients, tangents, normals, and increasing/decreasing functions. [cite: 192]",
+          "Solve problems involving rates of change and connected variables. [cite: 192, 198]",
+          "Locate stationary points, determine their nature (max/min), and use them in sketching. [cite: 193]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "1.8",
+    "topic_name": "(P1) 1.8 Integration",
+    "subtopics": [
+      {
+        "id": "1.8a",
+        "name": "(P1) 1.8a Integration Techniques",
+        "learning_outcomes": [
+          "Understand integration as the reverse of differentiation and integrate (ax + b)^n. [cite: 204]",
+          "Solve problems involving the evaluation of a constant of integration. [cite: 205]",
+          "Evaluate definite and improper integrals. [cite: 206, 214]"
+        ]
+      },
+      {
+        "id": "1.8b",
+        "name": "(P1) 1.8b Areas & Volumes",
+        "learning_outcomes": [
+          "Find the area of a region bounded by a curve and lines or between two curves. [cite: 208]",
+          "Calculate a volume of revolution about one of the axes. [cite: 209]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "5.1",
+    "topic_name": "(S1) 5.1 Representation of data",
     "subtopics": [
       {
         "id": "5.1a",
-        "name": "S1: Data Visualisation",
+        "name": "(S1) 5.1a Data Visualisation",
         "learning_outcomes": [
-          "Select suitable ways of presenting raw data and discuss advantages/disadvantages[cite: 13, 14].",
-          "Draw and interpret stem-and-leaf diagrams (including back-to-back), box-and-whisker plots, histograms, and cumulative frequency graphs[cite: 15, 18]."
+          "Select suitable ways of presenting raw data and discuss advantages/disadvantages. [cite: 13, 14]",
+          "Draw and interpret stem-and-leaf diagrams (including back-to-back), box-and-whisker plots, histograms, and cumulative frequency graphs. [cite: 15, 18]"
         ]
       },
       {
         "id": "5.1b",
-        "name": "S1: Summary Statistics",
+        "name": "(S1) 5.1b Summary Statistics",
         "learning_outcomes": [
-          "Understand and use measures of central tendency: mean, median, and mode[cite: 16].",
-          "Understand and use measures of variation: range, IQR, and standard deviation[cite: 16].",
-          "Calculate mean and standard deviation from data, totals, or coded totals[cite: 21]."
+          "Understand and use measures of central tendency: mean, median, and mode. [cite: 16]",
+          "Understand and use measures of variation: range, IQR, and standard deviation. [cite: 16]",
+          "Calculate mean and standard deviation from data, totals, or coded totals. [cite: 21]"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "topic_id": "5.2",
+    "topic_name": "(S1) 5.2 Permutations and combinations",
+    "subtopics": [
       {
-        "id": "5.2",
-        "name": "S1: Permutations & Combinations",
+        "id": "5.2a",
+        "name": "(S1) 5.2a Permutations & Combinations",
         "learning_outcomes": [
-          "Solve simple selection problems using permutations and combinations[cite: 24].",
-          "Solve arrangement problems in a line involving repetition or restrictions[cite: 25, 26]."
+          "Understand terms and solve simple selection problems using permutations and combinations. [cite: 24]",
+          "Solve arrangement problems in a line involving repetition or restrictions. [cite: 25, 26]"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "topic_id": "5.3",
+    "topic_name": "(S1) 5.3 Probability",
+    "subtopics": [
       {
         "id": "5.3a",
-        "name": "S1: Probability Laws",
+        "name": "(S1) 5.3a Probability Laws",
         "learning_outcomes": [
-          "Evaluate probabilities via enumeration or permutations/combinations[cite: 37].",
-          "Use addition and multiplication of probabilities[cite: 38].",
-          "Understand exclusive and independent events and test for independence[cite: 39]."
+          "Evaluate probabilities via enumeration or permutations/combinations. [cite: 37]",
+          "Use addition and multiplication of probabilities in simple cases. [cite: 38]",
+          "Understand exclusive and independent events and test for independence. [cite: 39]"
         ]
       },
       {
         "id": "5.3b",
-        "name": "S1: Conditional Probability",
+        "name": "(S1) 5.3b Conditional Probability",
         "learning_outcomes": [
-          "Calculate and use conditional probabilities[cite: 40].",
-          "Use the conditional probability formula P(A|B) = P(A ∩ B) / P(B) in simple cases[cite: 46]."
+          "Calculate and use conditional probabilities in simple cases. [cite: 40]",
+          "Use the conditional probability formula in simple cases. [cite: 46]"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "topic_id": "5.4",
+    "topic_name": "(S1) 5.4 Discrete random variables",
+    "subtopics": [
       {
         "id": "5.4a",
-        "name": "S1: Discrete Distributions",
+        "name": "(S1) 5.4a Discrete Distributions",
         "learning_outcomes": [
-          "Draw up probability distribution tables and calculate E(X) and Var(X)[cite: 49]."
+          "Draw up probability distribution tables and calculate E(X) and Var(X). [cite: 49]"
         ]
       },
       {
         "id": "5.4b",
-        "name": "S1: Binomial & Geo Models",
+        "name": "(S1) 5.4b Binomial & Geo Models",
         "learning_outcomes": [
-          "Use formulae for binomial B(n, p) and geometric Geo(p) distributions[cite: 50, 53].",
-          "Recognise practical situations for these models and use expectation/variance formulae[cite: 50, 51]."
+          "Use formulae for binomial and geometric distributions. [cite: 50]",
+          "Recognise practical situations where these distributions are suitable models. [cite: 50]",
+          "Use expectation and variance formulae for binomial and geometric distributions. [cite: 51]"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "topic_id": "5.5",
+    "topic_name": "(S1) 5.5 The normal distribution",
+    "subtopics": [
       {
         "id": "5.5a",
-        "name": "S1: Normal Distribution",
+        "name": "(S1) 5.5a Normal Distribution Calculations",
         "learning_outcomes": [
-          "Use a normal distribution to model a continuous random variable and use tables[cite: 62].",
-          "Solve problems using standardisation Z = (X - μ) / σ[cite: 63, 70]."
+          "Use a normal distribution to model a continuous random variable and use tables. [cite: 62]",
+          "Solve problems using standardisation Z = (X - μ) / σ. [cite: 63, 70]"
         ]
       },
       {
         "id": "5.5b",
-        "name": "S1: Normal Approximation",
+        "name": "(S1) 5.5b Normal Approximation",
         "learning_outcomes": [
-          "Recall conditions (np > 5 and nq > 5) for using the normal distribution as an approximation to the binomial[cite: 66, 71].",
-          "Use the normal approximation with a continuity correction to solve problems[cite: 66]."
+          "Recall conditions (np > 5 and nq > 5) for using the normal distribution as an approximation to the binomial. [cite: 66, 71]",
+          "Use the normal approximation with a continuity correction to solve problems. [cite: 66]"
         ]
       }
     ]

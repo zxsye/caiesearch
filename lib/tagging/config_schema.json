@@ -18,6 +18,11 @@
         "type": "array",
         "items": { "type": "integer" }
       },
+      "FULL": {
+        "type": "array",
+        "items": { "type": "integer" },
+        "description": "List of paper numbers that test both AS and A2 syllabus content."
+      },
       "mcq_papers": {
         "type": "array",
         "items": { "type": "integer" },

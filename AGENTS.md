@@ -154,18 +154,68 @@ docker exec -it schsrch-www node reindex.bin.js --repair-dirs
 
 These call `ensureDir()` on docs with empty `dir`, which runs the recognizer and saves the result. Safe to run anytime — skips docs that already have `dir`. MS export also calls `ensureDir()` on demand, so never-viewed MS docs get indexed on first export.
 
-### Stage 3: Link Topics to Syllabus (`doLinkTopics.bin.js`)
+#### Re-running the recognizer on already-indexed papers (after a recognizer bug fix)
 
-After `dir` is populated, tag questions with curriculum topics:
+`--repair-*` only touches docs whose `dir` is *empty*. If a recognizer bug produced a *wrong* `dir` and you've since fixed it, use `--rerecognize-qp` to re-run the recognizer on every QP doc while preserving existing Gemini topic tags:
 
 ```bash
+# Preview what would change (safe, no writes)
+docker exec -it schsrch-www node reindex.bin.js --rerecognize-qp --dry-run
+
+# Apply, skipping docs whose qN set is unchanged
+docker exec -it schsrch-www node reindex.bin.js --rerecognize-qp --only-changed
+
+# Restrict to one subject
+docker exec -it schsrch-www node reindex.bin.js --rerecognize-qp --subject 9701
+
+# After applying, let doLinkTopics tag newly detected questions (incremental — only sends
+# untagged questions to Gemini, so previously tagged questions aren't re-billed)
 GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js
+```
+
+How it preserves topics: for each QP doc, snapshots `dir.dirs[i].topics` (and `subparts`) keyed by `qN`, force-reruns `Recognizer.dir()`, then re-attaches the snapshotted tags onto matching question numbers in the new dir. Questions newly detected by the fix end up untagged so `doLinkTopics` picks them up on its next pass. Counters at the end of the run show preserved vs lost tag counts — `lost > 0` would mean a `qN` that previously existed no longer does (in practice this should be 0 unless the recognizer fix is regressive).
+
+### Stage 3: Link Topics to Syllabus (`doLinkTopics.bin.js`)
+
+After `dir` is populated, tag questions with curriculum topics. This script uses Gemini to analyze question text and map it to the syllabus.
+
+```bash
+# Basic usage (defaults to subject 9709, limit 5)
+GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js
+
+# Full syntax:
+# node doLinkTopics.bin.js <subject> [limit] [year] [papers] [--force]
+```
+
+#### Filtering & Limits
+
+You can target specific papers to avoid hitting Gemini rate limits or to focus on recent years:
+
+| Argument | Description | Example |
+|----------|-------------|---------|
+| `<subject>` | Subject code (default 9709) | `9701` |
+| `[limit]` | Max papers to process (default 5) | `20` |
+| `[year]` | Single year or range | `23` or `20-23` |
+| `[papers]` | Comma-separated papers or paper+variant | `1,2` or `11,12,13` |
+| `--force` | Re-tag questions that already have topics | `--force` |
+
+**Examples:**
+```bash
+# Tag 20 papers from 2023 for Chemistry (9701)
+GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js 9701 20 23
+
+# Tag all variants of Paper 1 and 2 for 2020-2023
+GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js 9701 100 20-23 1,2
+
+# Force re-tagging a specific paper
+GEMINI_API_KEY=$GEMINI_API_KEY docker exec -it schsrch-www node doLinkTopics.bin.js 9701 1 23 11 --force
 ```
 
 - Reads **QP docs only** (MS docs are never touched).
 - For each QP, sends question text to Gemini and writes `topics: [...]` to each `dir.dirs[i]`.
 - Syllabus definitions live in [`lib/tagging/`](lib/tagging/) (JSON per subject/level).
-- Safe to re-run: only updates `topics` fields, does not remove or recreate docs.
+- Safe to re-run: by default, it skips questions that already have tags unless `--force` is used.
+- **Rate Limiting**: The script includes a 2-second sleep between questions to respect API quotas.
 
 > [!NOTE]
 > Requires `GEMINI_API_KEY` environment variable.

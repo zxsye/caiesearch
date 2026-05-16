@@ -1,151 +1,298 @@
 [
   {
-    "topic_id": "3",
-    "topic_name": "Pure Mathematics 3",
+    "topic_id": "3.1",
+    "topic_name": "(P3) 3.1 Algebra",
     "subtopics": [
       {
-        "id": "3.1",
-        "name": "Algebra & Partial Fractions",
+        "id": "3.1a",
+        "name": "(P3) 3.1a Modulus Functions & Polynomials",
         "learning_outcomes": [
-          "Understand the meaning of |x|, sketch the graph of y=|ax+b|, and solve related equations and inequalities [cite: 6, 14]",
-          "Divide a polynomial (degree ≤ 4) by a linear or quadratic polynomial to identify the quotient and remainder [cite: 7, 15]",
-          "Apply the factor theorem and the remainder theorem to solve polynomial equations or evaluate coefficients [cite: 8, 15, 16]",
-          "Decompose rational functions into partial fractions for denominators with linear factors, repeated linear factors, or a quadratic factor [cite: 9, 10]",
-          "Use the expansion of (1+x)^n where n is a rational number and |x|<1, including adapting standard series [cite: 11, 19]"
+          "understand the meaning of |x|, sketch the graph of y=|ax+b| and use relations such as |a|=|b| ⇔ a²=b² and |x-a|<b ⇔ a-b<x<a+b when solving equations and inequalities [cite: 6]",
+          "divide a polynomial, of degree not exceeding 4, by a linear or quadratic polynomial, and identify the quotient and remainder (which may be zero) [cite: 7]",
+          "use the factor theorem and the remainder theorem [cite: 8]"
         ]
       },
       {
-        "id": "3.2",
-        "name": "Logarithmic & Exponential Functions",
+        "id": "3.1b",
+        "name": "(P3) 3.1b Partial Fractions & Binomial Series",
         "learning_outcomes": [
-          "Use the laws of logarithms and understand the relationship between logarithms and indices [cite: 26]",
-          "Understand the definitions, properties, and graphs of e^x and ln x, including their relationship as inverse functions [cite: 27, 31]",
-          "Solve equations and inequalities in which the unknown appears in indices [cite: 28, 32]",
-          "Use logarithms to transform non-linear relationships to linear form to determine unknown constants [cite: 29, 34, 35]"
-        ]
-      },
-      {
-        "id": "3.3",
-        "name": "Trigonometry",
-        "learning_outcomes": [
-          "Use the secant, cosecant, and cotangent functions, including their relationships to primary functions and their graphs [cite: 38, 39]",
-          "Apply trigonometric identities involving sec^2 θ, cosec^2 θ, and compound/addition angle formulae [cite: 40, 41, 42, 43]",
-          "Use double-angle formulae for sin 2A, cos 2A, and tan 2A [cite: 44]",
-          "Express a sin θ + b cos θ in the forms R sin(θ ± α) or R cos(θ ± α) to solve equations [cite: 45, 48]"
-        ]
-      },
-      {
-        "id": "3.4",
-        "name": "Differentiation",
-        "learning_outcomes": [
-          "Use the derivatives of e^x, ln x, sin x, cos x, tan x, and tan^-1 x [cite: 55]",
-          "Apply the product and quotient rules to find derivatives [cite: 56, 60]",
-          "Find and use the first derivative of a function defined parametrically or implicitly [cite: 57, 61, 62]",
-          "Solve problems involving tangents and normals using various differentiation techniques [cite: 63]"
-        ]
-      },
-      {
-        "id": "3.5",
-        "name": "Integration",
-        "learning_outcomes": [
-          "Integrate functions involving e^(ax+b), 1/(ax+b), sin(ax+b), cos(ax+b), sec^2(ax+b), and 1/(x^2+a^2) [cite: 66, 77]",
-          "Use trigonometric relationships and double-angle formulae to carry out integration [cite: 67, 78]",
-          "Integrate rational functions via decomposition into partial fractions [cite: 68, 69, 79]",
-          "Recognize and integrate functions of the form kf'(x)/f(x) [cite: 70, 72, 80]",
-          "Apply integration by parts and use given substitutions to simplify and evaluate integrals [cite: 74, 75, 82, 83]"
-        ]
-      },
-      {
-        "id": "3.6",
-        "name": "Numerical Solutions",
-        "learning_outcomes": [
-          "Locate a root approximately using graphical considerations or sign changes [cite: 92, 96]",
-          "Understand the notation for a sequence of approximations and the possibility of iteration failure [cite: 93, 97]",
-          "Use a given iteration formula x_n+1 = F(x_n) to determine a root to a prescribed degree of accuracy [cite: 94]"
-        ]
-      },
-      {
-        "id": "3.7",
-        "name": "Vectors",
-        "learning_outcomes": [
-          "Use standard vector notations and carry out addition, subtraction, and scalar multiplication [cite: 99]",
-          "Calculate the magnitude of a vector and use unit, displacement, and position vectors [cite: 99]",
-          "Find and use the equation of a straight line in the form r = a + tb [cite: 99]",
-          "Determine if two lines are parallel, intersect, or are skew, and find points of intersection [cite: 99]",
-          "Calculate and use the scalar product to solve problems involving angles and perpendiculars [cite: 99]"
-        ]
-      },
-      {
-        "id": "3.8",
-        "name": "Differential Equations",
-        "learning_outcomes": [
-          "Formulate simple statements involving a rate of change as a differential equation [cite: 106, 121]",
-          "Solve first-order differential equations using the separation of variables [cite: 107, 122]",
-          "Find particular solutions using initial conditions and interpret solutions in a modeling context [cite: 108, 109, 123]"
-        ]
-      },
-      {
-        "id": "3.9",
-        "name": "Complex Numbers",
-        "learning_outcomes": [
-          "Understand Cartesian form x + iy, including modulus, argument, and the conjugate of a complex number [cite: 112, 113, 125]",
-          "Use the conjugate pair result for polynomial equations with real coefficients [cite: 114, 128]",
-          "Represent complex numbers on an Argand diagram and understand the geometrical effects of operations [cite: 115, 118]",
-          "Carry out multiplication and division in polar form r(cos θ + i sin θ) or exponential form re^iθ [cite: 116, 129, 130]",
-          "Find square roots of a complex number and illustrate loci defined by equations or inequalities [cite: 117, 119, 131, 132]"
+          "recall an appropriate form for expressing rational functions in partial fractions, and carry out the decomposition, in cases where the denominator is no more complicated than (ax+b)(cx+d)(ex+f), (ax+b)(cx+d)², (ax+b)(cx²+d) [cite: 9, 10]",
+          "use the expansion of (1+x)^n where n is a rational number and |x|<1 [cite: 11]"
         ]
       }
     ]
   },
   {
-    "topic_id": "6",
-    "topic_name": "Probability & Statistics 2",
+    "topic_id": "3.2",
+    "topic_name": "(P3) 3.2 Logarithmic and exponential functions",
     "subtopics": [
       {
-        "id": "6.1",
-        "name": "Poisson Distribution",
+        "id": "3.2a",
+        "name": "(P3) 3.2a Logarithmic Properties & Equations",
         "learning_outcomes": [
-          "Calculate probabilities for the Poisson distribution Po(λ) where mean and variance equal λ [cite: 141, 142]",
-          "Understand the relevance of the Poisson distribution to random events and use it as a model [cite: 143, 144]",
-          "Apply the Poisson distribution as an approximation to the Binomial distribution [cite: 145, 149]",
-          "Use the Normal distribution with a continuity correction to approximate the Poisson distribution [cite: 146, 150]"
+          "understand the relationship between logarithms and indices, and use the laws of logarithms (excluding change of base) [cite: 26]",
+          "use logarithms to solve equations and inequalities in which the unknown appears in indices [cite: 28]"
         ]
       },
+      {
+        "id": "3.2b",
+        "name": "(P3) 3.2b Exponential Models & Linearization",
+        "learning_outcomes": [
+          "understand the definition and properties of e^x and ln x, including their relationship as inverse functions and their graphs [cite: 27]",
+          "use logarithms to transform a given relationship to linear form, and hence determine unknown constants by considering the gradient and/or intercept [cite: 29]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.3",
+    "topic_name": "(P3) 3.3 Trigonometry",
+    "subtopics": [
+      {
+        "id": "3.3a",
+        "name": "(P3) 3.3a Reciprocal Ratios & Trigonometric Identities",
+        "learning_outcomes": [
+          "understand the relationship of the secant, cosecant and cotangent functions to cosine, sine and tangent, and use properties and graphs of all six trigonometric functions for angles of any magnitude [cite: 38, 39]",
+          "use trigonometrical identities for the simplification and exact evaluation of expressions, and in the course of solving equations, and select an identity or identities appropriate to the context, showing familiarity in particular with the use of sec²θ ≡ 1 + tan²θ and cosec²θ ≡ 1 + cot²θ [cite: 40, 41, 42]"
+        ]
+      },
+      {
+        "id": "3.3b",
+        "name": "(P3) 3.3b Compound Angles & Linear Formulations",
+        "learning_outcomes": [
+          "use trigonometrical identities for the simplification and exact evaluation of expressions, and in the course of solving equations, and select an identity or identities appropriate to the context, showing familiarity in particular with the use of the expansions of sin(A ± B), cos(A ± B) and tan(A ± B) [cite: 40, 43]",
+          "use trigonometrical identities for the simplification and exact evaluation of expressions, and in the course of solving equations, and select an identity or identities appropriate to the context, showing familiarity in particular with the use of the formulae for sin 2A, cos 2A and tan 2A [cite: 40, 44]",
+          "use trigonometrical identities for the simplification and exact evaluation of expressions, and in the course of solving equations, and select an identity or identities appropriate to the context, showing familiarity in particular with the use of the expression of a sin θ + b cos θ in the forms R sin(θ ± α) and R cos(θ ± α) [cite: 40, 45]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.4",
+    "topic_name": "(P3) 3.4 Differentiation",
+    "subtopics": [
+      {
+        "id": "3.4a",
+        "name": "(P3) 3.4a Derivatives & Differentiation Rules",
+        "learning_outcomes": [
+          "use the derivatives of e^x, ln x, sin x, cos x, tan x, tan⁻¹x, together with constant multiples, sums, differences and composites [cite: 55]",
+          "differentiate products and quotients [cite: 56]"
+        ]
+      },
+      {
+        "id": "3.4b",
+        "name": "(P3) 3.4b Parametric & Implicit Differentiation",
+        "learning_outcomes": [
+          "find and use the first derivative of a function which is defined parametrically or implicitly [cite: 57]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.5",
+    "topic_name": "(P3) 3.5 Integration",
+    "subtopics": [
+      {
+        "id": "3.5a",
+        "name": "(P3) 3.5a Core Integrals & Trigonometric Integration",
+        "learning_outcomes": [
+          "extend the idea of 'reverse differentiation' to include the integration of e^(ax+b), 1/(ax+b), sin(ax+b), cos(ax+b), sec²(ax+b) and 1/(x²+a²) [cite: 66]",
+          "use trigonometrical relationships in carrying out integration [cite: 67]"
+        ]
+      },
+      {
+        "id": "3.5b",
+        "name": "(P3) 3.5b Rational Functions & Advanced Techniques",
+        "learning_outcomes": [
+          "integrate rational functions by means of decomposition into partial fractions [cite: 68, 69]",
+          "recognise an integrand of the form kf'(x)/f(x), and integrate such functions [cite: 70, 71, 72]",
+          "recognise when an integrand can usefully be regarded as a product, and use integration by parts [cite: 74]",
+          "use a given substitution to simplify and evaluate either a definite or an indefinite integral [cite: 75]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.6",
+    "topic_name": "(P3) 3.6 Numerical solution of equations",
+    "subtopics": [
+      {
+        "id": "3.6",
+        "name": "(P3) 3.6 Numerical solution of equations",
+        "learning_outcomes": [
+          "locate approximately a root of an equation, by means of graphical considerations and/or searching for a sign change [cite: 92]",
+          "understand the idea of, and use the notation for, a sequence of approximations which converges to a root of an equation [cite: 93]",
+          "understand how a given simple iterative formula of the form x_n+1 = F(x_n) relates to the equation being solved, and use a given iteration, or an iteration based on a given rearrangement of an equation, to determine a root to a prescribed degree of accuracy [cite: 94]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.7",
+    "topic_name": "(P3) 3.7 Vectors",
+    "subtopics": [
+      {
+        "id": "3.7a",
+        "name": "(P3) 3.7a Vector Operations & Straight Lines",
+        "learning_outcomes": [
+          "use standard notations for vectors, i.e. ⎛x⎞, xi+yj, ⎛x⎞, xi+yj+zk, AB, a [cite: 99]",
+          "carry out addition and subtraction of vectors and multiplication of a vector by a scalar, and interpret these operations in geometrical terms [cite: 99]",
+          "calculate the magnitude of a vector, and use unit vectors, displacement vectors and position vectors [cite: 99]",
+          "understand the significance of all the symbols used when the equation of a straight line is expressed in the form r=a+tb, and find the equation of a line, given sufficient information [cite: 99]"
+        ]
+      },
+      {
+        "id": "3.7b",
+        "name": "(P3) 3.7b Intersections & Scalar Products",
+        "learning_outcomes": [
+          "determine whether two lines are parallel, intersect or are skew, and find the point of intersection of two lines when it exists [cite: 99]",
+          "use formulae to calculate the scalar product of two vectors, and use scalar products in problems involving lines and points [cite: 99]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.8",
+    "topic_name": "(P3) 3.8 Differential equations",
+    "subtopics": [
+      {
+        "id": "3.8",
+        "name": "(P3) 3.8 Differential equations",
+        "learning_outcomes": [
+          "formulate a simple statement involving a rate of change as a differential equation [cite: 106]",
+          "find by integration a general form of solution for a first order differential equation in which the variables are separable [cite: 107]",
+          "use an initial condition to find a particular solution [cite: 108]",
+          "interpret the solution of a differential equation in the context of a problem being modelled by the equation [cite: 109]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "3.9",
+    "topic_name": "(P3) 3.9 Complex numbers",
+    "subtopics": [
+      {
+        "id": "3.9a",
+        "name": "(P3) 3.9a Algebraic Operations & Geometrical Diagrams",
+        "learning_outcomes": [
+          "understand the idea of a complex number, recall the meaning of the terms real part, imaginary part, modulus, argument, conjugate, and use the fact that two complex numbers are equal if and only if both real and imaginary parts are equal [cite: 112]",
+          "carry out operations of addition, subtraction, multiplication and division of two complex numbers expressed in Cartesian form x+iy [cite: 113]",
+          "use the result that, for a polynomial equation with real coefficients, any non-real roots occur in conjugate pairs [cite: 114]",
+          "represent complex numbers geometrically by means of an Argand diagram [cite: 115]"
+        ]
+      },
+      {
+        "id": "3.9b",
+        "name": "(P3) 3.9b Polar Representations & Loci",
+        "learning_outcomes": [
+          "carry out operations of multiplication and division of two complex numbers expressed in polar form r(cos θ + i sin θ) ≡ re^(iθ) [cite: 116]",
+          "find the two square roots of a complex number [cite: 117]",
+          "understand in simple terms the geometrical effects of conjugating a complex number and of adding, subtracting, multiplying and dividing two complex numbers [cite: 118]",
+          "illustrate simple equations and inequalities involving complex numbers by means of loci in an Argand diagram [cite: 119]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6.1",
+    "topic_name": "(S2) 6.1 The Poisson distribution",
+    "subtopics": [
+      {
+        "id": "6.1a",
+        "name": "(S2) 6.1a Poisson Properties & Formulations",
+        "learning_outcomes": [
+          "use formulae to calculate probabilities for the distribution Po(λ) [cite: 141]",
+          "use the fact that if X ~ Po(λ) then the mean and variance of X are each equal to λ [cite: 142]",
+          "understand the relevance of the Poisson distribution to the distribution of random events, and use the Poisson distribution as a model [cite: 143, 144]"
+        ]
+      },
+      {
+        "id": "6.1b",
+        "name": "(S2) 6.1b Distribution Approximations",
+        "learning_outcomes": [
+          "use the Poisson distribution as an approximation to the binomial distribution where appropriate [cite: 145]",
+          "use the normal distribution, with continuity correction, as an approximation to the Poisson distribution where appropriate [cite: 146]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6.2",
+    "topic_name": "(S2) 6.2 Linear combinations of random variables",
+    "subtopics": [
       {
         "id": "6.2",
-        "name": "Linear Combinations of Random Variables",
+        "name": "(S2) 6.2 Linear combinations of random variables",
         "learning_outcomes": [
-          "Use results for expectation and variance of aX + b and independent aX + bY [cite: 152, 153, 154, 155]",
-          "Understand the distribution of linear combinations of independent Normal and Poisson variables [cite: 156, 157, 158]"
+          "use, when solving problems, the results that E(aX+b) = aE(X)+b and Var(aX+b) = a²Var(X) [cite: 152, 153]",
+          "use, when solving problems, the results that E(aX+bY) = aE(X)+bE(Y) and Var(aX+bY) = a²Var(X)+b²Var(Y) for independent X and Y [cite: 152, 154, 155]",
+          "use, when solving problems, the result that if X has a normal distribution then so does aX+b [cite: 152, 156]",
+          "use, when solving problems, the result that if X and Y have independent normal distributions then aX+bY has a normal distribution [cite: 152, 157]",
+          "use, when solving problems, the result that if X and Y have independent Poisson distributions then X+Y has a Poisson distribution [cite: 152, 158]"
         ]
-      },
+      }
+    ]
+  },
+  {
+    "topic_id": "6.3",
+    "topic_name": "(S2) 6.3 Continuous random variables",
+    "subtopics": [
       {
         "id": "6.3",
-        "name": "Continuous Random Variables",
+        "name": "(S2) 6.3 Continuous random variables",
         "learning_outcomes": [
-          "Understand the concept of a continuous random variable and the properties of a probability density function [cite: 167]",
-          "Use a density function to solve problems involving probabilities, mean, and variance [cite: 168, 171]",
-          "Locate the median and other percentiles using the density function [cite: 173]"
+          "understand the concept of a continuous random variable, and recall and use properties of a probability density function [cite: 167]",
+          "use a probability density function to solve problems involving probabilities, and to calculate the mean and variance of a distribution [cite: 168]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6.4",
+    "topic_name": "(S2) 6.4 Sampling and estimation",
+    "subtopics": [
+      {
+        "id": "6.4a",
+        "name": "(S2) 6.4a Sampling Frameworks & Sample Means",
+        "learning_outcomes": [
+          "understand the distinction between a sample and a population, and appreciate the necessity for randomness in choosing samples [cite: 178]",
+          "explain in simple terms why a given sampling method may be unsatisfactory [cite: 179]",
+          "recognise that a sample mean can be regarded as a random variable, and use the facts that E(X̄) = μ and that Var(X̄) = σ²/n [cite: 180, 181]",
+          "use the fact that (X̄) has a normal distribution if X has a normal distribution [cite: 182]",
+          "use the Central Limit Theorem where appropriate [cite: 183]"
         ]
       },
       {
-        "id": "6.4",
-        "name": "Sampling & Estimation",
+        "id": "6.4b",
+        "name": "(S2) 6.4b Estimates & Confidence Intervals",
         "learning_outcomes": [
-          "Distinguish between a sample and population and recognize the need for random sampling [cite: 178, 188]",
-          "Understand the distribution of the sample mean and apply the Central Limit Theorem for large samples [cite: 180, 181, 183, 191]",
-          "Calculate unbiased estimates of population mean and variance from raw or summarized data [cite: 184, 192, 193]",
-          "Determine and interpret confidence intervals for a population mean or proportion [cite: 185, 186]"
+          "calculate unbiased estimates of the population mean and variance from a sample, using either raw or summarised data [cite: 184]",
+          "determine and interpret a confidence interval for a population mean in cases where the population is normally distributed with known variance or where a large sample is used [cite: 185]",
+          "determine, from a large sample, an approximate confidence interval for a population proportion [cite: 186]"
+        ]
+      }
+    ]
+  },
+  {
+    "topic_id": "6.5",
+    "topic_name": "(S2) 6.5 Hypothesis tests",
+    "subtopics": [
+      {
+        "id": "6.5a",
+        "name": "(S2) 6.5a Significance Testing Mechanics",
+        "learning_outcomes": [
+          "understand the nature of a hypothesis test, the difference between one-tailed and two-tailed tests, and the terms null hypothesis, alternative hypothesis, significance level, rejection region (or critical region), acceptance region and test statistic [cite: 201]",
+          "formulate hypotheses and carry out a hypothesis test in the context of a single observation from a population which has a binomial or Poisson distribution, using direct evaluation of probabilities [cite: 202, 203]",
+          "formulate hypotheses and carry out a hypothesis test in the context of a single observation from a population which has a binomial or Poisson distribution, using a normal approximation to the binomial or the Poisson distribution, where appropriate [cite: 202, 204]",
+          "formulate hypotheses and carry out a hypothesis test concerning the population mean in cases where the population is normally distributed with known variance or where a large sample is used [cite: 205]"
         ]
       },
       {
-        "id": "6.5",
-        "name": "Hypothesis Testing",
+        "id": "6.5b",
+        "name": "(S2) 6.5b Decision Errors",
         "learning_outcomes": [
-          "Understand null/alternative hypotheses, one-tailed/two-tailed tests, significance levels, and rejection regions [cite: 201, 209]",
-          "Carry out hypothesis tests for a single observation from a Binomial or Poisson distribution [cite: 202, 203, 204]",
-          "Carry out hypothesis tests concerning the population mean for Normal distributions or large samples [cite: 205]",
-          "Understand and calculate the probabilities of making Type I and Type II errors [cite: 206, 207]"
+          "understand the terms Type I error and Type II error in relation to hypothesis tests [cite: 206]",
+          "calculate the probabilities of making Type I and Type II errors in specific situations involving tests based on a normal distribution or direct evaluation of binomial or Poisson probabilities [cite: 207]"
         ]
       }
     ]

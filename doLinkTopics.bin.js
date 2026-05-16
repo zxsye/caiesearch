@@ -118,15 +118,18 @@ async function tagQuestionWithGemini(qN, questionText, subjectId, syllabusData) 
     `Your task: for each main part of the question, list which SYLLABUS SUBTOPICS it assesses.\n\n` +
     `Syllabus Structure:\n${syllabusStr}\n\n` +
     `Question Text:\n${questionText}\n\n` +
-    `Return a JSON array with one object per main part (e.g. (a), (b), (c)). ` +
-    `Do not split sub-sub-parts like (i), (ii) or (1), (2) into separate rows.\n\n` +
+    `Return a JSON array with one object per top-level part of the question. ` +
+    `Top-level parts are typically labeled (a), (b), etc., but in many questions they are labeled (i), (ii), etc., without any (a) or (b). ` +
+    `Identify the highest level of structure used in THIS question and create one object per top-level part. ` +
+    `Do not split nested sub-parts (e.g. an (i) inside an (a)) into separate rows; combine them under their parent part.\n` +
+    `CRITICAL: If the question has no numbered or lettered parts at all, you MUST return exactly ONE object with "part": null.\n\n` +
     `Labelling rules:\n` +
     `- Prefer the finest level: use each subtopic's exact string value from the field "name" inside "subtopics" (copy character-for-character).\n` +
     `- If a syllabus topic has an empty "subtopics" array, you may use that topic's "topic_name" instead.\n` +
     `- Do not return parent topic_name when that topic lists subtopics — choose the relevant subtopic name(s) only.\n` +
     `- Do not return learning_outcomes text; only subtopic "name" or bare topic_name as above.\n\n` +
     `Each object must have:\n` +
-    `- "part": The label of the part (e.g. "(a)", "(b)", or null if there is no lettered structure).\n` +
+    `- "part": The label of the top-level part (e.g. "(a)", "(b)", or "(i)", "(ii)" if those are the top-level, or null if there are no parts).\n` +
     `- "topics": A JSON array of those allowed labels (one or more per part).\n\n` +
     `Return ONLY the JSON array. Do not include markdown or explanations.`
 
@@ -350,27 +353,67 @@ db.on('open', async () => {
       // Determine syllabus level (AS vs A2)
       let level = 'AS'
       const subjectConfig = taggingConfig[doc.subject]
-      if (subjectConfig) {
-        if (subjectConfig.A2 && subjectConfig.A2.includes(doc.paper)) {
-          level = 'A2'
-        } else if (subjectConfig.AS && subjectConfig.AS.includes(doc.paper)) {
-          level = 'AS'
+      
+      if (doc.subject === '9709') {
+        const year = parseInt(doc.time.slice(-2), 10)
+        const isPre2020 = !isNaN(year) && year < 20
+        
+        if (isPre2020) {
+          // Pre-2020 Syllabus: AS (1, 2, 4, 6), A2 (3, 5, 7)
+          if ([3, 5, 7].includes(doc.paper)) {
+            level = 'A2'
+          } else {
+            level = 'AS'
+          }
+        } else {
+          // 2020+ Syllabus: AS (1, 2, 4, 5), A2 (3, 6)
+          if ([3, 6].includes(doc.paper)) {
+            level = 'A2'
+          } else {
+            level = 'AS'
+          }
         }
       } else {
-        // Fallback default logic for A-Level
-        if (doc.subject.startsWith('9') && doc.paper >= 4) {
-          level = 'A2'
+        if (subjectConfig) {
+          if (subjectConfig.FULL && subjectConfig.FULL.includes(doc.paper)) {
+            level = 'FULL'
+          } else if (subjectConfig.A2 && subjectConfig.A2.includes(doc.paper)) {
+            level = 'A2'
+          } else if (subjectConfig.AS && subjectConfig.AS.includes(doc.paper)) {
+            level = 'AS'
+          }
+        } else {
+          // Fallback default logic for A-Level
+          if (doc.subject.startsWith('9') && doc.paper >= 4) {
+            level = 'A2'
+          }
         }
       }
       const taggingDir = path.join(__dirname, 'lib', 'tagging', doc.subject)
-      const taggingFile = path.join(taggingDir, `${level}.json`)
       
       let syllabusData = []
-      if (fs.existsSync(taggingFile)) {
+      
+      if (level === 'FULL') {
+        const asFile = path.join(taggingDir, `AS.json`)
+        const a2File = path.join(taggingDir, `A2.json`)
         try {
-          syllabusData = JSON.parse(fs.readFileSync(taggingFile, 'utf8'))
+          if (fs.existsSync(asFile)) {
+            syllabusData = syllabusData.concat(JSON.parse(fs.readFileSync(asFile, 'utf8')))
+          }
+          if (fs.existsSync(a2File)) {
+            syllabusData = syllabusData.concat(JSON.parse(fs.readFileSync(a2File, 'utf8')))
+          }
         } catch (e) {
-          console.warn(`  Failed to parse syllabus file ${taggingFile}: ${e.message}`)
+          console.warn(`  Failed to parse syllabus file for FULL level: ${e.message}`)
+        }
+      } else {
+        const taggingFile = path.join(taggingDir, `${level}.json`)
+        if (fs.existsSync(taggingFile)) {
+          try {
+            syllabusData = JSON.parse(fs.readFileSync(taggingFile, 'utf8'))
+          } catch (e) {
+            console.warn(`  Failed to parse syllabus file ${taggingFile}: ${e.message}`)
+          }
         }
       }
 
